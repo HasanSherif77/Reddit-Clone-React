@@ -1,13 +1,14 @@
 import React from "react";
 import "./TopBar.css";
 
-import redditLogoImage from "../../assets/images/Logo.png";
-import searchIconImage from "../../assets/images/Search.svg";
-import adImage from "../../assets/images/Ad.svg";
-import bellImage from "../../assets/images/Bell.svg";
-import chatImage from "../../assets/images/Chat.svg";
-import createImage from "../../assets/images/Create.svg";
-import girlAvatarImage from "../../assets/images/Girl-Avatar.svg";
+import redditLogoImage from "../../../assets/images/Logo.png";
+import searchIconImage from "../../../assets/images/Search.svg";
+import adImage from "../../../assets/images/Ad.svg";
+import bellImage from "../../../assets/images/Bell.svg";
+import chatImage from "../../../assets/images/Chat.svg";
+import createImage from "../../../assets/images/Create.svg";
+import girlAvatarImage from "../../../assets/images/Girl-Avatar.svg";
+
 
 function TopBar() {
   return (

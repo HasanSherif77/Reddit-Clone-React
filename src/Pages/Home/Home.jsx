@@ -1,5 +1,5 @@
 import React from "react";
-import TopBar from "../../Components/Shared/TopBar";
+import TopBar from "../../Components/Shared/TopBar/TopBar";
 
 
 function Home() {
