@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import React from 'react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+
+// Community Pages
+import CommunityPage from './Pages/Community/CommunityPage';
+import CreateCommunityPage from './Pages/Community/CreateCommunityPage';
+import EditCommunityPage from './Pages/Community/EditCommunityPage';
+
+
+// Simple layout for communities
+const CommunityLayout = ({ children }) => (
+  <div className="community-app flex min-h-screen">
+    <main className="flex-1 p-6">{children}</main>
+  </div>
+);
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Router>
+      <CommunityLayout>
+        <Routes>
+          <Route path="/c/:communityName" element={<CommunityPage />} />
+          <Route path="/create-community" element={<CreateCommunityPage />} />
+          <Route path="/edit-community/:communityName" element={<EditCommunityPage />} />
+        </Routes>
+      </CommunityLayout>
+    </Router>
   );
 }
 
