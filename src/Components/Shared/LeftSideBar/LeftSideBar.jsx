@@ -22,6 +22,7 @@ import bestOfRedditIcon from "../../../assets/images/Best-Of-Reddit.svg";
 import accessibilityIcon from "../../../assets/images/Accessibility.svg";
 import settingIcon from "../../../assets/images/Setting.svg";
 import gamesIcon from "../../../assets/images/Games.svg";
+import SidebarButton from "./SideBarButton";
 
 function LeftSideBar({ isOpen, onToggle }) {
   const [openSections, setOpenSections] = useState({
@@ -37,6 +38,37 @@ function LeftSideBar({ isOpen, onToggle }) {
       [section]: !prev[section],
     }));
   };
+  const sidebarItems = [
+  { icon: homeIcon, label: "Home", title: "Home", active: true },
+  { icon: popularIcon, label: "Popular", title: "Popular" },
+  { icon: answersIcon, label: "Answers", title: "Answers" },
+  { icon: exploreIcon, label: "Explore", title: "Explore" },
+  { icon: allIcon, label: "All", title: "All" },
+  { icon: plusIcon, label: "Start a community", title: "Create community" },
+];
+const resourcesSection = [
+  { icon: redditIcon, label: "About Reddit" },
+  { icon: advertiseIcon, label: "Advertise" },
+  { icon: developerIcon, label: "Developer Platform" },
+  { icon: proIcon, label: "Reddit Pro" },
+  { icon: helpIcon, label: "Help" },
+  { icon: blogIcon, label: "Blog" },
+  { icon: careersIcon, label: "Careers" },
+  { icon: pressIcon, label: "Press" },
+];
+
+const resourcesMiddleSection = [
+  { icon: communitiesIcon, label: "Communities" },
+  { icon: bestOfRedditIcon, label: "Best of Reddit" },
+];
+
+const resourcesBottomSection = [
+  { icon: blogIcon, label: "Reddit Rules" },
+  { icon: blogIcon, label: "Privacy Policy" },
+  { icon: blogIcon, label: "User Agreement" },
+  { icon: accessibilityIcon, label: "Accessibility" },
+];
+
 
   return (
     <>
@@ -51,30 +83,14 @@ function LeftSideBar({ isOpen, onToggle }) {
       <aside className={`leftsidebar ${isOpen ? "leftsidebar-open" : "leftsidebar-closed"}`}>
         <div className="leftsidebar-scroll-content">
           <nav className="leftsidebar-section">
-            <button className="leftsidebar-item leftsidebar-item-active" title="Home">
-              <img src={homeIcon} alt="Home" className="leftsidebar-icon" />
-              <span>Home</span>
-            </button>
-            <button className="leftsidebar-item" title="Popular">
-              <img src={popularIcon} alt="Popular" className="leftsidebar-icon" />
-              <span>Popular</span>
-            </button>
-            <button className="leftsidebar-item" title="Answers">
-              <img src={answersIcon} alt="Answers" className="leftsidebar-icon" />
-              <span>Answers</span>
-            </button>
-            <button className="leftsidebar-item" title="Explore">
-              <img src={exploreIcon} alt="Explore" className="leftsidebar-icon" />
-              <span>Explore</span>
-            </button>
-            <button className="leftsidebar-item" title="All">
-              <img src={allIcon} alt="All" className="leftsidebar-icon" />
-              <span>All</span>
-            </button>
-            <button className="leftsidebar-item" title="Create community">
-              <img src={plusIcon} alt="Create" className="leftsidebar-icon" />
-              <span>Start a community</span>
-            </button>
+            {sidebarItems.map((item, index) => (
+              <SidebarButton
+                key={index}
+                label={item.label}
+                active={item.active}
+                icon={item.icon}
+              />
+            ))}
           </nav>
 
           <div className="leftsidebar-divider" />
@@ -93,10 +109,10 @@ function LeftSideBar({ isOpen, onToggle }) {
             </button>
             {openSections.games && (
               <div className="leftsidebar-collapse-content">
-                <button className="leftsidebar-item">
-                  <img src={gamesIcon} alt="Games" className="leftsidebar-icon" />
-                  <span>Discover More Games</span>
-                </button>
+                <SidebarButton
+                  icon={gamesIcon}
+                  label="Discover More Games"
+                />
               </div>
             )}
           </div>
@@ -117,10 +133,10 @@ function LeftSideBar({ isOpen, onToggle }) {
             </button>
             {openSections.feeds && (
               <div className="leftsidebar-collapse-content">
-                <button className="leftsidebar-item">
-                  <img src={plusIcon} alt="Create" className="leftsidebar-icon" />
-                  <span>Create Custom Feed</span>
-                </button>
+                <SidebarButton
+                  icon={plusIcon}
+                  label="Create Custom Feed"
+                />
               </div>
             )}
           </div>
@@ -141,10 +157,10 @@ function LeftSideBar({ isOpen, onToggle }) {
             </button>
             {openSections.communities && (
               <div className="leftsidebar-collapse-content">
-                <button className="leftsidebar-item">
-                  <img src={settingIcon} alt="Manage" className="leftsidebar-icon" />
-                  <span>Manage Communities</span>
-                </button>
+                <SidebarButton
+                  icon={settingIcon}
+                  label="Manage Communities"
+                />
               </div>
             )}
           </div>
@@ -165,71 +181,37 @@ function LeftSideBar({ isOpen, onToggle }) {
             </button>
             {openSections.resources && (
               <div className="leftsidebar-collapse-content">
-                <button className="leftsidebar-item">
-                  <img src={redditIcon} alt="About" className="leftsidebar-icon" />
-                  <span>About Reddit</span>
-                </button>
-                <button className="leftsidebar-item">
-                  <img src={advertiseIcon} alt="Advertise" className="leftsidebar-icon" />
-                  <span>Advertise</span>
-                </button>
-                <button className="leftsidebar-item">
-                  <img src={developerIcon} alt="Developer" className="leftsidebar-icon" />
-                  <span>Developer Platform</span>
-                </button>
-                <button className="leftsidebar-item">
-                  <img src={proIcon} alt="Pro" className="leftsidebar-icon" />
-                  <span>Reddit Pro</span>
-                </button>
-                <button className="leftsidebar-item">
-                  <img src={helpIcon} alt="Help" className="leftsidebar-icon" />
-                  <span>Help</span>
-                </button>
-                <button className="leftsidebar-item">
-                  <img src={blogIcon} alt="Blog" className="leftsidebar-icon" />
-                  <span>Blog</span>
-                </button>
-                <button className="leftsidebar-item">
-                  <img src={careersIcon} alt="Careers" className="leftsidebar-icon" />
-                  <span>Careers</span>
-                </button>
-                <button className="leftsidebar-item">
-                  <img src={pressIcon} alt="Press" className="leftsidebar-icon" />
-                  <span>Press</span>
-                </button>
+                {resourcesSection.map((item, index) => (
+                  <SidebarButton
+                    icon={item.icon}
+                    key={index}
+                    label={item.label}
+                  />
+                ))}
 
                 <div className="leftsidebar-divider" />
 
-                <button className="leftsidebar-item">
-                  <img src={communitiesIcon} alt="Communities" className="leftsidebar-icon" />
-                  <span>Communities</span>
-                </button>
-                <button className="leftsidebar-item">
-                  <img src={bestOfRedditIcon} alt="Best of Reddit" className="leftsidebar-icon" />
-                  <span>Best of Reddit</span>
-                </button>
+                {resourcesMiddleSection.map((item, index) => (
+                  <SidebarButton
+                    icon={item.icon}
+                    key={index}
+                    label={item.label}
+                  />
+                ))}
 
                 <div className="leftsidebar-divider" />
 
-                <button className="leftsidebar-item">
-                  <img src={blogIcon} alt="Reddit Rules" className="leftsidebar-icon" />
-                  <span>Reddit Rules</span>
-                </button>
-                <button className="leftsidebar-item">
-                  <img src={blogIcon} alt="Privacy Policy" className="leftsidebar-icon" />
-                  <span>Privacy Policy</span>
-                </button>
-                <button className="leftsidebar-item">
-                  <img src={blogIcon} alt="User Agreement" className="leftsidebar-icon" />
-                  <span>User Agreement</span>
-                </button>
+                {resourcesBottomSection.map((item, index) => (
+                  <SidebarButton
+                    icon={item.icon}
+                    label={item.label}
+                    key={index}
+                  />
+                ))}
 
                 <div className="leftsidebar-divider" />
 
-                <button className="leftsidebar-item">
-                  <img src={accessibilityIcon} alt="Accessibility" className="leftsidebar-icon" />
-                  <span>Accessibility</span>
-                </button>
+                <SidebarButton icon={accessibilityIcon} label="Accessibility" />
               </div>
             )}
           </div>

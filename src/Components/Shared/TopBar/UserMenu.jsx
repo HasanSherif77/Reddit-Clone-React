@@ -1,4 +1,4 @@
-import React, { useState, useRef, useEffect } from "react";
+import React, { useRef, useEffect } from "react";
 import "./UserMenu.css";
 
 import editAvatarIcon from "../../../assets/images/Edit-Avatar.svg";
@@ -8,6 +8,36 @@ import earnIcon from "../../../assets/images/Earn.svg";
 import premiumIcon from "../../../assets/images/Premium.svg";
 import logOutIcon from "../../../assets/images/Log-Out.svg";
 import settingIcon from "../../../assets/images/Setting.svg";
+
+
+function UserMenuItem({ icon, label, subtitle }) {
+  return (
+    <button className="usermenu-item">
+      <img src={icon} alt={label} className="usermenu-icon" />
+
+      {subtitle ? (
+        <div className="usermenu-item-content">
+          <span>{label}</span>
+          <span className="usermenu-item-subtitle">{subtitle}</span>
+        </div>
+      ) : (
+        <span>{label}</span>
+      )}
+    </button>
+  );
+}
+
+const mainMenuItems = [
+  { icon: editAvatarIcon, label: "Edit Avatar" },
+  { icon: draftsIcon, label: "Drafts" },
+  { icon: achievementsIcon, label: "Achievements", subtitle: "5 unlocked" },
+  { icon: earnIcon, label: "Earn", subtitle: "Earn cash on Reddit" },
+  { icon: premiumIcon, label: "Premium" },
+];
+
+const logoutItem = [{ icon: logOutIcon, label: "Log Out" }];
+const settingsItem = [{ icon: settingIcon, label: "Settings" }];
+
 
 function UserMenu({ isOpen, onClose, avatarImage, username }) {
   const menuRef = useRef(null);
@@ -41,50 +71,26 @@ function UserMenu({ isOpen, onClose, avatarImage, username }) {
 
       <div className="usermenu-divider" />
 
-      <button className="usermenu-item">
-        <img src={editAvatarIcon} alt="Edit Avatar" className="usermenu-icon" />
-        <span>Edit Avatar</span>
-      </button>
-
-      <button className="usermenu-item">
-        <img src={draftsIcon} alt="Drafts" className="usermenu-icon" />
-        <span>Drafts</span>
-      </button>
-
-      <button className="usermenu-item">
-        <img src={achievementsIcon} alt="Achievements" className="usermenu-icon" />
-        <div className="usermenu-item-content">
-          <span>Achievements</span>
-          <span className="usermenu-item-subtitle">5 unlocked</span>
-        </div>
-      </button>
-
-      <button className="usermenu-item">
-        <img src={earnIcon} alt="Earn" className="usermenu-icon" />
-        <div className="usermenu-item-content">
-          <span>Earn</span>
-          <span className="usermenu-item-subtitle">Earn cash on Reddit</span>
-        </div>
-      </button>
-
-      <button className="usermenu-item">
-        <img src={premiumIcon} alt="Premium" className="usermenu-icon" />
-        <span>Premium</span>
-      </button>
+      {mainMenuItems.map((item, index) => (
+        <UserMenuItem
+          key={index}
+          icon={item.icon}
+          label={item.label}
+          subtitle={item.subtitle}
+        />
+      ))}
 
       <div className="usermenu-divider" />
 
-      <button className="usermenu-item">
-        <img src={logOutIcon} alt="Log Out" className="usermenu-icon" />
-        <span>Log Out</span>
-      </button>
+      {logoutItem.map((item, index) => (
+        <UserMenuItem key={index} {...item} />
+      ))}
 
       <div className="usermenu-divider" />
 
-      <button className="usermenu-item">
-        <img src={settingIcon} alt="Settings" className="usermenu-icon" />
-        <span>Settings</span>
-      </button>
+      {settingsItem.map((item, index) => (
+        <UserMenuItem key={index} {...item} />
+      ))}
     </div>
   );
 }
