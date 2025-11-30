@@ -1,0 +1,229 @@
+.leftsidebar-layout {
+  display: flex;
+  align-items: flex-start;
+  position: relative;
+}
+
+.leftsidebar {
+  position: fixed;
+  left: 0;
+  top: 72px;
+  background-color: #fff;
+  width: 280px;
+  height: calc(100vh - 72px);
+  border-right: 1px solid #edeff1;
+  transition: transform 0.2s cubic-bezier(0.4,0,0.2,1);
+  z-index: 200;
+  overflow: hidden;
+}
+
+.leftsidebar-closed {
+  transform: translateX(-280px);
+}
+
+.leftsidebar-open {
+  transform: translateX(0);
+}
+
+.leftsidebar-fixed-toggle {
+  position: fixed;
+  left: 260px;
+  top: 85px;
+  width: 36px;
+  height: 36px;
+  background-color: #fff;
+  border: 1px solid #edeff1;
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.2s cubic-bezier(0.4,0,0.2,1);
+  z-index: 300;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.leftsidebar-fixed-toggle:hover {
+  background-color: #f6f7f8;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.15);
+}
+
+.leftsidebar-fixed-toggle img {
+  width: 20px;
+  height: 20px;
+  opacity: 0.7;
+}
+
+.leftsidebar-fixed-toggle-closed {
+  left: 10px;
+}
+
+.leftsidebar-scroll-content {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding: 12px 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.leftsidebar-scroll-content::-webkit-scrollbar {
+  width: 8px;
+}
+
+.leftsidebar-scroll-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.leftsidebar-scroll-content::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 10px;
+}
+
+.leftsidebar-scroll-content::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
+.leftsidebar-section {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  padding: 0 10px;
+  margin-top: 10px;
+}
+
+.leftsidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 8px 12px;
+  margin-right: 36px;
+  background: none;
+  border: none;
+  border-radius: 100px;
+  cursor: pointer;
+  color: #1a1a1b;
+  font-size: 14px;
+  font-weight: 500;
+  transition: background 0.16s, opacity 0.16s;
+  text-align: left;
+  opacity: 0.88;
+}
+
+.leftsidebar-item:hover {
+  background-color: #f6f7f8;
+  opacity: 1;
+}
+
+.leftsidebar-item-active {
+  background-color: #e9ebed;
+  color: #1a1a1b;
+  font-weight: 500;
+  opacity: 1;
+}
+
+.leftsidebar-item-active:hover {
+  background-color: #e9ebed;
+  opacity: 1;
+}
+
+.leftsidebar-icon {
+  width: 20px;
+  height: 20px;
+}
+
+.leftsidebar-content {
+  flex: 1;
+  padding: 24px;
+  margin-left: 280px;
+  margin-right: auto;
+  max-width: 800px;
+  transition: margin-left 0.2s cubic-bezier(0.4,0,0.2,1);
+}
+
+.leftsidebar-layout:has(.leftsidebar-closed) .leftsidebar-content {
+  margin-left: 0;
+}
+
+.leftsidebar-divider {
+  height: 1px;
+  background-color: #edeff1;
+  margin: 16px 16px;
+}
+
+.leftsidebar-collapsible {
+  padding: 0 16px;
+}
+
+.leftsidebar-collapse-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 8px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  transition: background 0.16s;
+}
+
+.leftsidebar-collapse-header:hover {
+  background-color: #f6f7f8;
+  border-radius: 10px;
+}
+
+.leftsidebar-collapse-header span {
+  font-size: 12px;
+  color: rgba(0, 0, 0, 0.55);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.leftsidebar-arrow {
+  width: 16px;
+  height: 16px;
+  transition: transform 0.2s ease;
+  opacity: 0.6;
+}
+
+.leftsidebar-arrow-open {
+  transform: rotate(180deg);
+}
+
+.leftsidebar-collapse-content {
+  padding: 8px 0;
+  animation: slideDown 0.2s ease;
+}
+
+@keyframes slideDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.leftsidebar-collapse-text {
+  padding: 10px 16px;
+  font-size: 13px;
+  color: #7c7c7c;
+}
+
+.leftsidebar-footer {
+  margin-top: auto;
+  padding: 16px 20px;
+  border-top: 1px solid #edeff1;
+}
+
+.leftsidebar-footer p {
+  font-size: 11px;
+  color: #7c7c7c;
+  margin: 0;
+  line-height: 1.4;
+}
+
+
