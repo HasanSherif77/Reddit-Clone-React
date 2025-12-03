@@ -1,6 +1,6 @@
 import PersonItem from "./PersonItem";
 import "./PeopleSectionFull.css";
-import testImage from "./test.jpg";
+import testImage from "../../assets/images/test.jpg";
 
 export default function PeopleSectionFull({ showHeader = true }) {
   const people = [

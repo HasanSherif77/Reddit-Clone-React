@@ -1,5 +1,5 @@
 import MediaPostCard from "./MediaPostCard";
-import testImage from "./test.jpg";
+import testImage from "../../assets/images/test.jpg";
 
 import "./MediaGrid.css";
 

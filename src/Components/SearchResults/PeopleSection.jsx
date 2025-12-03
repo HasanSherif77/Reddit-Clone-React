@@ -1,6 +1,6 @@
 import PersonItem from "./PersonItem";
 import "./PeopleSection.css";
-import testImage from "./test.jpg";
+import testImage from "../../assets/images/test.jpg";
 export default function PeopleSection() {
   const people = [
     {

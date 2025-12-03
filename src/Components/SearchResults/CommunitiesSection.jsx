@@ -1,6 +1,6 @@
 import CommunityItem from "./CommunityItem";
 import "./CommunitiesSection.css";
-import testImage from "./test.jpg";
+import testImage from "../../assets/images/test.jpg";
 export default function CommunitiesSection() {
   const communities = [
     {

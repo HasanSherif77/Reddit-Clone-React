@@ -1,6 +1,6 @@
 import CommunityItem from "./CommunityItem";
 import "./CommunitiesSectionFull.css";
-import testImage from "./test.jpg";
+import testImage from "../../assets/images/test.jpg";
 
 export default function CommunitiesSectionFull({ showHeader = true }) {
   const communities = [

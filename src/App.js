@@ -6,7 +6,7 @@ import Notifications from "./Pages/Notifications/Notifications";
 function App() {
 
   return (
-    <Notifications />
+    <SearchResults />
   );
 }
 
