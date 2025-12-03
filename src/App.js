@@ -1,25 +1,12 @@
-import React, { useState } from "react";
 import "./App.css";
-import TopBar from "./Components/Shared/TopBar/TopBar";
-import LeftSideBar from "./Components/Shared/LeftSideBar/LeftSideBar";
-import Home from "./Pages/Home/Home";
+import SearchResults from "./Pages/SearchResults/SearchResults";
+import Notifications from "./Pages/Notifications/Notifications";
+
 
 function App() {
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
 
   return (
-    <div className="App">
-      <TopBar />
-      <div className="leftsidebar-layout">
-        <LeftSideBar
-          isOpen={isSidebarOpen}
-          onToggle={() => setIsSidebarOpen((prev) => !prev)}
-        />
-        <main className="leftsidebar-content">
-          <Home />
-        </main>
-      </div>
-    </div>
+    <Notifications />
   );
 }
 

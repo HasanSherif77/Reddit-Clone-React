@@ -1,0 +1,21 @@
+.search-tabs {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 16px;
+  }
+  
+  .tab-btn {
+    border: none;
+    background: transparent;
+    font-weight: bold;
+    cursor: pointer;
+    padding: 6px 14px;
+    border-radius: 20px;
+    font-size: 14px;
+    color: #4e4e54;
+  }
+  
+  .tab-btn.active {
+    background: #dbe4ea;
+  }
+  

@@ -1,0 +1,31 @@
+.filters {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start; /* Align items to the left */
+  gap: 12px;
+  margin-bottom: 2px;
+  width: 100%;
+}
+
+.filters select {
+  padding: 6px 5px;
+  border-radius: 8px;
+  cursor: pointer;
+  flex-shrink: 0; /* Prevent selects from shrinking */
+  border: none; /* Remove border */
+  outline: none; /* Remove focus outline */
+  font-size: 12px;
+  font-weight: bold;
+  color: #4e4e54;
+}
+
+.filters select:focus {
+  outline: none; /* Remove focus outline */
+}
+
+.filters-divider {
+  flex: 1;
+  height: 1px;
+  background-color: #e5e5e5;
+  min-height: 1px; /* Ensure it's visible */
+}
