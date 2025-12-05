@@ -1,0 +1,38 @@
+/* AuthModal.css - modal wrapper (use this file for container) */
+.modal-overlay {
+  position: fixed;
+  inset: 0; /* top:0; left:0; right:0; bottom:0 */
+  background: rgba(28, 28, 28, 0.6); /* backdrop */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2000;
+}
+
+.modal-container {
+  width: 520px;            /* total modal width (outer) */
+  background: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.35);
+  position: relative;
+  padding: 32px;           /* outer padding */
+  -webkit-font-smoothing:antialiased;
+}
+
+/* close button */
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 20px;
+  position: absolute;
+  right: 16px;
+  top: 12px;
+  cursor: pointer;
+  color: #8a8a8a;
+}
+
+/* Keep modal contents vertically scrollable on very small screens */
+.modal-container .modal-body {
+  max-height: calc(100vh - 80px);
+  overflow: auto;
+}
