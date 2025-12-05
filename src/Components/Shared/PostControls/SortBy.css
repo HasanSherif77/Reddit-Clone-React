@@ -1,0 +1,86 @@
+.sortby {
+  position: relative;
+}
+
+.sortby-button {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  background-color: transparent;
+  cursor: pointer;
+  font-size: 12px;
+  color: #1a1a1b;
+  transition: background-color 0.12s ease, border-color 0.12s ease;
+}
+
+.sortby-button:hover {
+  background-color: #f6f7f8;
+  border-color: #edeff1;
+}
+
+.sortby-button-open {
+  background-color: #f6f7f8;
+  border-color: #d7dadc;
+}
+
+.sortby-label {
+  font-size: 11px;
+  color: #878a8c;
+}
+
+.sortby-current {
+  font-size: 12px;
+  font-weight: 550;
+  color: #6b6f73;
+}
+
+.sortby-arrow {
+  width: 16px;
+  height: 16px;
+  opacity: 0.6;
+  transition: transform 0.16s ease;
+}
+
+.sortby-arrow-open {
+  transform: rotate(180deg);
+}
+
+.sortby-menu {
+  position: absolute;
+  top: 30px;
+  left: 0;
+  min-width: 160px;
+  background-color: #ffffff;
+  border-radius: 12px;
+  border: 1px solid #edeff1;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  padding: 4px 0 6px;
+  z-index: 50;
+}
+.sortby-menu-header {
+  padding: 6px 14px 4px;
+  font-size: 11px;
+  color: #878a8c;
+}
+
+.sortby-item {
+  width: 100%;
+  padding: 8px 14px;
+  border: none;
+  background: none;
+  text-align: left;
+  font-size: 13px;
+  cursor: pointer;
+  color: #1a1a1b;
+}
+
+.sortby-item:hover {
+  background-color: #f6f7f8;
+}
+
+.sortby-item-active {
+  font-weight: 600;
+}
