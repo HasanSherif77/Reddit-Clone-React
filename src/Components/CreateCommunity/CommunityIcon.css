@@ -1,0 +1,343 @@
+/* StyleCommunityComponent.css */
+.style-community-container {
+    max-width: 700px;
+    margin: 0 auto;
+    padding: 24px;
+    background-color: #ffffff;
+    border-radius: 4px;
+    border: 1px solid #edeff1;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+  
+  .style-header {
+    margin-bottom: 32px;
+  }
+  
+  .style-title {
+    font-size: 22px;
+    font-weight: 500;
+    color: #1a1a1b;
+    margin: 0 0 12px 0;
+    line-height: 1.3;
+  }
+  
+  .style-subtitle {
+    font-size: 14px;
+    color: #7c7c7c;
+    margin: 0;
+    line-height: 1.5;
+  }
+  
+  /* Style Sections */
+  .style-section {
+    margin-bottom: 24px;
+  }
+  
+  .section-header {
+    margin-bottom: 16px;
+  }
+  
+  .section-title {
+    font-size: 16px;
+    font-weight: 600;
+    color: #1a1a1b;
+    margin: 0 0 4px 0;
+  }
+  
+  .section-description {
+    font-size: 13px;
+    color: #7c7c7c;
+    margin: 0;
+  }
+  
+  /* Upload Areas */
+  .upload-area {
+    margin-top: 12px;
+  }
+  
+  .upload-placeholder {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 2px dashed #0079d3;
+    border-radius: 8px;
+    background-color: #f0f8ff;
+    cursor: pointer;
+    transition: all 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+  
+  .upload-placeholder:hover {
+    background-color: #e1f0ff;
+    border-color: #1484d6;
+  }
+  
+  .banner-placeholder {
+    width: 100%;
+    height: 150px;
+  }
+  
+  .icon-placeholder {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+  }
+  
+  .placeholder-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+  }
+  
+  .upload-icon {
+    stroke-width: 2px;
+  }
+  
+  .placeholder-text {
+    font-size: 14px;
+    font-weight: 700;
+    color: #0079d3;
+  }
+  
+  .file-input {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+    cursor: pointer;
+  }
+  
+  /* Preview Containers */
+  .preview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
+  }
+  
+  .banner-preview {
+    width: 100%;
+    max-height: 200px;
+    object-fit: contain;
+    background-color: #f6f7f8;
+    border-radius: 8px;
+    border: 1px solid #edeff1;
+  }
+  
+  .icon-preview {
+    width: 150px;
+    height: 150px;
+    object-fit: contain;
+    background-color: #f6f7f8;
+    border-radius: 50%;
+    border: 1px solid #edeff1;
+  }
+  
+  .remove-btn {
+    background-color: #f6f7f8;
+    color: #1a1a1b;
+    border: 1px solid #edeff1;
+    border-radius: 9999px;
+    padding: 6px 16px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: all 0.2s;
+  }
+  
+  .remove-btn:hover {
+    background-color: #e8e8e8;
+    border-color: #c8ccd0;
+  }
+  
+  /* Divider */
+  .divider {
+    height: 1px;
+    background-color: #edeff1;
+    margin: 32px 0;
+  }
+  
+  /* Community Preview */
+  .community-preview {
+    background-color: #fafafa;
+    border-radius: 8px;
+    border: 1px solid #edeff1;
+    padding: 16px;
+  }
+  
+  .preview-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 16px;
+  }
+  
+  .preview-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    object-fit: contain;
+    background-color: #f6f7f8;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .default-icon {
+    width: 64px;
+    height: 64px;
+    border-radius: 50%;
+    background-color: #0079d3;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 24px;
+    font-weight: 700;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  }
+  
+  .preview-info {
+    flex: 1;
+  }
+  
+  .preview-name {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1b;
+    margin: 0 0 4px 0;
+  }
+  
+  .preview-stats {
+    font-size: 13px;
+    color: #7c7c7c;
+    margin: 0 0 8px 0;
+    font-weight: 500;
+  }
+  
+  .preview-description {
+    font-size: 14px;
+    color: #1a1a1b;
+    margin: 0;
+    line-height: 1.4;
+  }
+  
+  .preview-banner {
+    width: 100%;
+    max-height: 120px;
+    object-fit: contain;
+    background-color: #f6f7f8;
+    border-radius: 4px;
+    border: 1px solid #edeff1;
+  }
+  
+  /* Action Buttons */
+  .style-actions {
+    display: flex;
+    justify-content: space-between;
+    gap: 12px;
+    padding-top: 24px;
+    border-top: 1px solid #edeff1;
+  }
+  
+  .back-btn {
+    background-color: #f6f7f8;
+    color: #1a1a1b;
+    border: 1px solid #edeff1;
+    border-radius: 9999px;
+    padding: 12px 32px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-family: inherit;
+  }
+  
+  .back-btn:hover {
+    background-color: #e8e8e8;
+  }
+  
+  .create-btn {
+    background-color: #0079d3;
+    color: white;
+    border: none;
+    border-radius: 9999px;
+    padding: 12px 32px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.2s;
+    font-family: inherit;
+  }
+  
+  .create-btn:hover {
+    background-color: #1484d6;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .style-community-container {
+      padding: 16px;
+      margin: 0 16px;
+    }
+    
+    .style-title {
+      font-size: 20px;
+    }
+    
+    .icon-placeholder {
+      width: 120px;
+      height: 120px;
+    }
+    
+    .icon-preview {
+      width: 120px;
+      height: 120px;
+    }
+    
+    .preview-header {
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+    }
+    
+    .preview-info {
+      text-align: center;
+    }
+    
+    .style-actions {
+      flex-direction: column;
+    }
+    
+    .back-btn,
+    .create-btn {
+      width: 100%;
+      text-align: center;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .section-title {
+      font-size: 15px;
+    }
+    
+    .banner-placeholder {
+      height: 100px;
+    }
+    
+    .preview-name {
+      font-size: 18px;
+    }
+    
+    .preview-stats {
+      font-size: 12px;
+    }
+    
+    .preview-description {
+      font-size: 13px;
+    }
+  }
