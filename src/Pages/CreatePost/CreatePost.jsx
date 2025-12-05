@@ -1,4 +1,6 @@
 import React, { useState } from 'react';
+import TopBar from '../../Components/Shared/TopBar/TopBar';
+import LeftSideBar from '../../Components/Shared/LeftSideBar/LeftSideBar';
 import './CreatePost.css';
 import CommunitySelector from '../../Components/CreatePost/CommunitySelector';
 import PostTypeTabs from '../../Components/CreatePost/PostTypeTabs';
@@ -9,6 +11,8 @@ import EditorBody from '../../Components/CreatePost/EditorBody';
 import FormActions from '../../Components/CreatePost/FormActions';
 
 const CreatePost = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSignedIn, setIsSignedIn] = useState(true);
   const [title, setTitle] = useState('');
   const [body, setBody] = useState('');
   const [selectedCommunity, setSelectedCommunity] = useState('');
@@ -21,44 +25,56 @@ const CreatePost = () => {
   };
 
   return (
-    <div className="create-post-container">
-      <div className="create-post-header">
-        <h1>Create post</h1>
-      </div>
-
-      <div className="post-form">
-        <CommunitySelector 
-          selectedCommunity={selectedCommunity}
-          setSelectedCommunity={setSelectedCommunity}
+    <div className="App">
+      <TopBar isSignedIn={isSignedIn} />
+      <div className="leftsidebar-layout">
+        <LeftSideBar
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen((prev) => !prev)}
+          isSignedIn={isSignedIn}
         />
+        <main className="create-post-content">
+          <div className="create-post-container">
+            <div className="create-post-header">
+              <h1>Create post</h1>
+            </div>
 
-        <PostTypeTabs 
-          postType={postType}
-          setPostType={setPostType}
-        />
+            <div className="post-form">
+              <CommunitySelector 
+                selectedCommunity={selectedCommunity}
+                setSelectedCommunity={setSelectedCommunity}
+              />
 
-        <TitleInput 
-          title={title}
-          setTitle={setTitle}
-        />
+              <PostTypeTabs 
+                postType={postType}
+                setPostType={setPostType}
+              />
 
-        <TagsInput 
-          tags={tags}
-          setTags={setTags}
-        />
+              <TitleInput 
+                title={title}
+                setTitle={setTitle}
+              />
 
-        <EditingToolbar /> {/* Changed */}
+              <TagsInput 
+                tags={tags}
+                setTags={setTags}
+              />
 
-        <EditorBody 
-          body={body}
-          setBody={setBody}
-        />
+              <EditingToolbar />
 
-        <FormActions 
-          title={title}
-          selectedCommunity={selectedCommunity}
-          handlePost={handlePost}
-        />
+              <EditorBody 
+                body={body}
+                setBody={setBody}
+              />
+
+              <FormActions 
+                title={title}
+                selectedCommunity={selectedCommunity}
+                handlePost={handlePost}
+              />
+            </div>
+          </div>
+        </main>
       </div>
     </div>
   );

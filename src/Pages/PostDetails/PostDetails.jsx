@@ -1,4 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
+import TopBar from '../../Components/Shared/TopBar/TopBar';
+import LeftSideBar from '../../Components/Shared/LeftSideBar/LeftSideBar';
 import './PostDetails.css';
 import PostHeader from '../../Components/PostDetails/PostHeader';
 import PostImage from '../../Components/PostDetails/PostImage';
@@ -6,6 +8,8 @@ import PostInteractions from '../../Components/PostDetails/PostInteractions';
 import CommentsSection from '../../Components/PostDetails/CommentsSection';
 
 const PostDetails = () => {
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSignedIn, setIsSignedIn] = useState(true);
   const postData = {
     subreddit: 'r/hazbin',
     timeAgo: '1h ago',
@@ -100,27 +104,39 @@ const PostDetails = () => {
   ];
 
   return (
-    <div className="post-details-page">
-      <div className="post-details-container">
-        <div className="post-content">
-          <PostHeader 
-            subreddit={postData.subreddit}
-            timeAgo={postData.timeAgo}
-            author={postData.author}
-            authorFlair={postData.authorFlair}
-          />
+    <div className="App">
+      <TopBar isSignedIn={isSignedIn} />
+      <div className="leftsidebar-layout">
+        <LeftSideBar
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen((prev) => !prev)}
+          isSignedIn={isSignedIn}
+        />
+        <main className="post-details-content">
+          <div className="post-details-page">
+            <div className="post-details-container">
+              <div className="post-content">
+                <PostHeader 
+                  subreddit={postData.subreddit}
+                  timeAgo={postData.timeAgo}
+                  author={postData.author}
+                  authorFlair={postData.authorFlair}
+                />
 
-          <h2 className="post-title">{postData.title}</h2>
+                <h2 className="post-title">{postData.title}</h2>
 
-          <PostImage imageUrl={postData.imageUrl} />
+                <PostImage imageUrl={postData.imageUrl} />
 
-          <PostInteractions 
-            voteCount={postData.voteCount}
-            commentCount={postData.commentCount}
-          />
+                <PostInteractions 
+                  voteCount={postData.voteCount}
+                  commentCount={postData.commentCount}
+                />
 
-          <CommentsSection comments={comments} />
-        </div>
+                <CommentsSection comments={comments} />
+              </div>
+            </div>
+          </div>
+        </main>
       </div>
     </div>
   );
