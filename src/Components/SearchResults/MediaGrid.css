@@ -1,0 +1,6 @@
+.media-grid {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  

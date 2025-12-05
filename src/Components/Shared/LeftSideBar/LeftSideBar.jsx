@@ -24,7 +24,7 @@ import settingIcon from "../../../assets/images/Setting.svg";
 import gamesIcon from "../../../assets/images/Games.svg";
 import SidebarButton from "./SideBarButton";
 
-function LeftSideBar({ isOpen, onToggle }) {
+function LeftSideBar({ isOpen, onToggle, isSignedIn = false }) {
   const [openSections, setOpenSections] = useState({
     games: false,
     feeds: false,
@@ -38,14 +38,19 @@ function LeftSideBar({ isOpen, onToggle }) {
       [section]: !prev[section],
     }));
   };
-  const sidebarItems = [
-  { icon: homeIcon, label: "Home", title: "Home", active: true },
-  { icon: popularIcon, label: "Popular", title: "Popular" },
-  { icon: answersIcon, label: "Answers", title: "Answers" },
-  { icon: exploreIcon, label: "Explore", title: "Explore" },
-  { icon: allIcon, label: "All", title: "All" },
-  { icon: plusIcon, label: "Start a community", title: "Create community" },
-];
+  
+  const allSidebarItems = [
+    { icon: homeIcon, label: "Home", title: "Home", active: true },
+    { icon: popularIcon, label: "Popular", title: "Popular" },
+    { icon: answersIcon, label: "Answers", title: "Answers" },
+    { icon: exploreIcon, label: "Explore", title: "Explore" },
+    { icon: allIcon, label: "All", title: "All", signedInOnly: true },
+    { icon: plusIcon, label: "Start a community", title: "Create community", signedInOnly: true },
+  ];
+
+  const sidebarItems = isSignedIn 
+    ? allSidebarItems 
+    : allSidebarItems.filter(item => !item.signedInOnly);
 const resourcesSection = [
   { icon: redditIcon, label: "About Reddit" },
   { icon: advertiseIcon, label: "Advertise" },
@@ -95,77 +100,81 @@ const resourcesBottomSection = [
 
           <div className="leftsidebar-divider" />
 
-          <div className="leftsidebar-collapsible">
-            <button
-              className="leftsidebar-collapse-header"
-              onClick={() => toggleSection("games")}
-            >
-              <span>GAMES ON REDDIT</span>
-              <img
-                src={arrowIcon}
-                alt="Toggle"
-                className={`leftsidebar-arrow ${openSections.games ? "leftsidebar-arrow-open" : ""}`}
-              />
-            </button>
-            {openSections.games && (
-              <div className="leftsidebar-collapse-content">
-                <SidebarButton
-                  icon={gamesIcon}
-                  label="Discover More Games"
-                />
+          {isSignedIn && (
+            <>
+              <div className="leftsidebar-collapsible">
+                <button
+                  className="leftsidebar-collapse-header"
+                  onClick={() => toggleSection("games")}
+                >
+                  <span>GAMES ON REDDIT</span>
+                  <img
+                    src={arrowIcon}
+                    alt="Toggle"
+                    className={`leftsidebar-arrow ${openSections.games ? "leftsidebar-arrow-open" : ""}`}
+                  />
+                </button>
+                {openSections.games && (
+                  <div className="leftsidebar-collapse-content">
+                    <SidebarButton
+                      icon={gamesIcon}
+                      label="Discover More Games"
+                    />
+                  </div>
+                )}
               </div>
-            )}
-          </div>
 
-          <div className="leftsidebar-divider" />
+              <div className="leftsidebar-divider" />
 
-          <div className="leftsidebar-collapsible">
-            <button
-              className="leftsidebar-collapse-header"
-              onClick={() => toggleSection("feeds")}
-            >
-              <span>CUSTOM FEEDS</span>
-              <img
-                src={arrowIcon}
-                alt="Toggle"
-                className={`leftsidebar-arrow ${openSections.feeds ? "leftsidebar-arrow-open" : ""}`}
-              />
-            </button>
-            {openSections.feeds && (
-              <div className="leftsidebar-collapse-content">
-                <SidebarButton
-                  icon={plusIcon}
-                  label="Create Custom Feed"
-                />
+              <div className="leftsidebar-collapsible">
+                <button
+                  className="leftsidebar-collapse-header"
+                  onClick={() => toggleSection("feeds")}
+                >
+                  <span>CUSTOM FEEDS</span>
+                  <img
+                    src={arrowIcon}
+                    alt="Toggle"
+                    className={`leftsidebar-arrow ${openSections.feeds ? "leftsidebar-arrow-open" : ""}`}
+                  />
+                </button>
+                {openSections.feeds && (
+                  <div className="leftsidebar-collapse-content">
+                    <SidebarButton
+                      icon={plusIcon}
+                      label="Create Custom Feed"
+                    />
+                  </div>
+                )}
               </div>
-            )}
-          </div>
 
-          <div className="leftsidebar-divider" />
+              <div className="leftsidebar-divider" />
 
-          <div className="leftsidebar-collapsible">
-            <button
-              className="leftsidebar-collapse-header"
-              onClick={() => toggleSection("communities")}
-            >
-              <span>COMMUNITIES</span>
-              <img
-                src={arrowIcon}
-                alt="Toggle"
-                className={`leftsidebar-arrow ${openSections.communities ? "leftsidebar-arrow-open" : ""}`}
-              />
-            </button>
-            {openSections.communities && (
-              <div className="leftsidebar-collapse-content">
-                <SidebarButton
-                  icon={settingIcon}
-                  label="Manage Communities"
-                />
+              <div className="leftsidebar-collapsible">
+                <button
+                  className="leftsidebar-collapse-header"
+                  onClick={() => toggleSection("communities")}
+                >
+                  <span>COMMUNITIES</span>
+                  <img
+                    src={arrowIcon}
+                    alt="Toggle"
+                    className={`leftsidebar-arrow ${openSections.communities ? "leftsidebar-arrow-open" : ""}`}
+                  />
+                </button>
+                {openSections.communities && (
+                  <div className="leftsidebar-collapse-content">
+                    <SidebarButton
+                      icon={settingIcon}
+                      label="Manage Communities"
+                    />
+                  </div>
+                )}
               </div>
-            )}
-          </div>
 
-          <div className="leftsidebar-divider" />
+              <div className="leftsidebar-divider" />
+            </>
+          )}
 
           <div className="leftsidebar-collapsible">
             <button
