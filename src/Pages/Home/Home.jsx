@@ -1,10 +1,17 @@
 import React from "react";
+import PostControls from "../../Components/Shared/PostControls/PostControls";
+import PostsList from "../../Components/Shared/Posts/PostsList";
+import "./Home.css";
 
 function Home() {
   return (
-    <>
-      <h1>Home Page Content</h1>
-    </>
+    <div className="home-layout">
+      <div className="home-main">
+        <PostControls />
+        <div className="home-divider" />
+        <PostsList />
+      </div>
+    </div>
   );
 }
 

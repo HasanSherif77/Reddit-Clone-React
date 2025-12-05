@@ -1,0 +1,38 @@
+.create-post-container {
+  max-width: 800px;
+  margin: 20px auto;
+  background-color: white;
+  border-radius: 4px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.create-post-header {
+  padding: 16px 20px;
+  border-bottom: 1px solid #edeff1;
+}
+
+.create-post-header h1 {
+  margin: 0;
+  font-size: 24px;
+  font-weight: bolder;
+  color: #1a1a1b;
+  text-align: left;
+
+}
+
+.post-form {
+  padding: 16px 20px;
+}
+
+.form-section {
+  margin-bottom: 20px;
+}
+
+/* Responsive adjustments */
+@media (max-width: 640px) {
+  .create-post-container {
+    margin: 0;
+    border-radius: 0;
+  }
+}

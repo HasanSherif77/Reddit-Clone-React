@@ -1,0 +1,56 @@
+.community-item {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 14px;
+  text-align: start;
+  cursor: pointer;
+}
+
+.community-avatar {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+}
+
+.community-info {
+  flex: 1;
+}
+
+.community-name-row {
+  display: flex;
+  gap: 6px;
+  align-items: center;
+  margin-bottom: 4px;
+}
+
+.community-name {
+  font-weight: 500;
+  font-size: 14px;
+}
+
+.nsfw-badge {
+  background: black;
+  color: white;
+  font-size: 11px;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.community-desc {
+  font-size: 13px;
+  color: gray;
+  margin: 0 0 4px 0;
+}
+
+.community-stats {
+  font-size: 12px;
+  color: gray;
+  margin: 0;
+}
+
+.see-more {
+  font-size: 13px;
+  color: #0079d3;
+  cursor: pointer;
+}
+  

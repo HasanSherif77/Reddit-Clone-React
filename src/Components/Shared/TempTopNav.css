@@ -1,0 +1,126 @@
+/* TempTopNav.css */
+.temp-top-nav {
+    position: fixed;
+    top: 0;
+    left: 240px; /* Width of the sidebar */
+    right: 0;
+    height: 56px;
+    background-color: #ffffff;
+    border-bottom: 1px solid #edeff1;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    z-index: 99;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+  }
+  
+  /* Left Section */
+  .nav-left {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo-container {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  }
+  
+  .reddit-logo {
+    margin-right: 8px;
+  }
+  
+  .logo-text {
+    font-size: 20px;
+    font-weight: 700;
+    color: #1a1a1b;
+    letter-spacing: -0.5px;
+  }
+  
+  /* Center Section */
+  .nav-center {
+    flex: 1;
+    max-width: 600px;
+    margin: 0 24px;
+  }
+  
+  .search-container {
+    position: relative;
+    width: 100%;
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    pointer-events: none;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 10px 16px 10px 40px;
+    background-color: #f6f7f8;
+    border: 1px solid #edeff1;
+    border-radius: 4px;
+    font-size: 14px;
+    color: #1a1a1b;
+    outline: none;
+    transition: all 0.2s;
+  }
+  
+  .search-input:focus {
+    border-color: #0079d3;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 1px #0079d3;
+  }
+  
+  .search-input::placeholder {
+    color: #878a8c;
+  }
+  
+  /* Right Section */
+  .nav-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  
+  .nav-btn {
+    background: none;
+    border: none;
+    padding: 8px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .nav-btn:hover {
+    background-color: #f6f7f8;
+  }
+  
+  .user-avatar {
+    cursor: pointer;
+    border-radius: 50%;
+    overflow: hidden;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .temp-top-nav {
+      left: 200px; /* Adjusted for smaller sidebar */
+      padding: 0 16px;
+    }
+    
+    .logo-text {
+      display: none;
+    }
+    
+    .nav-right {
+      gap: 12px;
+    }
+  }
