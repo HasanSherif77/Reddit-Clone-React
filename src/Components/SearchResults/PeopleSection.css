@@ -1,0 +1,12 @@
+.people-section {
+  margin-top: 24px;
+}
+
+.people-section h4 {
+  margin-bottom: 10px;
+}
+.see-more {
+  font-size: 14px;
+  cursor: pointer;
+  color: #0079d3;
+}

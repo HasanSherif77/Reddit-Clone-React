@@ -1,0 +1,17 @@
+.right-sidebar {
+    width: 300px;
+    max-width: 270px; /* Prevent width from exceeding container */
+    padding: 16px;
+    background-color: rgba(202, 197, 197, 0.196);
+    border-radius: 10px;
+    box-sizing: border-box; /* Include padding in width calculation */
+    overflow-x: hidden; /* Prevent horizontal overflow */
+    word-wrap: break-word; /* Break long words */
+    overflow-wrap: break-word; /* Additional word breaking */
+  }
+  
+  .divider {
+    height: 1px;
+    background-color: #e5e5e5;
+    margin: 20px 0;
+  }
