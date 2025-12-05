@@ -1,0 +1,11 @@
+.pc-wrapper {
+  width: 100%;
+}
+
+.pc-inner {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 4px;
+}
