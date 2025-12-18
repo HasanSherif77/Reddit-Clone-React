@@ -1,28 +1,38 @@
-// File: src/Components/EditProfile/SettingsSidebar.jsx
+// src/Components/EditProfile/SettingsSidebar.jsx
 import React from 'react';
+import './Settings.css'; // Import CSS for styling
 
 const SettingsSidebar = () => {
-  const items = ['Account', 'Profile', 'Privacy', 'Preferences', 'Notifications', 'Email'];
+  // Array of menu items for settings
+  const items = [
+    'Account',    // Account settings
+    'Profile',    // Profile settings (active)
+    'Privacy',    // Privacy settings
+    'Preferences', // User preferences
+    'Notifications', // Notification settings
+    'Email'       // Email settings
+  ];
   
   return (
-    <div style={{ width: '200px' }}>
-        <h2 style={{ fontSize: '20px', marginBottom: '20px' }}>User Settings</h2>
-        <div style={{ display: 'flex', flexDirection: 'column' }}>
-            {items.map((item, index) => (
-                <button key={index} style={{ 
-                    textAlign: 'left', 
-                    padding: '10px', 
-                    backgroundColor: item === 'Profile' ? '#f6f7f8' : 'transparent', // Highlight Profile
-                    border: 'none', 
-                    borderRadius: '4px',
-                    fontWeight: item === 'Profile' ? 'bold' : 'normal',
-                    cursor: 'pointer'
-                }}>
-                    {item}
-                </button>
-            ))}
-        </div>
-    </div>
+    // Navigation sidebar container
+    <nav className="edit-profile-sidebar">
+      {/* Sidebar title */}
+      <h2 className="sidebar-title">User Settings</h2>
+      
+      {/* Container for menu items */}
+      <div className="sidebar-items">
+        {/* Map through items to create buttons */}
+        {items.map((item) => (
+          <button 
+            key={item} // Unique key for React
+            // Add 'active' class if item is 'Profile'
+            className={`sidebar-item ${item === 'Profile' ? 'active' : ''}`}
+          >
+            {item} {/* Display item name */}
+          </button>
+        ))}
+      </div>
+    </nav>
   );
 };
 

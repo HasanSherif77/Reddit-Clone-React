@@ -1,13 +1,18 @@
 // src/Components/EditProfile/AdvancedSection.jsx
 import React from "react";
-import SettingRow from "./SettingRow";
+import SettingRow from "./SettingRow"; // Import SettingRow component
+import "./Settings.css"; // Import CSS for styling
 
 const AdvancedSection = () => {
   return (
+    // Advanced settings section
     <section className="settings-section">
-      <h2 className="settings-subtitle-heading">Advanced</h2>
+      {/* Section subtitle */}
+      <h2 className="section-subtitle">Advanced</h2>
 
-      <div className="settings-section-card">
+      {/* Card containing setting rows */}
+      <div className="settings-card">
+        {/* Profile moderation tools setting */}
         <SettingRow
           title="Profile moderation tools"
           description="Access tools to help you moderate your profile."

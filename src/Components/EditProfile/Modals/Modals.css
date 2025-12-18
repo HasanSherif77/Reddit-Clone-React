@@ -1,0 +1,337 @@
+/* ===== MODAL OVERLAY STYLES ===== */
+
+/* Semi-transparent background overlay */
+.modal-overlay {
+  position: fixed; /* Fixed position to cover entire screen */
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black */
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  align-items: center; /* Center vertically */
+  z-index: 1000; /* Ensure modal appears above other elements */
+  animation: fadeIn 0.2s ease; /* Fade in animation */
+}
+
+/* Fade in animation for overlay */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ===== MODAL CONTAINER STYLES ===== */
+
+/* Main modal container */
+.modal-container {
+  background-color: white; /* White background */
+  border-radius: 8px; /* Rounded corners */
+  width: 90%; /* Responsive width */
+  max-width: 500px; /* Maximum width */
+  max-height: 90vh; /* Maximum height (90% of viewport) */
+  overflow-y: auto; /* Scroll if content is too tall */
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); /* Subtle shadow */
+  animation: slideUp 0.3s ease; /* Slide up animation */
+}
+
+/* Larger modal variant */
+.medium-modal {
+  max-width: 600px; /* Wider modal */
+}
+
+/* Slide up animation for modal */
+@keyframes slideUp {
+  from { 
+    opacity: 0;
+    transform: translateY(20px); /* Start 20px below */
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0); /* End at normal position */
+  }
+}
+
+/* ===== MODAL HEADER STYLES ===== */
+
+/* Header section of modal */
+.modal-header {
+  display: flex;
+  justify-content: space-between; /* Space between title and close button */
+  align-items: center;
+  padding: 20px 24px; /* Padding around header */
+  border-bottom: 1px solid #edeff1; /* Bottom border */
+}
+
+/* Modal title */
+.modal-title {
+  font-size: 20px;
+  font-weight: 500;
+  color: #1c1c1c; /* Dark gray text */
+  margin: 0; /* Remove default margin */
+}
+
+/* Close button */
+.modal-close-btn {
+  background: none; /* No background */
+  border: none; /* No border */
+  font-size: 24px; /* Larger font for X */
+  color: #878a8c; /* Gray color */
+  cursor: pointer; /* Pointer cursor */
+  padding: 4px 8px; /* Padding for click area */
+  border-radius: 4px; /* Rounded corners */
+  line-height: 1; /* Normal line height */
+}
+
+/* Close button hover effect */
+.modal-close-btn:hover {
+  background-color: #f6f7f8; /* Light gray background on hover */
+  color: #1c1c1c; /* Darker text on hover */
+}
+
+/* ===== MODAL BODY STYLES ===== */
+
+/* Body section of modal */
+.modal-body {
+  padding: 24px; /* Padding around body content */
+}
+
+/* Avatar preview container */
+.avatar-preview {
+  display: flex;
+  justify-content: center; /* Center horizontally */
+  margin-bottom: 24px; /* Space below */
+}
+
+/* Avatar preview image */
+.avatar-preview-image {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%; /* Circular avatar */
+  object-fit: cover; /* Cover the area without stretching */
+  border: 3px solid #edeff1; /* Light border */
+}
+
+/* Placeholder when no avatar is selected */
+.avatar-placeholder {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%; /* Circular placeholder */
+  background-color: #f6f7f8; /* Light gray background */
+  display: flex;
+  align-items: center; /* Center vertically */
+  justify-content: center; /* Center horizontally */
+  border: 3px dashed #d3d6da; /* Dashed border */
+}
+
+/* Placeholder icon */
+.placeholder-icon {
+  font-size: 48px; /* Large emoji/icon */
+  color: #878a8c; /* Gray color */
+}
+
+/* ===== FILE UPLOAD SECTION ===== */
+
+/* File upload area */
+.file-upload-section {
+  text-align: center; /* Center align content */
+  margin-bottom: 20px; /* Space below */
+}
+
+/* Upload button */
+.upload-btn {
+  display: inline-block;
+  background-color: #0079d3; /* Reddit blue */
+  color: white;
+  padding: 10px 20px;
+  border-radius: 20px; /* Pill-shaped button */
+  font-size: 14px;
+  font-weight: 500;
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.2s; /* Smooth color transition */
+}
+
+/* Upload button hover effect */
+.upload-btn:hover {
+  background-color: #1484d6; /* Slightly darker blue */
+}
+
+/* Hint text below upload button */
+.upload-hint {
+  font-size: 12px;
+  color: #7c7c7c; /* Gray text */
+  margin-top: 8px; /* Space above */
+}
+
+/* Remove avatar button */
+.remove-avatar-btn {
+  display: block;
+  width: 100%; /* Full width */
+  background: none; /* Transparent background */
+  border: 1px solid #d3d6da; /* Light border */
+  color: #ff4500; /* Reddit orange for destructive action */
+  padding: 10px;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Remove button hover effect */
+.remove-avatar-btn:hover {
+  background-color: #fff8f6; /* Light orange background */
+}
+
+/* ===== INPUT FIELD STYLES ===== */
+
+/* Input group container */
+.input-group {
+  margin-bottom: 20px; /* Space below each input group */
+}
+
+/* Input label */
+.input-label {
+  display: block; /* Block display for proper spacing */
+  font-size: 14px;
+  font-weight: 500;
+  color: #1c1c1c; /* Dark gray */
+  margin-bottom: 8px; /* Space below label */
+}
+
+/* Text input field */
+.modal-input {
+  width: 100%; /* Full width */
+  padding: 12px; /* Inner padding */
+  border: 1px solid #d3d6da; /* Light border */
+  border-radius: 4px; /* Slightly rounded corners */
+  font-size: 14px;
+  box-sizing: border-box; /* Include padding in width */
+}
+
+/* Text input focus state */
+.modal-input:focus {
+  outline: none; /* Remove default outline */
+  border-color: #0079d3; /* Blue border on focus */
+  box-shadow: 0 0 0 3px rgba(0, 121, 211, 0.1); /* Light blue glow */
+}
+
+/* Textarea field */
+.modal-textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #d3d6da;
+  border-radius: 4px;
+  font-size: 14px;
+  resize: vertical; /* Allow vertical resizing only */
+  min-height: 100px; /* Minimum height */
+  box-sizing: border-box;
+  font-family: inherit; /* Use same font as rest of page */
+}
+
+/* Textarea focus state */
+.modal-textarea:focus {
+  outline: none;
+  border-color: #0079d3;
+  box-shadow: 0 0 0 3px rgba(0, 121, 211, 0.1);
+}
+
+/* Character counter below input/textarea */
+.character-counter {
+  text-align: right; /* Align to right */
+  font-size: 12px;
+  color: #7c7c7c; /* Gray text */
+  margin-top: 4px; /* Small space above */
+}
+
+/* ===== INFORMATION TEXT STYLES ===== */
+
+/* Container for informational text */
+.modal-info {
+  background-color: #f6f7f8; /* Light gray background */
+  padding: 16px; /* Inner padding */
+  border-radius: 4px; /* Rounded corners */
+  margin-top: 20px; /* Space above */
+}
+
+/* Informational text paragraph */
+.info-text {
+  font-size: 13px;
+  color: #7c7c7c; /* Gray text */
+  margin: 0 0 8px 0; /* Bottom margin except last child */
+  line-height: 1.4; /* Better readability */
+}
+
+/* Remove margin from last paragraph */
+.info-text:last-child {
+  margin-bottom: 0;
+}
+
+/* ===== MODAL FOOTER STYLES ===== */
+
+/* Footer with action buttons */
+.modal-footer {
+  display: flex;
+  justify-content: flex-end; /* Align buttons to right */
+  gap: 12px; /* Space between buttons */
+  padding: 20px 24px; /* Padding around footer */
+  border-top: 1px solid #edeff1; /* Top border */
+}
+
+/* Cancel button */
+.modal-cancel-btn {
+  padding: 10px 16px;
+  background: none; /* Transparent background */
+  border: 1px solid #d3d6da; /* Light border */
+  border-radius: 20px; /* Pill-shaped */
+  font-size: 14px;
+  font-weight: 500;
+  color: #1c1c1c; /* Dark text */
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Cancel button hover effect */
+.modal-cancel-btn:hover {
+  background-color: #f6f7f8; /* Light gray background */
+}
+
+/* Save button */
+.modal-save-btn {
+  padding: 10px 24px;
+  background-color: #0079d3; /* Reddit blue */
+  border: none;
+  border-radius: 20px; /* Pill-shaped */
+  font-size: 14px;
+  font-weight: 500;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+/* Save button hover effect (when not disabled) */
+.modal-save-btn:hover:not(:disabled) {
+  background-color: #1484d6; /* Slightly darker blue */
+}
+
+/* Save button disabled state */
+.modal-save-btn:disabled {
+  background-color: #ccd0d5; /* Light gray */
+  cursor: not-allowed; /* Not allowed cursor */
+}
+
+/* ===== RESPONSIVE DESIGN ===== */
+
+/* Styles for mobile devices */
+@media (max-width: 600px) {
+  .modal-container {
+    width: 95%; /* Wider on small screens */
+    max-height: 80vh; /* Slightly shorter */
+  }
+  
+  /* Reduce padding on mobile */
+  .modal-header,
+  .modal-body,
+  .modal-footer {
+    padding: 16px;
+  }
+}
