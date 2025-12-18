@@ -1,5 +1,7 @@
 // src/Pages/EditProfile/EditProfile.jsx
 import React, { useState } from "react";
+import TopBar from "../../Components/Shared/TopBar/TopBar";
+import LeftSideBar from "../../Components/Shared/LeftSideBar/LeftSideBar";
 
 // Import header
 import SettingsHeader from "../../Components/EditProfile/SettingsHeader";
@@ -14,9 +16,12 @@ import EmailSettings from "../../Components/EditProfile/EmailSettings";
 
 // Import CSS
 import "../../Components/EditProfile/Settings.css";
+import "./EditProfile.css";
 
 const EditProfile = () => {
   const [activeTab, setActiveTab] = useState("Profile");
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSignedIn, setIsSignedIn] = useState(true);
 
   // Function to render different settings pages
   const renderSettingsContent = () => {
@@ -39,21 +44,27 @@ const EditProfile = () => {
   };
 
   return (
-    <div className="reddit-edit-profile-page">
-      <div className="edit-profile-container">
-        <div className="edit-profile-main">
-          <div className="edit-profile-content">
-            
-            {/* Header with tabs */}
-            <SettingsHeader activeTab={activeTab} onTabChange={setActiveTab} />
-            
-            {/* Dynamic content based on active tab */}
-            <div className="profile-sections">
-              {renderSettingsContent()}
+    <div className="App">
+      <TopBar isSignedIn={isSignedIn} />
+      <div className="leftsidebar-layout">
+        <LeftSideBar
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen((prev) => !prev)}
+          isSignedIn={isSignedIn}
+        />
+        <main className="edit-profile-content">
+          <div className="edit-profile-container">
+            <div className="edit-profile-main">
+              {/* Header with tabs */}
+              <SettingsHeader activeTab={activeTab} onTabChange={setActiveTab} />
+              
+              {/* Dynamic content based on active tab */}
+              <div className="profile-sections">
+                {renderSettingsContent()}
+              </div>
             </div>
-            
           </div>
-        </div>
+        </main>
       </div>
     </div>
   );

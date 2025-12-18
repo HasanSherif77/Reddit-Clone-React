@@ -17,12 +17,13 @@ import LoginForm from "./Pages/Login/LoginForm";
 import SignUpForm from "./Pages/Login/SignUpForm";
 import DiscoverCommunities from "./Pages/Community/DiscoverCommunities";
 import ManageModeratedCommunities from "./Pages/Community/ManageModeratedCommunities";
+import EditProfile from "./Pages/EditProfile/EditProfile";
 function App() {
   return (
     <BrowserRouter>
       <CommunityProvider>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/" element={<EditProfile />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/post/:postId" element={<PostDetails />} />
           <Route path="/user/:userId" element={<UserProfile />} />
