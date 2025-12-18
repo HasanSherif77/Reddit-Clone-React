@@ -1,48 +1,59 @@
 // src/Pages/EditProfile/EditProfile.jsx
-import React from "react";
-import "./Settings.css";
+import React, { useState } from "react";
 
-// Shared Layout Components
-import TopBar from "../../Components/Shared/TopBar/TopBar";
-import LeftSideBar from "../../Components/Shared/LeftSideBar/LeftSideBar";
-
-// Settings Content Components
+// Import header
 import SettingsHeader from "../../Components/EditProfile/SettingsHeader";
-import GeneralSection from "../../Components/EditProfile/GeneralSection";
-import CurateProfileSection from "../../Components/EditProfile/CurateProfileSection";
-import AdvancedSection from "../../Components/EditProfile/AdvancedSection";
+
+// Import ALL settings pages
+import ProfileSettings from "../../Components/EditProfile/ProfileSettings";
+import AccountSettings from "../../Components/EditProfile/AccountSettings";
+import PrivacySettings from "../../Components/EditProfile/PrivacySettings";
+import PreferencesSettings from "../../Components/EditProfile/PreferencesSettings";
+import NotificationsSettings from "../../Components/EditProfile/NotificationsSettings";
+import EmailSettings from "../../Components/EditProfile/EmailSettings";
+
+// Import CSS
+import "../../Components/EditProfile/Settings.css";
 
 const EditProfile = () => {
+  const [activeTab, setActiveTab] = useState("Profile");
+
+  // Function to render different settings pages
+  const renderSettingsContent = () => {
+    switch (activeTab) {
+      case "Account":
+        return <AccountSettings />;
+      case "Profile":
+        return <ProfileSettings />;
+      case "Privacy":
+        return <PrivacySettings />;
+      case "Preferences":
+        return <PreferencesSettings />;
+      case "Notifications":
+        return <NotificationsSettings />;
+      case "Email":
+        return <EmailSettings />;
+      default:
+        return <ProfileSettings />;
+    }
+  };
+
   return (
-    <div className="page settings-page">
-      <TopBar />
-      
-      {/* 1. Grid Layout Wrapper (272px Sidebar | Content) */}
-      <div className="settings-layout-wrapper">
-        
-        {/* Left Column: Sidebar */}
-        <div className="settings-sidebar-container">
-           <LeftSideBar />
-        </div>
-        
-        {/* Right Column: Main Content Area */}
-        <main className="settings-main-content">
-          
-          {/* 2. Content Limiter: This div has the max-width: 840px set in CSS. 
-              It prevents all inner content from stretching across the screen. */}
-          <div className="settings-content-limiter">
-            <SettingsHeader />
+    <div className="reddit-edit-profile-page">
+      <div className="edit-profile-container">
+        <div className="edit-profile-main">
+          <div className="edit-profile-content">
             
-            {/* 3. The actual content sections */}
-            <div className="settings-body">
-              <GeneralSection />
-              <CurateProfileSection />
-              <AdvancedSection />
+            {/* Header with tabs */}
+            <SettingsHeader activeTab={activeTab} onTabChange={setActiveTab} />
+            
+            {/* Dynamic content based on active tab */}
+            <div className="profile-sections">
+              {renderSettingsContent()}
             </div>
+            
           </div>
-
-        </main>
-
+        </div>
       </div>
     </div>
   );

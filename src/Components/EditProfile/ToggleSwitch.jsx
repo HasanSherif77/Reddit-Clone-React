@@ -1,5 +1,6 @@
 // src/Components/EditProfile/ToggleSwitch.jsx
 import React from "react";
+import "./Settings.css";
 
 const ToggleSwitch = ({ checked = false }) => {
   return (
