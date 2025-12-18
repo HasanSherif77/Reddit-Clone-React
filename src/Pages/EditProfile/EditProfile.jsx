@@ -1,5 +1,6 @@
 // src/Pages/EditProfile/EditProfile.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import TopBar from "../../Components/Shared/TopBar/TopBar";
 import LeftSideBar from "../../Components/Shared/LeftSideBar/LeftSideBar";
 
@@ -19,9 +20,17 @@ import "../../Components/EditProfile/Settings.css";
 import "./EditProfile.css";
 
 const EditProfile = () => {
+  const location = useLocation();
   const [activeTab, setActiveTab] = useState("Profile");
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isSignedIn, setIsSignedIn] = useState(true);
+
+  // Check if navigating from edit-avatar route
+  useEffect(() => {
+    if (location.pathname === "/edit-avatar") {
+      setActiveTab("Profile");
+    }
+  }, [location.pathname]);
 
   // Function to render different settings pages
   const renderSettingsContent = () => {

@@ -1,9 +1,11 @@
 // SignUpForm.jsx - Page component with signup logic
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthForm from "../../Components/Login/AuthForm";
 import { API_BASE } from "../../utils/api";
 
-const SignUpForm = ({ switchToLogin, onAuthSuccess }) => {
+const SignUpForm = ({ onAuthSuccess }) => {
+  const navigate = useNavigate();
   const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -42,8 +44,13 @@ const SignUpForm = ({ switchToLogin, onAuthSuccess }) => {
       // Save token
       localStorage.setItem("token", data.token);
 
-      // Update parent state (App.js)
-      onAuthSuccess(data.user);
+      // Update parent state (App.js) if callback provided
+      if (onAuthSuccess) {
+        onAuthSuccess(data.user);
+      } else {
+        // Navigate to home page on successful signup
+        navigate("/");
+      }
 
     } catch (err) {
       setError("Network error");
@@ -66,7 +73,7 @@ const SignUpForm = ({ switchToLogin, onAuthSuccess }) => {
       onSubmit={handleSignUp}
       switchText="Already have an account?"
       switchLinkText="Log In"
-      onSwitch={switchToLogin}
+      onSwitch={() => navigate("/login")}
       showConfirmPassword={true}
       submitText="Sign Up"
       isLoading={isLoading}

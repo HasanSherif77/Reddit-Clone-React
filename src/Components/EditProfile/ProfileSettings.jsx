@@ -1,5 +1,6 @@
 // src/Components/EditProfile/ProfileSettings.jsx
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 // Import modals
 import {
   EditAvatarModal,
@@ -12,7 +13,15 @@ import ToggleSwitch from "./ToggleSwitch";
 import "./Settings.css";
 
 const ProfileSettings = () => {
+  const location = useLocation();
   const [activeModal, setActiveModal] = useState(null);
+  
+  // Auto-open avatar modal if navigating from /edit-avatar
+  useEffect(() => {
+    if (location.pathname === "/edit-avatar") {
+      setActiveModal('avatar');
+    }
+  }, [location.pathname]);
   
   const [userData, setUserData] = useState({
     displayName: "JohnDoe",

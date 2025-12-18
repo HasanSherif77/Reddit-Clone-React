@@ -42,12 +42,15 @@ const CommunityTypeComponent = () => {
   };
 
   const handleNext = () => {
-    // Save community type settings (in a real app, you would save to state or backend)
+    // Save community type settings to sessionStorage
     const communitySettings = {
       type: selectedType,
       isMature: isMature
     };
     console.log('Community settings:', communitySettings);
+    
+    // Save to sessionStorage for later use
+    sessionStorage.setItem('communitySettings', JSON.stringify(communitySettings));
 
     // Go to community style step (banner / profile, etc.)
     navigate('/community-style');

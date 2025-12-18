@@ -55,12 +55,11 @@ const AddTopicsComponent = ({ onNext }) => {
     // Save selected topics (in a real app, you would save to state or backend)
     console.log('Selected topics:', selectedTopics);
     
+    // Save topics to sessionStorage for later use
+    sessionStorage.setItem('selectedTopics', JSON.stringify(selectedTopics));
+    
     // Navigate to community type component
-    if (onNext) {
-      onNext();
-    } else {
-      navigate('/community-type'); // Using react-router navigation
-    }
+    navigate('/community-type');
   };
 
   // Filter topics based on search query

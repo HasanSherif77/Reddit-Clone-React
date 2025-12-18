@@ -42,11 +42,11 @@ const dummyPosts = [
   }
 ];
 
-function PostsList() {
+function PostsList({ isSignedIn = true }) {
   return (
     <div className="posts-list">
       {dummyPosts.map((post) => (
-        <PostCard key={post.id} {...post} />
+        <PostCard key={post.id} {...post} isSignedIn={isSignedIn} />
       ))}
     </div>
   );

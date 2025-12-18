@@ -1,9 +1,11 @@
 // LoginForm.jsx - Page component with login logic
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import AuthForm from "../../Components/Login/AuthForm";
 import { API_BASE } from "../../utils/api";
 
-const LoginForm = ({ switchToSignUp, onAuthSuccess }) => {
+const LoginForm = ({ onAuthSuccess }) => {
+  const navigate = useNavigate();
   const [emailOrUsername, setEmailOrUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
@@ -30,8 +32,13 @@ const LoginForm = ({ switchToSignUp, onAuthSuccess }) => {
       // Save token
       localStorage.setItem("token", data.token);
 
-      // Update parent state (App.js)
-      onAuthSuccess(data.user);
+      // Update parent state (App.js) if callback provided
+      if (onAuthSuccess) {
+        onAuthSuccess(data.user);
+      } else {
+        // Navigate to home page on successful login
+        navigate("/");
+      }
 
     } catch (err) {
       setError("Network error");
@@ -52,7 +59,7 @@ const LoginForm = ({ switchToSignUp, onAuthSuccess }) => {
       onSubmit={handleLogin}
       switchText="New to Reddit?"
       switchLinkText="Sign Up"
-      onSwitch={switchToSignUp}
+      onSwitch={() => navigate("/signup")}
       submitText="Log In"
       isLoading={isLoading}
     />

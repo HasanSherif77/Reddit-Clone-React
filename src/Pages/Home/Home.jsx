@@ -5,9 +5,8 @@ import PostControls from "../../Components/Shared/PostControls/PostControls";
 import PostsList from "../../Components/Shared/Post/PostsList";
 import "./Home.css";
 
-function Home() {
+function Home({ isSignedIn = true }) {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
-  const [isSignedIn, setIsSignedIn] = useState(true);
 
   return (
     <div className="App">
@@ -23,7 +22,7 @@ function Home() {
             <div className="home-main">
               <PostControls />
               <div className="home-divider" />
-              <PostsList />
+              <PostsList isSignedIn={isSignedIn} />
             </div>
           </div>
         </main>

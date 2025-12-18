@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./LeftSideBar.css";
 
 import homeIcon from "../../../assets/images/Home.svg";
@@ -24,7 +25,8 @@ import settingIcon from "../../../assets/images/Setting.svg";
 import gamesIcon from "../../../assets/images/Games.svg";
 import SidebarButton from "./SideBarButton";
 
-function LeftSideBar({ isOpen, onToggle, isSignedIn = false }) {
+function LeftSideBar({ isOpen, onToggle, isSignedIn = false, userId }) {
+  const navigate = useNavigate();
   const [openSections, setOpenSections] = useState({
     games: false,
     feeds: false,
@@ -38,14 +40,28 @@ function LeftSideBar({ isOpen, onToggle, isSignedIn = false }) {
       [section]: !prev[section],
     }));
   };
+
+  const handleHomeClick = () => {
+    if (isSignedIn) {
+      // Get userId from prop, localStorage, or use default
+      const currentUserId = userId || localStorage.getItem("userId") || "user";
+      navigate(`/feed/${currentUserId}`);
+    } else {
+      navigate("/");
+    }
+  };
+
+  const handleStartCommunityClick = () => {
+    navigate("/add-topics");
+  };
   
   const allSidebarItems = [
-    { icon: homeIcon, label: "Home", title: "Home", active: true },
+    { icon: homeIcon, label: "Home", title: "Home", active: true, onClick: handleHomeClick },
     { icon: popularIcon, label: "Popular", title: "Popular" },
     { icon: answersIcon, label: "Answers", title: "Answers" },
     { icon: exploreIcon, label: "Explore", title: "Explore" },
     { icon: allIcon, label: "All", title: "All", signedInOnly: true },
-    { icon: plusIcon, label: "Start a community", title: "Create community", signedInOnly: true },
+    { icon: plusIcon, label: "Start a community", title: "Create community", signedInOnly: true, onClick: handleStartCommunityClick },
   ];
 
   const sidebarItems = isSignedIn 
@@ -94,6 +110,7 @@ const resourcesBottomSection = [
                 label={item.label}
                 active={item.active}
                 icon={item.icon}
+                onClick={item.onClick}
               />
             ))}
           </nav>

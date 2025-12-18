@@ -1,4 +1,5 @@
 import React, { useState, useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./PostCard.css";
 
 import likeIcon from "../../../assets/images/Like.svg";
@@ -12,6 +13,7 @@ import saveIcon from "../../../assets/images/Save.svg";
 import reportIcon from "../../../assets/images/Report.svg";
 
 function PostCard({
+  id,
   community,
   communityIcon,
   timeAgo,
@@ -19,8 +21,10 @@ function PostCard({
   text,
   mediaUrl,
   votes,
-  commentsCount
+  commentsCount,
+  isSignedIn = true
 }) {
+  const navigate = useNavigate();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSummaryPopupOpen, setIsSummaryPopupOpen] = useState(false);
   const [summary, setSummary] = useState(null);
@@ -58,8 +62,58 @@ function PostCard({
     }
   };
 
+  const handlePostClick = (e) => {
+    // Don't navigate if clicking on interactive elements
+    if (
+      e.target.closest('.postcard-header-actions') ||
+      e.target.closest('.postcard-menu') ||
+      e.target.closest('.postcard-action') ||
+      e.target.closest('.postcard-summary-overlay')
+    ) {
+      return;
+    }
+    
+    if (!isSignedIn) {
+      navigate("/login");
+      return;
+    }
+    
+    if (id) {
+      navigate(`/post/${id}`);
+    }
+  };
+
+  const handleCommentClick = (e) => {
+    e.stopPropagation();
+    if (id) {
+      navigate(`/post/${id}`);
+    }
+  };
+
+  const handleVoteClick = (e) => {
+    e.stopPropagation();
+    if (!isSignedIn) {
+      navigate("/login");
+      return;
+    }
+    // TODO: Implement vote logic here
+  };
+
+  const handleJoinClick = (e) => {
+    e.stopPropagation();
+    if (!isSignedIn) {
+      navigate("/login");
+      return;
+    }
+    // TODO: Implement join community logic here
+  };
+
   return (
-    <article className="postcard">
+    <article 
+      className="postcard" 
+      onClick={handlePostClick} 
+      style={{ cursor: id ? 'pointer' : 'default' }}
+    >
       <header className="postcard-header">
         <div className="postcard-header-main">
           {communityIcon && (
@@ -75,7 +129,7 @@ function PostCard({
         </div>
 
         <div className="postcard-header-actions">
-          <button className="postcard-join-btn">Join</button>
+          <button className="postcard-join-btn" onClick={handleJoinClick}>Join</button>
           <button
             className="postcard-dots-btn"
             onClick={() => setIsMenuOpen((prev) => !prev)}
@@ -131,7 +185,7 @@ function PostCard({
       )}
 
       <footer className="postcard-footer">
-        <button className="postcard-action postcard-vote">
+        <button className="postcard-action postcard-vote" onClick={handleVoteClick}>
           <img
             src={likeIcon}
             alt="Like"
@@ -145,7 +199,7 @@ function PostCard({
           />
         </button>
 
-        <button className="postcard-action">
+        <button className="postcard-action" onClick={handleCommentClick}>
           <img
             src={commentIcon}
             alt="Comments"

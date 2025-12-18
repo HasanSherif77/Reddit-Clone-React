@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./TopBar.css";
 import UserMenu from "./UserMenu";
 import LoginButton from "./LoginButton";
@@ -12,6 +13,7 @@ import createImage from "../../../assets/images/Create.svg";
 import girlAvatarImage from "../../../assets/images/Girl-Avatar.svg";
 
 function TopBar({ isSignedIn = false }) {
+  const navigate = useNavigate();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
 
   return (
@@ -50,12 +52,20 @@ function TopBar({ isSignedIn = false }) {
               <img src={chatImage} alt="Chat messages" className="topbar-icon-img" />
             </button>
 
-            <button className="topbar-create-btn" title="Create post">
+            <button 
+              className="topbar-create-btn" 
+              title="Create post"
+              onClick={() => navigate("/create-post")}
+            >
               <img src={createImage} alt="Create" className="topbar-icon-img" />
               <span>Create</span>
             </button>
 
-            <button className="topbar-icon-btn" title="Open inbox">
+            <button 
+              className="topbar-icon-btn" 
+              title="Open inbox"
+              onClick={() => navigate("/notifications")}
+            >
               <img src={bellImage} alt="Notifications" className="topbar-icon-img" />
             </button>
 
@@ -75,7 +85,7 @@ function TopBar({ isSignedIn = false }) {
             />
           </>
         ) : (
-          <LoginButton onClick={() => console.log("Login clicked")} />
+          <LoginButton />
         )}
       </div>
     </header>

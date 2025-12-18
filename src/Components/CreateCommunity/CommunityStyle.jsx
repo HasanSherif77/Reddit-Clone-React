@@ -38,21 +38,15 @@ const CommunityStyle = () => {
 
   const handleNext = () => {
     if (communityName && description && !nameError) {
-      // Create the community directly with name and description
-      const communityData = {
+      // Save community data to sessionStorage before navigating
+      const tempData = {
         name: communityName,
-        description: description,
-        // Default values for banner and icon (can be updated later)
-        banner: null,
-        icon: null
+        description: description
       };
-
-      // Create the community
-      const newCommunity = addCommunity(communityData);
-      console.log('Community created:', newCommunity);
-
-      // Navigate directly to the created community page
-      navigate(`/r/${newCommunity.name}`);
+      sessionStorage.setItem('tempCommunityData', JSON.stringify(tempData));
+      
+      // Navigate to community icon step
+      navigate('/community-icon');
     } else {
       alert('Please fix errors before proceeding');
     }
@@ -152,15 +146,7 @@ const CommunityStyle = () => {
           </button>
           <button
             className="next-btn"
-            onClick={() => {
-              // Save community data to sessionStorage before navigating
-              const tempData = {
-                name: communityName,
-                description: description
-              };
-              sessionStorage.setItem('tempCommunityData', JSON.stringify(tempData));
-              navigate('/community-icon');
-            }}
+            onClick={handleNext}
             disabled={!communityName || !description || nameError}
           >
             Next

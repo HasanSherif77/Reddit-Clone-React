@@ -1,4 +1,5 @@
 import React, { useRef, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "./UserMenu.css";
 
 import editAvatarIcon from "../../../assets/images/Edit-Avatar.svg";
@@ -10,9 +11,9 @@ import logOutIcon from "../../../assets/images/Log-Out.svg";
 import settingIcon from "../../../assets/images/Setting.svg";
 
 
-function UserMenuItem({ icon, label, subtitle }) {
+function UserMenuItem({ icon, label, subtitle, onClick }) {
   return (
-    <button className="usermenu-item">
+    <button className="usermenu-item" onClick={onClick}>
       <img src={icon} alt={label} className="usermenu-icon" />
 
       {subtitle ? (
@@ -27,20 +28,40 @@ function UserMenuItem({ icon, label, subtitle }) {
   );
 }
 
-const mainMenuItems = [
-  { icon: editAvatarIcon, label: "Edit Avatar" },
-  { icon: draftsIcon, label: "Drafts" },
-  { icon: achievementsIcon, label: "Achievements", subtitle: "5 unlocked" },
-  { icon: earnIcon, label: "Earn", subtitle: "Earn cash on Reddit" },
-  { icon: premiumIcon, label: "Premium" },
-];
-
-const logoutItem = [{ icon: logOutIcon, label: "Log Out" }];
-const settingsItem = [{ icon: settingIcon, label: "Settings" }];
-
-
 function UserMenu({ isOpen, onClose, avatarImage, username }) {
+  const navigate = useNavigate();
   const menuRef = useRef(null);
+
+  const handleEditAvatar = () => {
+    onClose();
+    navigate("/edit-avatar");
+  };
+
+  const handleSettings = () => {
+    onClose();
+    navigate("/edit-profile");
+  };
+
+  const handleLogout = () => {
+    // Clear authentication token
+    localStorage.removeItem("token");
+    onClose();
+    // Navigate to home page (isSignedIn will be false since token is cleared)
+    navigate("/");
+    // Reload the page to reset all component states
+    window.location.reload();
+  };
+
+  const mainMenuItems = [
+    { icon: editAvatarIcon, label: "Edit Avatar", onClick: handleEditAvatar },
+    { icon: draftsIcon, label: "Drafts" },
+    { icon: achievementsIcon, label: "Achievements", subtitle: "5 unlocked" },
+    { icon: earnIcon, label: "Earn", subtitle: "Earn cash on Reddit" },
+    { icon: premiumIcon, label: "Premium" },
+  ];
+
+  const logoutItem = [{ icon: logOutIcon, label: "Log Out", onClick: handleLogout }];
+  const settingsItem = [{ icon: settingIcon, label: "Settings", onClick: handleSettings }];
 
   useEffect(() => {
     const handleClickOutside = (event) => {
@@ -77,6 +98,7 @@ function UserMenu({ isOpen, onClose, avatarImage, username }) {
           icon={item.icon}
           label={item.label}
           subtitle={item.subtitle}
+          onClick={item.onClick}
         />
       ))}
 
