@@ -9,40 +9,34 @@ import communityImage from "../../../assets/demo-posts/CommunityImage.jpg"
 const dummyPosts = [
   {
     id: "1",
-    type: "image",
     community: "r/ArabHands",
     communityIcon: communityImage,
     timeAgo: "41 min. ago",
     title: "Code",
     text: "",
-    imageUrl: codeImage,
-    videoUrl: null,
+    mediaUrl: codeImage,
     votes: 123,
     commentsCount: 7
   },
   {
     id: "2",
-    type: "text",
     community: "r/learnprogramming",
     communityIcon: communityImage,
     timeAgo: "3 hours ago",
     title: "Started building a Reddit clone in React!",
     text: "Today I finished the header, sidebar, and sort/view controls. Next step is rendering posts from a backend.",
-    imageUrl: null,
-    videoUrl: null,
+    mediaUrl: null,
     votes: 45,
     commentsCount: 12
   },
   {
     id: "3",
-    type: "video",
     community: "r/videos",
     communityIcon: communityImage,
     timeAgo: "1 day ago",
     title: "Cool demo video",
     text: "",
-    imageUrl: null,
-    videoUrl: demoVideo,
+    mediaUrl: demoVideo,
     votes: 300,
     commentsCount: 90
   }

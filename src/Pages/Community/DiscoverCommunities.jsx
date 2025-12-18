@@ -1,8 +1,8 @@
 // DiscoverCommunities.jsx
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import TempSidebar from '../../Components/Shared/TempSidebar';
-import TempTopNav from '../../Components/Shared/TempTopNav';
+import TopBar from '../../Components/Shared/TopBar/TopBar';
+import LeftSideBar from '../../Components/Shared/LeftSideBar/LeftSideBar';
 import { useCommunities } from '../../Components/Community/CommunityContext';
 import './DiscoverCommunities.css';
 
@@ -10,6 +10,8 @@ const DiscoverCommunities = () => {
   const navigate = useNavigate();
   const { joinCommunity, isCommunityJoined, joinedCommunities } = useCommunities();
   const [forceUpdate, setForceUpdate] = useState(0);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSignedIn, setIsSignedIn] = useState(true);
 
   useEffect(() => {
     setForceUpdate(prev => prev + 1);
@@ -51,13 +53,15 @@ const DiscoverCommunities = () => {
   };
 
   return (
-    <div className="discover-communities-page">
-      <TempSidebar />
-
-      <div className="discover-communities-page__content">
-        <TempTopNav />
-
-        <main className="main-content">
+    <div className="App">
+      <TopBar isSignedIn={isSignedIn} />
+      <div className="leftsidebar-layout">
+        <LeftSideBar
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen((prev) => !prev)}
+          isSignedIn={isSignedIn}
+        />
+        <main className="discover-communities-content">
           <div className="discover-communities-container">
             {/* Header Section */}
             <div className="discover-header">
@@ -67,49 +71,46 @@ const DiscoverCommunities = () => {
 
             {/* Communities List */}
             <div key={`communities-grid-${forceUpdate}`} className="communities-grid">
-        {communities.map((community, index) => (
-          <div key={community.id} className="community-card">
-            {/* Rank Number */}
-            <div className="community-rank">
-              <span className="rank-number">{index + 1}</span>
-            </div>
-            
-            {/* Community Content */}
-            <div
-              className="community-content"
-              onClick={() => handleViewCommunity(community.name)}
-            >
-              <div className="community-header">
-                <div className="community-icon" style={{ backgroundColor: community.iconColor }}>
-                  <span className="icon-placeholder">{community.icon}</span>
+              {communities.map((community, index) => (
+                <div key={community.id} className="community-card">
+                  {/* Rank Number */}
+                  <div className="community-rank">
+                    <span className="rank-number">{index + 1}</span>
+                  </div>
+                  
+                  {/* Community Content */}
+                  <div
+                    className="community-content"
+                    onClick={() => handleViewCommunity(community.name)}
+                  >
+                    <div className="community-header">
+                      <div className="community-icon" style={{ backgroundColor: community.iconColor }}>
+                        <span className="icon-placeholder">{community.icon}</span>
+                      </div>
+                      <div className="community-info">
+                        <h3 className="community-name">r/{community.name}</h3>
+                        <div className="community-members">{community.members} members</div>
+                      </div>
+                    </div>
+                    
+                    <p className="community-description">{community.description}</p>
+                  </div>
+                  
+                  {/* Join Button */}
+                  <button
+                    className={`join-button ${isCommunityJoined(community.id) ? 'joined' : ''}`}
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      if (!isCommunityJoined(community.id)) {
+                        handleJoinCommunity(community);
+                      }
+                    }}
+                  >
+                    {isCommunityJoined(community.id) ? 'Joined' : 'Join'}
+                  </button>
                 </div>
-                <div className="community-info">
-                  <h3 className="community-name">r/{community.name}</h3>
-                  <div className="community-members">{community.members} members</div>
-                </div>
-              </div>
-              
-              <p className="community-description">{community.description}</p>
+              ))}
             </div>
-            
-            {/* Join Button */}
-            <button
-              className={`join-button ${isCommunityJoined(community.id) ? 'joined' : ''}`}
-              onClick={(e) => {
-                e.stopPropagation();
-                if (!isCommunityJoined(community.id)) {
-                  handleJoinCommunity(community);
-                }
-              }}
-            >
-              {isCommunityJoined(community.id) ? 'Joined' : 'Join'}
-            </button>
-          </div>
-        ))}
-      </div>
-
-     
-           
           </div>
         </main>
       </div>

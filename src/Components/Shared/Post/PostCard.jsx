@@ -12,35 +12,51 @@ import saveIcon from "../../../assets/images/Save.svg";
 import reportIcon from "../../../assets/images/Report.svg";
 
 function PostCard({
-  type,
   community,
   communityIcon,
   timeAgo,
   title,
   text,
-  imageUrl,
-  videoUrl,
+  mediaUrl,
   votes,
   commentsCount
 }) {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isSummaryPopupOpen, setIsSummaryPopupOpen] = useState(false);
+  const [summary, setSummary] = useState(null);
   const menuRef = useRef(null);
+  const summaryPopupRef = useRef(null);
 
   useEffect(() => {
     const handleClickOutside = (e) => {
       if (menuRef.current && !menuRef.current.contains(e.target)) {
         setIsMenuOpen(false);
       }
+      if (summaryPopupRef.current && !summaryPopupRef.current.contains(e.target)) {
+        setIsSummaryPopupOpen(false);
+      }
     };
 
-    if (isMenuOpen) {
+    if (isMenuOpen || isSummaryPopupOpen) {
       document.addEventListener("mousedown", handleClickOutside);
     }
 
     return () => {
       document.removeEventListener("mousedown", handleClickOutside);
     };
-  }, [isMenuOpen]);
+  }, [isMenuOpen, isSummaryPopupOpen]);
+
+  // Determine if mediaUrl is a video based on file extension
+  const isVideo = mediaUrl && /\.(mp4|webm|ogg|mov|avi)$/i.test(mediaUrl);
+
+  const handleSummarizeClick = async () => {
+    setIsSummaryPopupOpen(true);
+    // TODO: Implement AI summarization logic here
+    // For now, show a placeholder message
+    if (!summary) {
+      setSummary("AI summarization will be implemented here. This will analyze the post content and provide a concise summary.");
+    }
+  };
 
   return (
     <article className="postcard">
@@ -96,23 +112,21 @@ function PostCard({
 
       <h3 className="postcard-title">{title}</h3>
 
-      {type === "text" && text && (
+      {text && (
         <p className="postcard-text">{text}</p>
       )}
 
-      {type === "image" && imageUrl && (
+      {mediaUrl && (
         <div className="postcard-media">
-          <img src={imageUrl} alt={title} className="postcard-image" />
-        </div>
-      )}
-
-      {type === "video" && videoUrl && (
-        <div className="postcard-media">
-          <video
-            src={videoUrl}
-            className="postcard-video"
-            controls
-          />
+          {isVideo ? (
+            <video
+              src={mediaUrl}
+              className="postcard-video"
+              controls
+            />
+          ) : (
+            <img src={mediaUrl} alt={title} className="postcard-image" />
+          )}
         </div>
       )}
 
@@ -148,7 +162,47 @@ function PostCard({
           />
           <span>Share</span>
         </button>
+
+        <button className="postcard-action" onClick={handleSummarizeClick}>
+          <svg 
+            className="postcard-action-icon" 
+            width="16" 
+            height="16" 
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            strokeWidth="2"
+          >
+            <path d="M12 2L2 7l10 5 10-5-10-5z" />
+            <path d="M2 17l10 5 10-5M2 12l10 5 10-5" />
+          </svg>
+          <span>Summarize</span>
+        </button>
       </footer>
+
+      {isSummaryPopupOpen && (
+        <div className="postcard-summary-overlay">
+          <div className="postcard-summary-popup" ref={summaryPopupRef}>
+            <div className="postcard-summary-header">
+              <h3 className="postcard-summary-title">AI Summary</h3>
+              <button 
+                className="postcard-summary-close"
+                onClick={() => setIsSummaryPopupOpen(false)}
+                aria-label="Close summary"
+              >
+                ×
+              </button>
+            </div>
+            <div className="postcard-summary-content">
+              {summary ? (
+                <p className="postcard-summary-text">{summary}</p>
+              ) : (
+                <p className="postcard-summary-loading">Generating summary...</p>
+              )}
+            </div>
+          </div>
+        </div>
+      )}
     </article>
   );
 }

@@ -1,8 +1,8 @@
 // ManageModeratedCommunities.jsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import TempSidebar from '../../Components/Shared/TempSidebar';
-import TempTopNav from '../../Components/Shared/TempTopNav';
+import TopBar from '../../Components/Shared/TopBar/TopBar';
+import LeftSideBar from '../../Components/Shared/LeftSideBar/LeftSideBar';
 import { useCommunities } from '../../Components/Community/CommunityContext';
 import './ManageModeratedCommunities.css';
 
@@ -10,6 +10,8 @@ const ManageModeratedCommunities = () => {
   const navigate = useNavigate();
   const [selectedCommunities, setSelectedCommunities] = useState([]);
   const { communities } = useCommunities();
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+  const [isSignedIn, setIsSignedIn] = useState(true);
 
   // Transform communities data to match the expected format
   const moderatedCommunities = communities.map(community => ({
@@ -72,17 +74,19 @@ const ManageModeratedCommunities = () => {
   };
 
   const handleNavigateToCommunity = (communityName) => {
-    navigate(`/${communityName}`);
+    navigate(`/r/${communityName}`);
   };
 
   return (
-    <div className="manage-moderated-page">
-      <TempSidebar />
-
-      <div className="manage-moderated-page__content">
-        <TempTopNav />
-
-        <main className="main-content">
+    <div className="App">
+      <TopBar isSignedIn={isSignedIn} />
+      <div className="leftsidebar-layout">
+        <LeftSideBar
+          isOpen={isSidebarOpen}
+          onToggle={() => setIsSidebarOpen((prev) => !prev)}
+          isSignedIn={isSignedIn}
+        />
+        <main className="manage-moderated-content">
           <div className="manage-moderated-container">
             {/* Header Section */}
             <div className="manage-header">
