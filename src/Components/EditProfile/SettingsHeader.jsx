@@ -1,13 +1,32 @@
 // src/Components/EditProfile/SettingsHeader.jsx
 import React from "react";
-import "./Settings.css"; // Import CSS for styling
+import "./Settings.css";
 
-const SettingsHeader = () => {
+const SettingsHeader = ({ activeTab, onTabChange }) => {
+  const TABS = ["Account", "Profile", "Privacy", "Preferences", "Notifications", "Email"];
+
   return (
-    // Header section of the page
-    <header className="edit-profile-header">
-      {/* Main page title */}
-      <h1 className="edit-profile-title">Profile</h1>
+    <header className="settings-header">
+      {/* Page title */}
+      <h1 className="settings-title">Settings</h1>
+
+      {/* Tabs navigation - NO LEFT SIDEBAR */}
+      <div className="settings-tabs-container">
+        <div className="settings-tabs-wrapper">
+          {TABS.map((tab) => (
+            <button
+              key={tab}
+              className={`settings-tab ${tab === activeTab ? "settings-tab--active" : ""}`}
+              type="button"
+              onClick={() => onTabChange(tab)}
+            >
+              {tab}
+            </button>
+          ))}
+        </div>
+        {/* Bottom line under tabs */}
+        <div className="tabs-bottom-line"></div>
+      </div>
     </header>
   );
 };

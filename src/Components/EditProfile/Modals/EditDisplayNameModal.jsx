@@ -2,32 +2,34 @@
 import React, { useState } from 'react';
 import './Modals.css';
 
-const EditDisplayNameModal = ({ isOpen, onClose, currentName = '' }) => {
-  // State for display name and character count
+// EditDisplayNameModal - popup for editing display name
+const EditDisplayNameModal = ({ isOpen, onClose, currentName = '', onSave }) => {
   const [displayName, setDisplayName] = useState(currentName);
   const [characterCount, setCharacterCount] = useState(currentName.length);
 
   // Don't render if modal is not open
   if (!isOpen) return null;
 
-  // Handle input change with character limit
+  // Handle input changes with character limit
   const handleInputChange = (e) => {
     const value = e.target.value;
-    // Limit to 30 characters like Reddit
-    if (value.length <= 30) {
+    if (value.length <= 30) { // Limit to 30 characters like Reddit
       setDisplayName(value);
       setCharacterCount(value.length);
     }
   };
 
-  // Handle save action
+  // Handle save button click
   const handleSave = () => {
     console.log('Saving display name:', displayName);
-    onClose(); // Close modal
+    if (onSave) onSave(displayName);
+    onClose();
   };
 
   return (
+    // Modal overlay
     <div className="modal-overlay" onClick={onClose}>
+      {/* Modal container */}
       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
         
         {/* Modal header */}
@@ -38,7 +40,7 @@ const EditDisplayNameModal = ({ isOpen, onClose, currentName = '' }) => {
 
         {/* Modal body */}
         <div className="modal-body">
-          {/* Input field for display name */}
+          {/* Input field */}
           <div className="input-group">
             <label className="input-label">Display name</label>
             <input
@@ -48,13 +50,14 @@ const EditDisplayNameModal = ({ isOpen, onClose, currentName = '' }) => {
               onChange={handleInputChange}
               placeholder="Enter a display name"
               maxLength={30}
+              autoFocus
             />
             <div className="character-counter">
               {characterCount}/30 characters
             </div>
           </div>
 
-          {/* Informational text */}
+          {/* Help text */}
           <div className="modal-info">
             <p className="info-text">
               Your display name appears on your profile and next to your posts and comments.
@@ -65,7 +68,7 @@ const EditDisplayNameModal = ({ isOpen, onClose, currentName = '' }) => {
           </div>
         </div>
 
-        {/* Modal footer with action buttons */}
+        {/* Modal footer */}
         <div className="modal-footer">
           <button className="modal-cancel-btn" onClick={onClose}>
             Cancel

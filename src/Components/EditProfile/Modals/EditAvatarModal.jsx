@@ -1,9 +1,9 @@
 // src/Components/EditProfile/Modals/EditAvatarModal.jsx
 import React, { useState } from 'react';
-import './Modals.css'; // Modal-specific CSS
+import './Modals.css';
 
-const EditAvatarModal = ({ isOpen, onClose, currentAvatar }) => {
-  // State for selected file and preview
+// EditAvatarModal - popup for editing/uploading profile picture
+const EditAvatarModal = ({ isOpen, onClose, currentAvatar, onSave }) => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState(currentAvatar || '');
 
@@ -15,7 +15,7 @@ const EditAvatarModal = ({ isOpen, onClose, currentAvatar }) => {
     const file = event.target.files[0];
     if (file) {
       setSelectedFile(file);
-      // Create preview URL for the selected image
+      // Create preview for the selected image
       const reader = new FileReader();
       reader.onloadend = () => {
         setPreviewUrl(reader.result);
@@ -26,24 +26,30 @@ const EditAvatarModal = ({ isOpen, onClose, currentAvatar }) => {
 
   // Handle save button click
   const handleSave = () => {
-    // Here you would send the data to your backend
     console.log('Saving avatar:', selectedFile);
-    onClose(); // Close modal after saving
+    if (onSave) onSave(previewUrl);
+    onClose();
+  };
+
+  // Handle remove avatar
+  const handleRemoveAvatar = () => {
+    setPreviewUrl('');
+    setSelectedFile(null);
   };
 
   return (
-    // Modal overlay (background)
+    // Modal overlay background
     <div className="modal-overlay" onClick={onClose}>
       {/* Modal container - stops click propagation */}
       <div className="modal-container" onClick={(e) => e.stopPropagation()}>
         
-        {/* Modal header with title and close button */}
+        {/* Modal header */}
         <div className="modal-header">
           <h2 className="modal-title">Edit avatar</h2>
           <button className="modal-close-btn" onClick={onClose}>×</button>
         </div>
 
-        {/* Modal body content */}
+        {/* Modal body */}
         <div className="modal-body">
           
           {/* Avatar preview section */}
@@ -80,7 +86,8 @@ const EditAvatarModal = ({ isOpen, onClose, currentAvatar }) => {
           {/* Remove avatar button */}
           <button 
             className="remove-avatar-btn"
-            onClick={() => setPreviewUrl('')}
+            onClick={handleRemoveAvatar}
+            disabled={!previewUrl}
           >
             Remove avatar
           </button>

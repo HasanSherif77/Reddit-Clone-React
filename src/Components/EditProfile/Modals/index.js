@@ -1,7 +1,14 @@
 // src/Components/EditProfile/Modals/index.js
-// Export all modal components from a single file
+// Export all modal components from one file
 
-export { default as EditAvatarModal } from './EditAvatarModal';
-export { default as EditDisplayNameModal } from './EditDisplayNameModal';
-export { default as EditBioModal } from './EditBioModal';
-// Add more modals here as needed
+// Import modal components
+import EditAvatarModal from './EditAvatarModal';
+import EditDisplayNameModal from './EditDisplayNameModal';
+import EditBioModal from './EditBioModal';
+
+// Export all modals
+export {
+  EditAvatarModal,
+  EditDisplayNameModal,
+  EditBioModal
+};

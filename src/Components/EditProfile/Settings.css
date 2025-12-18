@@ -1,226 +1,307 @@
 /* src/Components/EditProfile/Settings.css */
+
 /* ===== MAIN PAGE LAYOUT ===== */
+
+/* Main container with Reddit's signature gray background */
 .reddit-edit-profile-page {
-  min-height: 100vh;
-  background-color: #dae0e6;
-  padding: 20px;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  min-height: 100vh; /* Minimum height of full viewport */
+  background-color: #dae0e6; /* Reddit's exact gray background color */
+  padding: 20px; /* Padding around the entire page */
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; /* Reddit's font stack */
 }
 
+/* Main container for content - centered with max width */
 .edit-profile-container {
-  display: flex;
-  max-width: 1200px;
-  margin: 0 auto;
-  gap: 20px;
-}
-
-/* ===== LEFT SIDEBAR STYLES ===== */
-.edit-profile-sidebar {
-  width: 240px;
-  flex-shrink: 0;
-  background: white;
-  border-radius: 4px;
-  border: 1px solid #edeff1;
-}
-
-.sidebar-title {
-  font-size: 16px;
-  font-weight: 500;
-  color: #1c1c1c;
-  padding: 20px 24px 16px;
-  margin: 0;
-  border-bottom: 1px solid #edeff1;
-}
-
-.sidebar-items {
-  padding: 8px 0;
-}
-
-.sidebar-item {
-  display: block;
-  width: 100%;
-  text-align: left;
-  background: none;
-  border: none;
-  padding: 12px 24px;
-  font-size: 14px;
-  color: #1c1c1c;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  position: relative;
-}
-
-.sidebar-item:hover {
-  background-color: #f6f7f8;
-}
-
-.sidebar-item.active {
-  background-color: #f6f7f8;
-  font-weight: 500;
-  color: #0079d3;
-}
-
-.sidebar-item.active::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 3px;
-  background-color: #0079d3;
+  display: flex; /* Use flexbox layout */
+  max-width: 960px; /* Maximum width for content (reduced since no sidebar) */
+  margin: 0 auto; /* Center horizontally */
+  /* Note: No gap property since we removed the sidebar */
 }
 
 /* ===== MAIN CONTENT AREA STYLES ===== */
+
+/* Main content container - takes full width */
 .edit-profile-main {
-  flex: 1;
+  flex: 1; /* Take all available space */
+  width: 100%; /* Full width without sidebar */
 }
 
+/* White card containing all settings content */
 .edit-profile-content {
-  background: white;
-  border-radius: 4px;
-  border: 1px solid #edeff1;
-  padding: 24px;
+  background: white; /* White background for content card */
+  border-radius: 4px; /* Rounded corners like Reddit */
+  border: 1px solid #edeff1; /* Light gray border */
+  padding: 32px; /* Inner padding (increased since no sidebar) */
+  box-shadow: 0 2px 4px rgba(0,0,0,0.05); /* Subtle shadow for depth */
 }
 
-.edit-profile-header {
-  margin-bottom: 24px;
+/* ===== SETTINGS HEADER WITH TABS ===== */
+
+/* Header container at the top of the page */
+.settings-header {
+  max-width: 960px; /* Match content width */
+  margin: 0 auto 16px; /* Center and add bottom margin */
 }
 
-.edit-profile-title {
-  font-size: 20px;
-  font-weight: 500;
-  color: #1c1c1c;
-  margin: 0;
+/* Main page title "Settings" */
+.settings-title {
+  font-size: 28px; /* Large font size for main title */
+  font-weight: 600; /* Semi-bold weight */
+  margin: 0 0 24px 0; /* Bottom margin only */
+  color: #1a1a1b; /* Dark gray text color */
+}
+
+/* Container for horizontal tabs navigation */
+.settings-tabs-container {
+  position: relative; /* For positioning the bottom line */
+  margin-bottom: 24px; /* Space below tabs */
+}
+
+/* Wrapper for tab buttons */
+.settings-tabs-wrapper {
+  display: flex; /* Horizontal layout for tabs */
+  gap: 0; /* No gap between tabs (tight layout) */
+  position: relative; /* For z-index stacking */
+  z-index: 2; /* Ensure tabs are above bottom line */
+}
+
+/* Individual tab button */
+.settings-tab {
+  border: none; /* Remove default button border */
+  background: none; /* Transparent background */
+  padding: 12px 20px; /* Comfortable clickable area */
+  font-size: 14px; /* Standard font size */
+  font-weight: 500; /* Medium font weight */
+  color: #878a8c; /* Gray text for inactive tabs */
+  cursor: pointer; /* Pointer cursor on hover */
+  position: relative; /* For active state styling */
+  transition: color 0.2s; /* Smooth color transition on hover */
+  border-bottom: 2px solid transparent; /* Reserve space for active indicator */
+}
+
+/* Tab hover effect */
+.settings-tab:hover {
+  color: #1a1a1b; /* Dark text color on hover */
+}
+
+/* Active tab styling */
+.settings-tab--active {
+  color: #1a1a1b; /* Dark text for active tab */
+  border-bottom: 2px solid #0079d3; /* Blue underline for active tab */
+}
+
+/* Bottom line under all tabs for visual separation */
+.tabs-bottom-line {
+  position: absolute; /* Absolute positioning */
+  bottom: 0; /* Align to bottom of tabs container */
+  left: 0; /* Start from left edge */
+  right: 0; /* Extend to right edge */
+  height: 1px; /* Thin line */
+  background-color: #edeff1; /* Light gray color */
+  z-index: 1; /* Place behind tabs (lower z-index) */
 }
 
 /* ===== SETTINGS SECTIONS ===== */
+
+/* Container for all settings sections */
 .profile-sections {
-  margin-top: 16px;
+  margin-top: 16px; /* Space above first section */
 }
 
+/* Individual settings section */
 .settings-section {
-  margin-bottom: 32px;
+  margin-bottom: 32px; /* Space between sections */
 }
 
+/* Section label in uppercase (e.g., "GENERAL") */
 .section-label {
-  font-size: 10px;
-  font-weight: 700;
-  color: #878a8c;
-  text-transform: uppercase;
-  letter-spacing: 0.5px;
-  margin-bottom: 16px;
+  font-size: 10px; /* Very small text */
+  font-weight: 700; /* Bold weight */
+  color: #878a8c; /* Medium gray color */
+  text-transform: uppercase; /* Convert to ALL CAPS */
+  letter-spacing: 0.5px; /* Slightly spaced letters */
+  margin-bottom: 16px; /* Space below label */
 }
 
+/* Section subtitle (e.g., "Curate your profile") */
 .section-subtitle {
-  font-size: 16px;
-  font-weight: 500;
-  color: #1c1c1c;
-  margin-bottom: 16px;
+  font-size: 16px; /* Medium font size */
+  font-weight: 500; /* Medium weight */
+  color: #1c1c1c; /* Dark gray text */
+  margin-bottom: 16px; /* Space below subtitle */
 }
 
+/* White card containing groups of setting rows */
 .settings-card {
-  border: 1px solid #edeff1;
-  border-radius: 4px;
+  border: 1px solid #edeff1; /* Light gray border */
+  border-radius: 4px; /* Rounded corners */
+  background-color: white; /* Explicit white background */
 }
 
 /* ===== SETTING ROW STYLES ===== */
+
+/* Individual setting row (clickable item) */
 .setting-row {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 16px;
-  border-bottom: 1px solid #edeff1;
-  background: none;
-  border: none;
-  width: 100%;
-  cursor: pointer;
-  text-align: left;
+  display: flex; /* Flexbox for horizontal layout */
+  justify-content: space-between; /* Space between text and arrow */
+  align-items: center; /* Vertically center content */
+  padding: 16px; /* Inner padding for clickable area */
+  border-bottom: 1px solid #edeff1; /* Separator line between rows */
+  background: none; /* Transparent background */
+  border: none; /* Remove default button border */
+  width: 100%; /* Full width of container */
+  cursor: pointer; /* Pointer cursor indicating clickable */
+  text-align: left; /* Left aligned text */
 }
 
+/* Remove border from the last row in a card */
 .setting-row:last-child {
-  border-bottom: none;
+  border-bottom: none; /* No separator after last item */
 }
 
+/* Row without arrow icon (used for toggle switches) */
 .setting-row.no-arrow {
-  cursor: default;
+  cursor: default; /* Default cursor (not clickable) */
 }
 
+/* Container for text content within setting row */
 .setting-row-text {
-  flex: 1;
+  flex: 1; /* Take all available space */
 }
 
+/* Setting title (main text of the setting) */
 .setting-row-title {
-  font-size: 14px;
-  font-weight: 500;
-  color: #1c1c1c;
-  margin-bottom: 4px;
+  font-size: 14px; /* Standard font size */
+  font-weight: 500; /* Medium weight */
+  color: #1c1c1c; /* Dark gray text */
+  margin-bottom: 4px; /* Small space below title */
 }
 
+/* Setting description (explanatory text) */
 .setting-row-description {
-  font-size: 12px;
-  color: #7c7c7c;
-  line-height: 1.4;
+  font-size: 12px; /* Smaller font size */
+  color: #7c7c7c; /* Medium gray text */
+  line-height: 1.4; /* Better readability with increased line height */
 }
 
+/* Right arrow icon indicating clickable item */
 .setting-row-arrow {
-  font-size: 20px;
-  color: #878a8c;
-  margin-left: 16px;
+  font-size: 20px; /* Larger arrow icon */
+  color: #878a8c; /* Gray arrow color */
+  margin-left: 16px; /* Space between text and arrow */
 }
 
 /* ===== TOGGLE SWITCH STYLES ===== */
+
+/* Toggle switch container */
 .toggle-switch {
-  position: relative;
-  display: inline-block;
-  width: 40px;
-  height: 20px;
+  position: relative; /* For positioning child elements */
+  display: inline-block; /* Inline block display */
+  width: 40px; /* Fixed width */
+  height: 20px; /* Fixed height */
 }
 
+/* Hide the actual checkbox input */
 .toggle-switch input {
-  opacity: 0;
-  width: 0;
-  height: 0;
+  opacity: 0; /* Make completely transparent */
+  width: 0; /* Remove width */
+  height: 0; /* Remove height */
 }
 
+/* The slider (visible part of the toggle) */
 .toggle-switch-slider {
-  position: absolute;
-  cursor: pointer;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background-color: #ccc;
-  transition: .4s;
-  border-radius: 34px;
+  position: absolute; /* Absolute positioning within container */
+  cursor: pointer; /* Pointer cursor on hover */
+  top: 0; /* Align to top */
+  left: 0; /* Align to left */
+  right: 0; /* Extend to right */
+  bottom: 0; /* Extend to bottom */
+  background-color: #ccc; /* Gray background when off */
+  transition: .4s; /* Smooth transition for animations */
+  border-radius: 34px; /* Fully rounded ends */
 }
 
+/* The circle inside the slider */
 .toggle-switch-slider:before {
-  position: absolute;
-  content: "";
-  height: 14px;
-  width: 14px;
-  left: 3px;
-  bottom: 3px;
-  background-color: white;
-  transition: .4s;
-  border-radius: 50%;
+  position: absolute; /* Absolute positioning */
+  content: ""; /* Empty content (will be styled) */
+  height: 14px; /* Circle height */
+  width: 14px; /* Circle width */
+  left: 3px; /* Position from left */
+  bottom: 3px; /* Position from bottom */
+  background-color: white; /* White circle */
+  transition: .4s; /* Smooth transition for movement */
+  border-radius: 50%; /* Perfect circle */
 }
 
+/* When toggle is checked/ON */
 .toggle-switch input:checked + .toggle-switch-slider {
-  background-color: #24a0ed;
+  background-color: #24a0ed; /* Blue background when on */
 }
 
+/* Move circle to the right when toggle is ON */
 .toggle-switch input:checked + .toggle-switch-slider:before {
-  transform: translateX(20px);
+  transform: translateX(20px); /* Move 20px to the right */
 }
 
 /* ===== RESPONSIVE DESIGN ===== */
+
+/* Styles for tablets and mobile devices */
 @media (max-width: 768px) {
+  /* Stack content vertically on small screens */
   .edit-profile-container {
-    flex-direction: column;
+    flex-direction: column; /* Vertical layout */
   }
   
-  .edit-profile-sidebar {
-    width: 100%;
+  /* Adjust content padding for mobile */
+  .edit-profile-content {
+    padding: 24px 16px; /* Reduced padding on mobile */
+  }
+  
+  /* Make tabs scrollable horizontally on mobile */
+  .settings-tabs-wrapper {
+    overflow-x: auto; /* Horizontal scrolling for many tabs */
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+  }
+  
+  /* Adjust tab padding for mobile */
+  .settings-tab {
+    padding: 12px 16px; /* Slightly smaller padding */
+    white-space: nowrap; /* Prevent text wrapping in tabs */
+  }
+  
+  /* Adjust header spacing for mobile */
+  .settings-title {
+    font-size: 24px; /* Slightly smaller title on mobile */
+    margin-bottom: 20px; /* Reduced margin */
+  }
+  
+  /* Adjust section spacing for mobile */
+  .settings-section {
+    margin-bottom: 24px; /* Reduced space between sections */
+  }
+}
+
+/* Styles for very small mobile devices */
+@media (max-width: 480px) {
+  /* Further reduce padding on very small screens */
+  .edit-profile-content {
+    padding: 20px 12px; /* Minimal padding */
+  }
+  
+  /* Smaller tab font on very small screens */
+  .settings-tab {
+    font-size: 13px; /* Smaller font */
+    padding: 10px 12px; /* Smaller padding */
+  }
+  
+  /* Smaller title on very small screens */
+  .settings-title {
+    font-size: 22px; /* Smaller title */
+  }
+  
+  /* Adjust setting row padding */
+  .setting-row {
+    padding: 12px; /* Reduced padding */
   }
 }
