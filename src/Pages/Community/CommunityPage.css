@@ -1,47 +1,28 @@
-/* CommunityPage.css */
-.community-page {
-    display: flex;
-    min-height: 100vh;
-    background-color: #dae0e6;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  }
+/* Import LeftSideBar styles for layout */
+@import '../../Components/Shared/LeftSideBar/LeftSideBar.css';
 
-  .community-page__content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  
-  /* Adjust TempSidebar position */
-  .temp-sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100vh;
-    z-index: 100;
-  }
-  
-  /* Adjust TempTopNav position */
-  .temp-top-nav {
-    position: fixed;
-    left: 240px; /* Sidebar width */
-    right: 0;
-    top: 0;
-    z-index: 99;
-  }
-  
-  /* Main Content Area */
-  .main-content {
-    flex: 1;
-    margin-left: 240px; /* Sidebar width */
-    margin-top: 56px; /* Top nav height */
-    min-height: calc(100vh - 56px);
-    padding: 16px 24px 24px;
+/* CommunityPage.css */
+.community-page-content {
+  flex: 1;
+  padding: 24px;
+  margin-left: 280px;
+  margin-right: auto;
+  max-width: 1400px;
   width: 100%;
-  max-width: 1200px; /* create gutter on the right like Reddit */
-  box-sizing: border-box;
-  margin-right: auto; /* keep a bit of space on the right at large widths */
-  }
+  transition: margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.leftsidebar-layout:has(.leftsidebar-closed) .community-page-content {
+  margin-left: 60px;
+}
+
+.community-page-container {
+  width: 100%;
+  max-width: 1200px;
+}
   
   /* Content Wrapper for two-column layout
      Acts as the full‑width white card that the feed and sidebar sit on */

@@ -1,56 +1,33 @@
+/* Import LeftSideBar styles for layout */
+@import '../../Components/Shared/LeftSideBar/LeftSideBar.css';
+
 /* ManageModeratedCommunities.css */
-.manage-moderated-page {
-    display: flex;
-    min-height: 400vh;
-    background-color: #dae0e6;
-    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-  }
+.manage-moderated-content {
+  flex: 1;
+  padding: 24px;
+  margin-left: 280px;
+  margin-right: auto;
+  max-width: 1400px;
+  width: 100%;
+  transition: margin-left 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 
-  .manage-moderated-page__content {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-
-  /* Adjust TempSidebar position */
-  .temp-sidebar {
-    position: fixed;
-    left: 0;
-    top: 0;
-    height: 100vh;
-    z-index: 100;
-  }
-
-  /* Adjust TempTopNav position */
-  .temp-top-nav {
-    position: fixed;
-    left: 240px; /* Sidebar width */
-    right: 0;
-    top: 0;
-    z-index: 99;
-  }
-
-  /* Main Content Area */
-  .main-content {
-    flex: 1;
-    margin-left: 240px; /* Sidebar width */
-    margin-top: 56px; /* Top nav height */
-    min-height: calc(100vh - 56px);
-    padding: 16px 24px 24px;
-    width: 100%;
-    max-width: 1200px; /* create gutter on the right like Reddit */
-    box-sizing: border-box;
-    margin-right: auto; /* keep a bit of space on the right at large widths */
-  }
+.leftsidebar-layout:has(.leftsidebar-closed) .manage-moderated-content {
+  margin-left: 60px;
+}
 
 .manage-moderated-container {
-    max-width: 800px;
-    margin: 0 auto;
-    background-color: #ffffff;
-    border-radius: 4px;
-    border: 1px solid #edeff1;
-    font-family: inherit;
-  }
+  width: 100%;
+  max-width: 800px;
+  background-color: #ffffff;
+  border-radius: 4px;
+  border: 1px solid #edeff1;
+  font-family: inherit;
+  padding: 16px;
+}
   
   /* Header Section */
   .manage-header {
@@ -317,41 +294,14 @@
   }
   
   /* Responsive Design */
-  @media (max-width: 1024px) {
-    .main-content {
-      margin-left: 200px;
-      padding: 16px;
-    }
-
-    .temp-top-nav {
-      left: 200px;
-    }
-
-    .temp-sidebar {
-      width: 200px;
-    }
-  }
-
   @media (max-width: 768px) {
-    .temp-sidebar {
-      transform: translateX(-100%);
-      transition: transform 0.3s ease;
-    }
-
-    .temp-sidebar.open {
-      transform: translateX(0);
-    }
-
-    .main-content {
+    .manage-moderated-content {
+      padding: 16px;
       margin-left: 0;
     }
 
-    .temp-top-nav {
-      left: 0;
-    }
-
-    .main-content {
-      padding: 12px;
+    .leftsidebar-layout:has(.leftsidebar-closed) .manage-moderated-content {
+      margin-left: 0;
     }
 
     .manage-title {
@@ -386,8 +336,8 @@
   }
 
   @media (max-width: 640px) {
-    .main-content {
-      padding: 8px;
+    .manage-moderated-content {
+      padding: 12px;
     }
   }
 

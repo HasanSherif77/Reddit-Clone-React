@@ -1,27 +1,27 @@
 import React, { useState } from 'react';
 import TopBar from '../../Components/Shared/TopBar/TopBar';
 import LeftSideBar from '../../Components/Shared/LeftSideBar/LeftSideBar';
-import './PostDetails.css';
-import PostHeader from '../../Components/PostDetails/PostHeader';
-import PostImage from '../../Components/PostDetails/PostImage';
-import PostInteractions from '../../Components/PostDetails/PostInteractions';
+import PostCard from '../../Components/Shared/Post/PostCard';
 import CommentsSection from '../../Components/PostDetails/CommentsSection';
+import './PostDetails.css';
 
 const PostDetails = () => {
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [isSignedIn, setIsSignedIn] = useState(true);
+  const [commentsCount, setCommentsCount] = useState(286);
+  
   const postData = {
-    subreddit: 'r/hazbin',
+    community: 'r/hazbin',
+    communityIcon: null,
     timeAgo: '1h ago',
-    author: 'Tyranical5623',
-    authorFlair: '(Lucifer, King of Hell, Duck God)',
     title: 'HEEEY, Lucifer here, Ask me ANYTHING',
-    imageUrl: 'https://picsum.photos/600/400',
-    voteCount: 130,
-    commentCount: 286,
+    text: null,
+    mediaUrl: 'https://picsum.photos/600/400',
+    votes: 130,
+    commentsCount: commentsCount,
   };
 
-  const comments = [
+  const [comments, setComments] = useState([
     {
       id: 1,
       author: 'CharlieMorningstarFan',
@@ -101,7 +101,22 @@ const PostDetails = () => {
       isOP: false,
       replies: []
     }
-  ];
+  ]);
+
+  const handleAddComment = (commentText) => {
+    const newComment = {
+      id: Date.now(), // Simple ID generation
+      author: 'CurrentUser', // You can replace this with actual user data
+      timeAgo: 'just now',
+      content: commentText,
+      voteCount: 0,
+      isOP: false,
+      replies: []
+    };
+    
+    setComments(prevComments => [newComment, ...prevComments]);
+    setCommentsCount(prevCount => prevCount + 1);
+  };
 
   return (
     <div className="App">
@@ -116,23 +131,18 @@ const PostDetails = () => {
           <div className="post-details-page">
             <div className="post-details-container">
               <div className="post-content">
-                <PostHeader 
-                  subreddit={postData.subreddit}
+                <PostCard
+                  community={postData.community}
+                  communityIcon={postData.communityIcon}
                   timeAgo={postData.timeAgo}
-                  author={postData.author}
-                  authorFlair={postData.authorFlair}
+                  title={postData.title}
+                  text={postData.text}
+                  mediaUrl={postData.mediaUrl}
+                  votes={postData.votes}
+                  commentsCount={postData.commentsCount}
                 />
 
-                <h2 className="post-title">{postData.title}</h2>
-
-                <PostImage imageUrl={postData.imageUrl} />
-
-                <PostInteractions 
-                  voteCount={postData.voteCount}
-                  commentCount={postData.commentCount}
-                />
-
-                <CommentsSection comments={comments} />
+                <CommentsSection comments={comments} onAddComment={handleAddComment} />
               </div>
             </div>
           </div>
