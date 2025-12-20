@@ -91,6 +91,22 @@ const CreatePost = () => {
   const handleFileChange = (event) => {
     const file = event.target.files[0];
     if (file) {
+      // Check file size (limit to 10MB to account for base64 encoding overhead)
+      // Base64 increases size by ~33%, so 10MB file becomes ~13.3MB
+      const maxSize = 10 * 1024 * 1024; // 10MB in bytes
+      if (file.size > maxSize) {
+        alert('File size is too large. Please select an image or video smaller than 10MB.');
+        setSelectedFile(null);
+        setMediaPreview(null);
+        setMediaType(null);
+        // Reset file input
+        const fileInput = document.getElementById('media-file-input');
+        if (fileInput) {
+          fileInput.value = '';
+        }
+        return;
+      }
+
       setSelectedFile(file);
       
       // Determine if it's an image or video
@@ -103,6 +119,12 @@ const CreatePost = () => {
         const reader = new FileReader();
         reader.onloadend = () => {
           setMediaPreview(reader.result);
+        };
+        reader.onerror = () => {
+          alert('Error reading file. Please try again.');
+          setSelectedFile(null);
+          setMediaPreview(null);
+          setMediaType(null);
         };
         reader.readAsDataURL(file);
       } else {
@@ -172,11 +194,35 @@ const CreatePost = () => {
         body: JSON.stringify(postData),
       });
 
-      const data = await response.json();
-
+      // Check if response is ok before parsing JSON
       if (!response.ok) {
-        throw new Error(data.message || data.error || 'Failed to create post');
+        // Try to parse error response, but handle HTML errors gracefully
+        let errorMessage = 'Failed to create post';
+        const contentType = response.headers.get('content-type');
+        
+        if (contentType && contentType.includes('application/json')) {
+          try {
+            const errorData = await response.json();
+            errorMessage = errorData.message || errorData.error || errorMessage;
+          } catch (e) {
+            // If JSON parsing fails, use status text
+            errorMessage = response.statusText || errorMessage;
+          }
+        } else {
+          // Server returned HTML (likely an error page)
+          if (response.status === 413) {
+            errorMessage = 'Image file is too large. Please use an image smaller than 1MB or compress it.';
+          } else if (response.status === 400) {
+            errorMessage = 'Invalid request. The image might be corrupted or in an unsupported format.';
+          } else {
+            errorMessage = `Server error (${response.status}). Please try again or use a smaller image.`;
+          }
+        }
+        throw new Error(errorMessage);
       }
+
+      // Parse JSON only if response is ok
+      const data = await response.json();
 
       // Success - reset form and navigate
       setTitle('');
