@@ -16,10 +16,10 @@ const LoginForm = ({ onAuthSuccess }) => {
     setIsLoading(true);
 
     try {
-      const res = await fetch(`${API_BASE}/api/login`, {
+      const res = await fetch('http://localhost:5000/users/login', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ emailOrUsername, password }),
+        body: JSON.stringify({ email : emailOrUsername, password }),
       });
 
       const data = await res.json();
@@ -29,15 +29,38 @@ const LoginForm = ({ onAuthSuccess }) => {
         return;
       }
 
-      // Save token
-      localStorage.setItem("token", data.token);
+      // Clear all vote-related localStorage items from previous user
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('vote_') || key.startsWith('comment_vote_')) {
+          localStorage.removeItem(key);
+        }
+      });
+
+      // Save token to localStorage for backend communication
+      if (data.token) {
+        localStorage.setItem("token", data.token);
+      }
+
+      // Save userId if available
+      let userId = null;
+      if (data.user?.id || data.user?._id || data.userId) {
+        userId = data.user?.id || data.user?._id || data.userId;
+        localStorage.setItem("userId", userId);
+      }
+
+      // Dispatch event to notify components of auth change
+      window.dispatchEvent(new Event('authChanged'));
 
       // Update parent state (App.js) if callback provided
       if (onAuthSuccess) {
         onAuthSuccess(data.user);
       } else {
-        // Navigate to home page on successful login
-        navigate("/");
+        // Navigate to home page with isSignedIn=true
+        if (userId) {
+          navigate(`/feed/${userId}`);
+        } else {
+          navigate("/");
+        }
       }
 
     } catch (err) {

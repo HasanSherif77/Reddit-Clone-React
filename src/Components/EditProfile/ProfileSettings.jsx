@@ -15,6 +15,7 @@ import "./Settings.css";
 const ProfileSettings = () => {
   const location = useLocation();
   const [activeModal, setActiveModal] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   
   // Auto-open avatar modal if navigating from /edit-avatar
   useEffect(() => {
@@ -24,11 +25,52 @@ const ProfileSettings = () => {
   }, [location.pathname]);
   
   const [userData, setUserData] = useState({
-    displayName: "JohnDoe",
-    bio: "I love programming and cats!",
+    displayName: "",
+    bio: "",
     avatar: null,
+    avatarUrl: null,
     isMature: false
   });
+
+  // Fetch user data on component mount
+  useEffect(() => {
+    const fetchUserData = async () => {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        setIsLoading(false);
+        return;
+      }
+
+      try {
+        const response = await fetch("http://localhost:5000/users/me", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setUserData({
+            displayName: data.displayname || data.displayName || "",
+            bio: data.description || data.bio || "",
+            avatar: data.avatarUrl || data.avatar || null,
+            avatarUrl: data.avatarUrl || data.avatar || null,
+            isMature: data.isMature || false,
+          });
+        } else {
+          console.error("Failed to fetch user data");
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, []);
 
   const openDisplayNameModal = () => {
     console.log("Opening display name modal");
@@ -50,6 +92,98 @@ const ProfileSettings = () => {
     setActiveModal(null);
   };
 
+  // Save display name
+  const handleSaveDisplayName = async (newDisplayName) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const response = await fetch("http://localhost:5000/users/me", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ displayname: newDisplayName }),
+      });
+
+      if (response.ok) {
+        setUserData((prev) => ({ ...prev, displayName: newDisplayName }));
+        // Trigger event to refresh TopBar
+        window.dispatchEvent(new Event('profileUpdated'));
+      } else {
+        const error = await response.json();
+        console.error("Failed to update display name:", error);
+        alert("Failed to update display name. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error updating display name:", error);
+      alert("Error updating display name. Please try again.");
+    }
+  };
+
+  // Save bio
+  const handleSaveBio = async (newBio) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const response = await fetch("http://localhost:5000/users/me", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ description: newBio }),
+      });
+
+      if (response.ok) {
+        setUserData((prev) => ({ ...prev, bio: newBio }));
+      } else {
+        const error = await response.json();
+        console.error("Failed to update bio:", error);
+        alert("Failed to update bio. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error updating bio:", error);
+      alert("Error updating bio. Please try again.");
+    }
+  };
+
+  // Save avatar
+  const handleSaveAvatar = async (newAvatarUrl) => {
+    const token = localStorage.getItem("token");
+    if (!token) return;
+
+    try {
+      const response = await fetch("http://localhost:5000/users/me", {
+        method: "PATCH",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({ avatarUrl: newAvatarUrl }),
+      });
+
+      if (response.ok) {
+        setUserData((prev) => ({ 
+          ...prev, 
+          avatar: newAvatarUrl,
+          avatarUrl: newAvatarUrl 
+        }));
+        // Trigger event to refresh TopBar
+        window.dispatchEvent(new Event('avatarUpdated'));
+      } else {
+        const error = await response.json();
+        console.error("Failed to update avatar:", error);
+        alert("Failed to update avatar. Please try again.");
+      }
+    } catch (error) {
+      console.error("Error updating avatar:", error);
+      alert("Error updating avatar. Please try again.");
+    }
+  };
+
   return (
     <div className="profile-settings">
       
@@ -57,18 +191,21 @@ const ProfileSettings = () => {
         isOpen={activeModal === 'displayName'}
         onClose={closeModal}
         currentName={userData.displayName}
+        onSave={handleSaveDisplayName}
       />
       
       <EditBioModal
         isOpen={activeModal === 'bio'}
         onClose={closeModal}
         currentBio={userData.bio}
+        onSave={handleSaveBio}
       />
       
       <EditAvatarModal
         isOpen={activeModal === 'avatar'}
         onClose={closeModal}
-        currentAvatar={userData.avatar}
+        currentAvatar={userData.avatar || userData.avatarUrl}
+        onSave={handleSaveAvatar}
       />
 
       <section className="settings-section">

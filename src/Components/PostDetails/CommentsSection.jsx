@@ -1,14 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './CommentsSection.css';
 import CommentItem from './CommentItem';
+import defaultAvatar from '../../assets/default-avatars/default.svg';
 
-const CommentsSection = ({ comments, onAddComment }) => {
+const CommentsSection = ({ comments, onAddComment, onAddReply, isSignedIn = true }) => {
   const [commentText, setCommentText] = useState('');
+  const [userAvatar, setUserAvatar] = useState(defaultAvatar);
 
-  const handleSubmit = (e) => {
+  // Fetch current user's avatar
+  useEffect(() => {
+    const fetchUserAvatar = async () => {
+      if (!isSignedIn) {
+        setUserAvatar(defaultAvatar);
+        return;
+      }
+
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setUserAvatar(defaultAvatar);
+        return;
+      }
+
+      try {
+        const response = await fetch('http://localhost:5000/users/me', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const user = await response.json();
+          if (user.avatarUrl && user.avatarUrl.trim() !== '') {
+            setUserAvatar(user.avatarUrl);
+          } else {
+            setUserAvatar(defaultAvatar);
+          }
+        } else {
+          setUserAvatar(defaultAvatar);
+        }
+      } catch (error) {
+        setUserAvatar(defaultAvatar);
+      }
+    };
+
+    fetchUserAvatar();
+  }, [isSignedIn]);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
     if (commentText.trim() && onAddComment) {
-      onAddComment(commentText.trim());
+      await onAddComment(commentText.trim());
       setCommentText(''); // Clear the text field
     }
   };
@@ -30,7 +73,16 @@ const CommentsSection = ({ comments, onAddComment }) => {
       </div>
 
       <div className="add-comment">
-        <div className="comment-avatar">T</div>
+        <img 
+          src={userAvatar} 
+          alt="Your avatar" 
+          className="comment-avatar-img"
+          onError={(e) => {
+            if (e.target.src !== defaultAvatar) {
+              e.target.src = defaultAvatar;
+            }
+          }}
+        />
         <textarea 
           className="comment-input" 
           placeholder="Add your comment"
@@ -59,7 +111,12 @@ const CommentsSection = ({ comments, onAddComment }) => {
 
       <div className="comments-list">
         {comments.map(comment => (
-          <CommentItem key={comment.id} comment={comment} />
+          <CommentItem 
+            key={comment.id} 
+            comment={comment} 
+            onAddReply={onAddReply}
+            isSignedIn={isSignedIn}
+          />
         ))}
       </div>
 

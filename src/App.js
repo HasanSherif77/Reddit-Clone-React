@@ -27,8 +27,8 @@ function App() {
     <BrowserRouter>
       <CommunityProvider>
         <Routes>
-          <Route path="/" element={<Home isSignedIn={false} />} />
-          <Route path="/feed/:userId" element={<Home isSignedIn={true} />} />
+          <Route path="/" element={<Home />} />
+          <Route path="/feed/:userId" element={<Home />} />
           <Route path="/search" element={<SearchResults />} />
           <Route path="/post/:postId" element={<PostDetails />} />
           <Route path="/user/:userId" element={<UserProfile />} />
@@ -38,6 +38,7 @@ function App() {
           <Route path="/notifications" element={<Notifications />} />
           <Route path="/login" element={<LoginForm />} />
           <Route path="/signup" element={<SignUpForm />} />
+          <Route path="/discover-communities" element={<DiscoverCommunities />} />
           <Route path="/edit-profile" element={<EditProfile />} />
           <Route path="/edit-avatar" element={<EditProfile />} />
           <Route path="/add-topics" element={<AddTopicsComponent />} />

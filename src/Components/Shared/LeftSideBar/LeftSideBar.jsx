@@ -183,7 +183,8 @@ const resourcesBottomSection = [
                   <div className="leftsidebar-collapse-content">
                     <SidebarButton
                       icon={settingIcon}
-                      label="Manage Communities"
+                      label="Discover Communities"
+                      onClick={() => navigate('/discover-communities')}
                     />
                   </div>
                 )}

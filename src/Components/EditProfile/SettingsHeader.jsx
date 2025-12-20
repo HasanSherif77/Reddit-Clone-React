@@ -3,7 +3,7 @@ import React from "react";
 import "./Settings.css";
 
 const SettingsHeader = ({ activeTab, onTabChange }) => {
-  const TABS = ["Account", "Profile", "Privacy", "Preferences", "Notifications", "Email"];
+  const TABS = ["Account", "Profile", "Privacy", "Preferences", "Notifications", "Email", "My Posts"];
 
   return (
     <header className="settings-header">

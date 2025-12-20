@@ -1,0 +1,44 @@
+.my-posts-settings {
+  width: 100%;
+  padding: 24px;
+}
+
+.my-posts-header {
+  margin-bottom: 24px;
+}
+
+.my-posts-title {
+  font-size: 24px;
+  font-weight: 600;
+  color: #1a1a1b;
+  margin-bottom: 8px;
+}
+
+.my-posts-subtitle {
+  font-size: 14px;
+  color: #7c7c7c;
+  margin: 0;
+}
+
+.my-posts-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.my-posts-loading,
+.my-posts-error,
+.my-posts-empty {
+  padding: 40px;
+  text-align: center;
+  color: #7c7c7c;
+  font-size: 16px;
+  background-color: #ffffff;
+  border-radius: 8px;
+  border: 1px solid #edeff1;
+}
+
+.my-posts-error {
+  color: #ff4500;
+}
+

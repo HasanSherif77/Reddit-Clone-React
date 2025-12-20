@@ -129,6 +129,17 @@
     z-index: 1;
   }
 
+  .community-icon-img {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    object-fit: cover;
+    margin-right: 8px;
+    flex-shrink: 0;
+    position: relative;
+    z-index: 1;
+  }
+
   .icon-placeholder {
     color: white;
     font-size: 12px;

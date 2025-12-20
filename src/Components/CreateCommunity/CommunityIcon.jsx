@@ -8,6 +8,7 @@ const CommunityIcon = () => {
   const [bannerImage, setBannerImage] = useState(null);
   const [iconImage, setIconImage] = useState(null);
   const [communityData, setCommunityData] = useState(null);
+  const [isCreating, setIsCreating] = useState(false);
   const navigate = useNavigate();
   const { addCommunity } = useCommunities();
 
@@ -63,30 +64,63 @@ const CommunityIcon = () => {
     navigate(-1); // Go back to previous page
   };
 
-  const handleCreateCommunity = () => {
+  const handleCreateCommunity = async () => {
     if (!communityData) {
       alert('Community data not found. Please start over.');
       navigate('/add-topics');
       return;
     }
 
-    // Combine community data with style settings
-    const fullCommunityData = {
-      ...communityData,
-      banner: bannerImage,
-      icon: iconImage
-    };
+    const token = localStorage.getItem('token');
+    if (!token) {
+      alert('You must be logged in to create a community.');
+      navigate('/login');
+      return;
+    }
 
-    // Create the community
-    const newCommunity = addCommunity(fullCommunityData);
-    console.log('Community created:', newCommunity);
-    console.log('Full community data:', fullCommunityData);
+    setIsCreating(true);
+    try {
+      // Prepare community data matching the backend model
+      const communityPayload = {
+        communityName: communityData.name,
+        communityDescription: communityData.description,
+        communityMembersCount: 1, // Default value
+        communityIcon: iconImage || '', // Base64 string or empty
+        communityBanner: bannerImage || '' // Base64 string or empty
+      };
 
-    // Clear temporary data
-    sessionStorage.removeItem('tempCommunityData');
+      // Create the community via backend API
+      const response = await fetch('http://localhost:5000/communities/', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify(communityPayload),
+      });
 
-    // Navigate to the newly created community page
-    navigate(`/r/${newCommunity.name}`);
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        throw new Error(errorData.error || errorData.message || 'Failed to create community');
+      }
+
+      const newCommunity = await response.json();
+      console.log('Community created:', newCommunity);
+
+      // Clear temporary data
+      sessionStorage.removeItem('tempCommunityData');
+      sessionStorage.removeItem('communitySettings');
+
+      // Navigate to the newly created community page
+      // Assuming the response includes communityName or the community object
+      const communityName = newCommunity.communityName || newCommunity.community?.communityName || communityData.name;
+      navigate(`/r/${communityName}`);
+    } catch (error) {
+      console.error('Error creating community:', error);
+      alert(error.message || 'Failed to create community. Please try again.');
+    } finally {
+      setIsCreating(false);
+    }
   };
 
   return (
@@ -234,8 +268,9 @@ const CommunityIcon = () => {
         <button 
           className="create-btn"
           onClick={handleCreateCommunity}
+          disabled={isCreating}
         >
-          Create Community
+          {isCreating ? 'Creating...' : 'Create Community'}
         </button>
       </div>
     </div>

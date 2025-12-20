@@ -1,11 +1,19 @@
 // src/Components/EditProfile/Modals/EditDisplayNameModal.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Modals.css';
 
 // EditDisplayNameModal - popup for editing display name
 const EditDisplayNameModal = ({ isOpen, onClose, currentName = '', onSave }) => {
   const [displayName, setDisplayName] = useState(currentName);
   const [characterCount, setCharacterCount] = useState(currentName.length);
+
+  // Sync state when currentName changes
+  useEffect(() => {
+    if (isOpen) {
+      setDisplayName(currentName);
+      setCharacterCount(currentName.length);
+    }
+  }, [currentName, isOpen]);
 
   // Don't render if modal is not open
   if (!isOpen) return null;

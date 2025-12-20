@@ -1,31 +1,45 @@
-import React, { useState, useEffect } from "react";
-import "./PostsList.css";
-import PostCard from "./PostCard";
+import React, { useState, useEffect } from 'react';
+import PostCard from '../Shared/Post/PostCard';
+import './MyPostsSettings.css';
 
-function PostsList({ isSignedIn = true }) {
+const MyPostsSettings = () => {
   const [posts, setPosts] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [isSignedIn, setIsSignedIn] = useState(false);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const token = localStorage.getItem("token");
+    setIsSignedIn(!!token);
+  }, []);
+
+  useEffect(() => {
+    const fetchMyPosts = async () => {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        setError('You must be logged in to view your posts');
+        setLoading(false);
+        return;
+      }
+
       try {
         setLoading(true);
-        const token = localStorage.getItem('token');
-        const headers = {
-          'Content-Type': 'application/json',
-        };
-        
-        if (token) {
-          headers['Authorization'] = `Bearer ${token}`;
-        }
-
-        const response = await fetch('http://localhost:5000/posts/', {
+        const response = await fetch('http://localhost:5000/posts/me', {
           method: 'GET',
-          headers: headers,
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
         });
 
         if (!response.ok) {
+          if (response.status === 401) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("userId");
+            setError('Session expired. Please log in again.');
+            setIsSignedIn(false);
+            return;
+          }
           throw new Error('Failed to fetch posts');
         }
 
@@ -73,8 +87,8 @@ function PostsList({ isSignedIn = true }) {
             id: post._id || post.id,
             userId: userId,
             communityId: communityId,
-            userData: userData, // Pass populated user data
-            communityData: communityData, // Pass populated community data
+            userData: userData,
+            communityData: communityData,
             timeAgo: formatTimeAgo(post.createdAt || post.created_at),
             title: post.title || '',
             text: post.body || '',
@@ -94,8 +108,12 @@ function PostsList({ isSignedIn = true }) {
       }
     };
 
-    fetchPosts();
-  }, []);
+    if (isSignedIn) {
+      fetchMyPosts();
+    } else {
+      setLoading(false);
+    }
+  }, [isSignedIn]);
 
   // Helper function to format time ago
   const formatTimeAgo = (dateString) => {
@@ -116,9 +134,9 @@ function PostsList({ isSignedIn = true }) {
 
   if (loading) {
     return (
-      <div className="posts-list">
-        <div className="posts-loading">
-          <p>Loading posts...</p>
+      <div className="my-posts-settings">
+        <div className="my-posts-loading">
+          <p>Loading your posts...</p>
         </div>
       </div>
     );
@@ -126,9 +144,19 @@ function PostsList({ isSignedIn = true }) {
 
   if (error) {
     return (
-      <div className="posts-list">
-        <div className="posts-error">
+      <div className="my-posts-settings">
+        <div className="my-posts-error">
           <p>Error: {error}</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (!isSignedIn) {
+    return (
+      <div className="my-posts-settings">
+        <div className="my-posts-error">
+          <p>Please log in to view your posts.</p>
         </div>
       </div>
     );
@@ -136,21 +164,33 @@ function PostsList({ isSignedIn = true }) {
 
   if (posts.length === 0) {
     return (
-      <div className="posts-list">
-        <div className="posts-empty">
-          <p>No posts available</p>
+      <div className="my-posts-settings">
+        <div className="my-posts-empty">
+          <p>You haven't created any posts yet.</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="posts-list">
-      {posts.map((post) => (
-        <PostCard key={post.id} {...post} isSignedIn={isSignedIn} />
-      ))}
+    <div className="my-posts-settings">
+      <div className="my-posts-header">
+        <h2 className="my-posts-title">My Posts</h2>
+        <p className="my-posts-subtitle">All posts you've created ({posts.length})</p>
+      </div>
+      <div className="my-posts-list">
+        {posts.map((post) => (
+          <PostCard 
+            key={post.id} 
+            {...post} 
+            isSignedIn={isSignedIn}
+            preferCommunity={true}
+          />
+        ))}
+      </div>
     </div>
   );
-}
+};
 
-export default PostsList;
+export default MyPostsSettings;
+

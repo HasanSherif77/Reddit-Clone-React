@@ -182,6 +182,125 @@
   background-color: #fff8f6; /* Light orange background */
 }
 
+/* ===== DEFAULT AVATARS SECTION ===== */
+
+/* Section title for default avatars */
+.avatars-section-title {
+  font-size: 16px;
+  font-weight: 500;
+  color: #1c1c1c;
+  margin: 0 0 16px 0;
+}
+
+/* Container for default avatars grid */
+.default-avatars-section {
+  margin-bottom: 24px;
+}
+
+/* Grid container for avatars */
+.avatars-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+  gap: 12px;
+  max-height: 300px; /* Maximum height before scrolling */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 8px;
+  border: 1px solid #edeff1;
+  border-radius: 8px;
+  background-color: #fafafa;
+}
+
+/* Scrollbar styling for avatars grid */
+.avatars-grid::-webkit-scrollbar {
+  width: 8px;
+}
+
+.avatars-grid::-webkit-scrollbar-track {
+  background: #f1f1f1;
+  border-radius: 4px;
+}
+
+.avatars-grid::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 4px;
+}
+
+.avatars-grid::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Individual avatar option */
+.avatar-option {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 50%;
+  cursor: pointer;
+  border: 3px solid transparent;
+  transition: all 0.2s ease;
+  overflow: hidden;
+}
+
+/* Avatar option image */
+.avatar-option-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 50%;
+}
+
+/* Selected avatar state */
+.avatar-selected {
+  border-color: #0079d3; /* Blue border for selected */
+  box-shadow: 0 0 0 3px rgba(0, 121, 211, 0.2); /* Blue glow */
+}
+
+/* Avatar option hover effect */
+.avatar-option:hover {
+  transform: scale(1.05);
+  border-color: #0079d3;
+}
+
+/* Checkmark overlay for selected avatar */
+.avatar-checkmark {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 32px;
+  height: 32px;
+  background-color: #0079d3;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 20px;
+  font-weight: bold;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Divider between sections */
+.avatar-divider {
+  display: flex;
+  align-items: center;
+  text-align: center;
+  margin: 24px 0;
+  color: #7c7c7c;
+  font-size: 14px;
+}
+
+.avatar-divider::before,
+.avatar-divider::after {
+  content: '';
+  flex: 1;
+  border-bottom: 1px solid #edeff1;
+}
+
+.avatar-divider span {
+  padding: 0 16px;
+}
+
 /* ===== INPUT FIELD STYLES ===== */
 
 /* Input group container */

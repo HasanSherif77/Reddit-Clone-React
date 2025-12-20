@@ -21,7 +21,7 @@
 
 .community-page-container {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1600px;
 }
   
   /* Content Wrapper for two-column layout
@@ -32,7 +32,7 @@
     justify-content: center;
     gap: 24px;
     width: 100%;
-    max-width: 1060px;
+    max-width: 1400px;
     margin: 0 auto;
     box-sizing: border-box;
   }
@@ -44,6 +44,18 @@
     display: flex;
     justify-content: flex-start; /* Keep feed on the left side of main area */
     align-items: flex-start;
+    max-width: none;
+  }
+
+  /* Expand posts list width */
+  .content-main .posts-list {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .content-main .posts-list > * {
+    width: 100%;
+    max-width: 100%;
   }
   
   /* Sidebar Area */

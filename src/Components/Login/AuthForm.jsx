@@ -8,6 +8,10 @@ const AuthForm = ({
   title,
   emailOrUsername,
   setEmailOrUsername,
+  username,
+  setUsername,
+  email,
+  setEmail,
   password,
   setPassword,
   confirmPassword,
@@ -18,6 +22,8 @@ const AuthForm = ({
   switchLinkText,
   onSwitch,
   showConfirmPassword = false,
+  showUsername = false,
+  showEmail = false,
   submitText = "Submit",
   isLoading = false
 }) => {
@@ -39,14 +45,38 @@ const AuthForm = ({
       {error && <p className="error-text">{error}</p>}
 
       <form onSubmit={handleSubmit}>
-        <input
-          className="auth-input"
-          type="text"
-          placeholder="Email or Username"
-          value={emailOrUsername}
-          onChange={(e) => setEmailOrUsername(e.target.value)}
-          disabled={isLoading}
-        />
+        {showUsername && (
+          <input
+            className="auth-input"
+            type="text"
+            placeholder="Username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            disabled={isLoading}
+          />
+        )}
+
+        {showEmail && (
+          <input
+            className="auth-input"
+            type="email"
+            placeholder="Email"
+            value={email}
+            onChange={(e) => setEmail(e.target.value)}
+            disabled={isLoading}
+          />
+        )}
+
+        {!showUsername && !showEmail && (
+          <input
+            className="auth-input"
+            type="text"
+            placeholder="Email or Username"
+            value={emailOrUsername}
+            onChange={(e) => setEmailOrUsername(e.target.value)}
+            disabled={isLoading}
+          />
+        )}
 
         <input
           className="auth-input"

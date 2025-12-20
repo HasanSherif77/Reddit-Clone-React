@@ -1,16 +1,16 @@
 import React from 'react';
 import './FormActions.css';  
 
-const FormActions = ({ title, selectedCommunity, handlePost }) => {
+const FormActions = ({ title, selectedCommunity, handlePost, isSubmitting = false }) => {
   return (
     <div className="form-actions">
       <button className="save-draft-btn">Save Draft</button>
       <button 
         className="post-btn"
         onClick={handlePost}
-        disabled={!title.trim() || !selectedCommunity}
+        disabled={!title.trim() || isSubmitting}
       >
-        Post
+        {isSubmitting ? 'Posting...' : 'Post'}
       </button>
     </div>
   );

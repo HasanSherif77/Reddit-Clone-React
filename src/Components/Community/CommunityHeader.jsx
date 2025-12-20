@@ -2,19 +2,31 @@
 import React, { useState } from 'react';
 import './CommunityHeader.css';
 
-const CommunityHeader = ({ community }) => {
+const CommunityHeader = ({ 
+  community, 
+  hasJoined = false, 
+  isJoining = false, 
+  onJoinClick, 
+  onCreatePost,
+  isSignedIn = false,
+  activeTab = 'posts',
+  onTabChange
+}) => {
   const communityName = community?.name || 'Community';
   const communityDescription = community?.description || 'A community';
-  const [activeTab, setActiveTab] = useState('posts');
   const [sortBy, setSortBy] = useState('hot');
   const [isSortMenuOpen, setIsSortMenuOpen] = useState(false);
 
   const handleCreatePost = () => {
-    alert('Create post functionality would open here');
+    if (onCreatePost) {
+      onCreatePost();
+    }
   };
 
   const handleJoin = () => {
-    alert('Join community functionality would go here');
+    if (onJoinClick) {
+      onJoinClick();
+    }
   };
 
   const handleSortChange = (newSort) => {
@@ -38,6 +50,13 @@ const CommunityHeader = ({ community }) => {
     <header className="community-header-container">
       {/* Banner area */}
       <div className="community-banner">
+        {community?.banner && community.banner.trim() !== '' ? (
+          <img 
+            src={community.banner} 
+            alt={`${communityName} banner`}
+            className="banner-image"
+          />
+        ) : null}
         <div className="banner-overlay" />
       </div>
 
@@ -46,8 +65,29 @@ const CommunityHeader = ({ community }) => {
         {/* Community info with avatar */}
         <div className="community-info-section">
           <div className="community-avatar">
-            <div className="avatar-placeholder" style={{ backgroundColor: community?.iconColor || '#0079d3' }}>
-              <span className="avatar-text">{community?.icon || 'r/'}</span>
+            {community?.icon && community.icon.trim() !== '' ? (
+              <img 
+                src={community.icon} 
+                alt={`${communityName} icon`}
+                className="community-avatar-img"
+                onError={(e) => {
+                  // Fallback to placeholder if image fails
+                  e.target.style.display = 'none';
+                  const fallback = e.target.nextElementSibling;
+                  if (fallback) {
+                    fallback.style.display = 'flex';
+                  }
+                }}
+              />
+            ) : null}
+            <div 
+              className="avatar-placeholder" 
+              style={{ 
+                backgroundColor: community?.iconColor || '#0079d3',
+                display: (community?.icon && community.icon.trim() !== '') ? 'none' : 'flex'
+              }}
+            >
+              <span className="avatar-text">r/</span>
             </div>
           </div>
           <div className="community-details">
@@ -59,12 +99,20 @@ const CommunityHeader = ({ community }) => {
             </div>
           </div>
           <div className="community-actions">
-            <button className="btn-create-post" onClick={handleCreatePost}>
+            <button 
+              className="btn-create-post" 
+              onClick={handleCreatePost}
+              disabled={!isSignedIn}
+            >
               <span className="create-post-icon"></span>
               Create Post
             </button>
-            <button className="btn-join-community" onClick={handleJoin}>
-              Join
+            <button 
+              className={`btn-join-community ${hasJoined ? 'joined' : ''}`}
+              onClick={handleJoin}
+              disabled={isJoining || !isSignedIn}
+            >
+              {isJoining ? '...' : (hasJoined ? 'Joined' : 'Join')}
             </button>
           </div>
         </div>
@@ -76,7 +124,7 @@ const CommunityHeader = ({ community }) => {
               <button
                 key={tab.id}
                 className={`tab ${activeTab === tab.id ? 'active' : ''}`}
-                onClick={() => setActiveTab(tab.id)}
+                onClick={() => onTabChange && onTabChange(tab.id)}
               >
                 {tab.label}
               </button>

@@ -42,14 +42,43 @@ function UserMenu({ isOpen, onClose, avatarImage, username }) {
     navigate("/edit-profile");
   };
 
-  const handleLogout = () => {
-    // Clear authentication token
-    localStorage.removeItem("token");
-    onClose();
-    // Navigate to home page (isSignedIn will be false since token is cleared)
-    navigate("/");
-    // Reload the page to reset all component states
-    window.location.reload();
+  const handleLogout = async () => {
+    const token = localStorage.getItem("token");
+    
+    try {
+      // Call backend logout endpoint
+      if (token) {
+        await fetch("http://localhost:5000/users/logout", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+      }
+    } catch (error) {
+      console.error("Error during logout:", error);
+      // Continue with logout even if API call fails
+    } finally {
+      // Clear authentication token and userId
+      localStorage.removeItem("token");
+      localStorage.removeItem("userId");
+      
+      // Clear all vote-related localStorage items
+      Object.keys(localStorage).forEach(key => {
+        if (key.startsWith('vote_') || key.startsWith('comment_vote_')) {
+          localStorage.removeItem(key);
+        }
+      });
+      
+      // Dispatch event to notify components of auth change
+      window.dispatchEvent(new Event('authChanged'));
+      onClose();
+      // Navigate to home page (isSignedIn will be false since token is cleared)
+      navigate("/");
+      // Reload the page to reset all component states
+      window.location.reload();
+    }
   };
 
   const mainMenuItems = [

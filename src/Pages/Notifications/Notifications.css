@@ -139,6 +139,18 @@
     font-size: 12px;
 }
 
+.notifications-loading,
+.notifications-error {
+    padding: 40px;
+    text-align: center;
+    color: #7c7c7c;
+    font-size: 16px;
+}
+
+.notifications-error {
+    color: #ea0027;
+}
+
 /* Responsive design */
 @media (max-width: 768px) {
     .notifications-content {

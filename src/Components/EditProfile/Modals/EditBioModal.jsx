@@ -1,11 +1,19 @@
 // src/Components/EditProfile/Modals/EditBioModal.jsx
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './Modals.css';
 
 // EditBioModal - popup for editing profile bio/description
 const EditBioModal = ({ isOpen, onClose, currentBio = '', onSave }) => {
   const [bio, setBio] = useState(currentBio);
   const [characterCount, setCharacterCount] = useState(currentBio.length);
+
+  // Sync state when currentBio changes
+  useEffect(() => {
+    if (isOpen) {
+      setBio(currentBio);
+      setCharacterCount(currentBio.length);
+    }
+  }, [currentBio, isOpen]);
 
   // Don't render if modal is not open
   if (!isOpen) return null;

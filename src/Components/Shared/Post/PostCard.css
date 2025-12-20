@@ -66,12 +66,29 @@
   font-size: 12px;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.12s ease, border-color 0.12s ease;
+  transition: background-color 0.12s ease, border-color 0.12s ease, color 0.12s ease;
 }
 
-.postcard-join-btn:hover {
+.postcard-join-btn:hover:not(:disabled) {
   background-color: #132a57;
   border-color: #132a57;
+}
+
+.postcard-join-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.postcard-join-btn-joined {
+  background-color: #ffffff;
+  border-color: #1a3b7c;
+  color: #1a3b7c;
+}
+
+.postcard-join-btn-joined:hover:not(:disabled) {
+  background-color: #f6f7f8;
+  border-color: #132a57;
+  color: #132a57;
 }
 
 .postcard-dots-btn {
@@ -204,14 +221,70 @@
   transition: filter 0.12s ease, opacity 0.12s ease;
 }
 
-.postcard-vote {
-  gap: 6px;
-  padding: 2px 14px;
+.postcard-vote-container {
+  display: flex;
+  align-items: center;
+  gap: 0;
+  border: 1px solid #d7dadc;
+  border-radius: 999px;
+  background-color: #f6f7f8;
+  overflow: hidden;
+}
+
+.postcard-vote-btn {
+  background-color: transparent;
+  border: none;
+  padding: 4px 8px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.12s ease;
+}
+
+.postcard-vote-btn:first-child {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.postcard-vote-btn:last-child {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.postcard-vote-btn:hover:not(:disabled) {
+  background-color: #e4e5e7;
+}
+
+.postcard-vote-btn:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.postcard-vote-btn-active.postcard-vote-btn-upvoted {
+  background-color: #46d160;
+}
+
+.postcard-vote-btn-active.postcard-vote-btn-upvoted .postcard-like-icon {
+  filter: brightness(0) saturate(100%) invert(100%);
+}
+
+.postcard-vote-btn-active.postcard-vote-btn-downvoted {
+  background-color: #ff4500;
+}
+
+.postcard-vote-btn-active.postcard-vote-btn-downvoted .postcard-dislike-icon {
+  filter: brightness(0) saturate(100%) invert(100%);
 }
 
 .postcard-vote-count {
   min-width: 40px;
   text-align: center;
+  font-weight: 600;
+  padding: 4px 8px;
+  border-left: 1px solid #d7dadc;
+  border-right: 1px solid #d7dadc;
+  background-color: #f6f7f8;
 }
 
 .postcard-like-icon:hover {
@@ -303,6 +376,13 @@
   color: #7c7c7c;
   margin: 0;
   font-style: italic;
+}
+
+.postcard-summary-error {
+  font-size: 15px;
+  line-height: 1.6;
+  color: #ea0027;
+  margin: 0;
 }
 
 @media (max-width: 640px) {

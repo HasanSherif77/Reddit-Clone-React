@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "./TopBar.css";
 import UserMenu from "./UserMenu";
@@ -10,11 +10,104 @@ import adImage from "../../../assets/images/Ad.svg";
 import bellImage from "../../../assets/images/Bell.svg";
 import chatImage from "../../../assets/images/Chat.svg";
 import createImage from "../../../assets/images/Create.svg";
-import girlAvatarImage from "../../../assets/images/Girl-Avatar.svg";
+import defaultAvatar from "../../../assets/default-avatars/default.svg";
 
 function TopBar({ isSignedIn = false }) {
   const navigate = useNavigate();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
+  const [userData, setUserData] = useState({
+    username: null,
+    displayName: null,
+    avatarUrl: null,
+  });
+  const [isLoading, setIsLoading] = useState(false);
+
+  // Fetch user data when signed in
+  useEffect(() => {
+    const fetchUserData = async () => {
+      if (!isSignedIn) {
+        setUserData({ username: null, displayName: null, avatarUrl: null });
+        return;
+      }
+
+      const token = localStorage.getItem("token");
+      if (!token) {
+        return;
+      }
+
+      setIsLoading(true);
+      try {
+        const response = await fetch("http://localhost:5000/users/me", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setUserData({
+            username: data.username || data.user?.username || null,
+            displayName: data.displayname || data.displayName || data.user?.displayname || data.user?.displayName || null,
+            avatarUrl: data.avatarUrl || data.avatar || data.user?.avatarUrl || data.user?.avatar || null,
+          });
+        } else {
+          console.error("Failed to fetch user data");
+          // If token is invalid, clear it
+          if (response.status === 401) {
+            localStorage.removeItem("token");
+            localStorage.removeItem("userId");
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchUserData();
+  }, [isSignedIn]);
+
+  // Listen for custom events to refresh user data when profile is updated
+  useEffect(() => {
+    const handleProfileUpdate = async () => {
+      if (!isSignedIn) return;
+      
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      try {
+        const response = await fetch("http://localhost:5000/users/me", {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          setUserData({
+            username: data.username || data.user?.username || null,
+            displayName: data.displayname || data.displayName || data.user?.displayname || data.user?.displayName || null,
+            avatarUrl: data.avatarUrl || data.avatar || data.user?.avatarUrl || data.user?.avatar || null,
+          });
+        }
+      } catch (error) {
+        console.error("Error refreshing user data:", error);
+      }
+    };
+    
+    window.addEventListener('profileUpdated', handleProfileUpdate);
+    window.addEventListener('avatarUpdated', handleProfileUpdate);
+
+    return () => {
+      window.removeEventListener('profileUpdated', handleProfileUpdate);
+      window.removeEventListener('avatarUpdated', handleProfileUpdate);
+    };
+  }, [isSignedIn]);
 
   return (
     <header className="topbar">
@@ -70,7 +163,7 @@ function TopBar({ isSignedIn = false }) {
             </button>
 
             <img
-              src={girlAvatarImage}
+              src={userData.avatarUrl || defaultAvatar}
               alt="User profile"
               className="topbar-avatar-img"
               title="Open profile menu"
@@ -80,8 +173,8 @@ function TopBar({ isSignedIn = false }) {
             <UserMenu
               isOpen={isUserMenuOpen}
               onClose={() => setIsUserMenuOpen(false)}
-              avatarImage={girlAvatarImage}
-              username="u/YourUsername"
+              avatarImage={userData.avatarUrl || defaultAvatar}
+              username={userData.displayName || (userData.username ? `u/${userData.username}` : "u/User")}
             />
           </>
         ) : (

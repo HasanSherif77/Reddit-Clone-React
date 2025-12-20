@@ -3,3 +3,16 @@
   flex-direction: column;
   gap: 12px;
 }
+
+.posts-loading,
+.posts-error,
+.posts-empty {
+  padding: 40px;
+  text-align: center;
+  color: #7c7c7c;
+  font-size: 16px;
+}
+
+.posts-error {
+  color: #ea0027;
+}

@@ -14,6 +14,7 @@ import PrivacySettings from "../../Components/EditProfile/PrivacySettings";
 import PreferencesSettings from "../../Components/EditProfile/PreferencesSettings";
 import NotificationsSettings from "../../Components/EditProfile/NotificationsSettings";
 import EmailSettings from "../../Components/EditProfile/EmailSettings";
+import MyPostsSettings from "../../Components/EditProfile/MyPostsSettings";
 
 // Import CSS
 import "../../Components/EditProfile/Settings.css";
@@ -47,6 +48,8 @@ const EditProfile = () => {
         return <NotificationsSettings />;
       case "Email":
         return <EmailSettings />;
+      case "My Posts":
+        return <MyPostsSettings />;
       default:
         return <ProfileSettings />;
     }
