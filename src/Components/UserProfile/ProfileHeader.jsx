@@ -1,6 +1,7 @@
 import React from "react";
+import defaultAvatar from "../../assets/default-avatars/default.svg";
 
-const ProfileHeader = () => {
+const ProfileHeader = ({ displayname, username, avatarUrl, description }) => {
   return (
     <header className="profile-header">
       <div className="profile-banner">
@@ -10,15 +11,20 @@ const ProfileHeader = () => {
       <div className="profile-header-bottom">
         <div className="profile-avatar-wrapper">
           <img
-            src="https://www.redditstatic.com/avatars/defaults/v2/avatar_default_7.png"
+            src={avatarUrl || defaultAvatar}
             alt="Avatar"
             className="profile-avatar"
           />
         </div>
 
         <div className="profile-name-block">
-          <div className="profile-display-name">IllHistory3645</div>
-          <div className="profile-username">u/IllHistory3645</div>
+          <div className="profile-display-name">{displayname || username || "Unknown User"}</div>
+          <div className="profile-username">u/{username || "unknown"}</div>
+          {description && (
+            <div className="profile-description" style={{ marginTop: '8px', color: '#7c7c7c', fontSize: '14px' }}>
+              {description}
+            </div>
+          )}
         </div>
 
         <div className="profile-header-actions">

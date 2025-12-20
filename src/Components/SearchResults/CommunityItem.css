@@ -4,6 +4,7 @@
   margin-bottom: 14px;
   text-align: start;
   cursor: pointer;
+  width: 100%;
 }
 
 .community-avatar {
@@ -14,18 +15,13 @@
 
 .community-info {
   flex: 1;
-}
-
-.community-name-row {
-  display: flex;
-  gap: 6px;
-  align-items: center;
-  margin-bottom: 4px;
+  min-width: 0;
 }
 
 .community-name {
   font-weight: 500;
   font-size: 14px;
+  margin: 0 0 4px 0;
 }
 
 .nsfw-badge {
@@ -34,6 +30,7 @@
   font-size: 11px;
   padding: 2px 6px;
   border-radius: 6px;
+  margin-right: 6px;
 }
 
 .community-desc {

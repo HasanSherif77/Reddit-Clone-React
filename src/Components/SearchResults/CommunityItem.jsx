@@ -13,11 +13,10 @@ export default function CommunityItem({
       <img src={avatar} alt="" className="community-avatar" />
 
       <div className="community-info">
-        <div className="community-name-row">
+        <p className="community-name">
           {nsfw && <span className="nsfw-badge">18+</span>}
-          <span className="community-name">{name}</span>
-        </div>
-
+          {name}
+        </p>
         <p className="community-desc">{description}</p>
         <p className="community-stats">
           {members} members · {online} online

@@ -1,4 +1,5 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
+import { useSearchParams } from 'react-router-dom';
 import TopBar from '../../Components/Shared/TopBar/TopBar';
 import LeftSideBar from '../../Components/Shared/LeftSideBar/LeftSideBar';
 import SearchTabsBar from '../../Components/SearchResults/SearchTabsBar';
@@ -11,9 +12,11 @@ import RightSidebar from '../../Components/SearchResults/RightSidebar';
 import './SearchResults.css';
 
 const SearchResults = () => {
+  const [searchParams] = useSearchParams();
   const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const [activeTab, setActiveTab] = useState('All');
-  const [isSignedIn, setIsSignedIn] = useState(true); // Change to true to test signed-in view
+  const [isSignedIn, setIsSignedIn] = useState(true);
+  const searchQuery = searchParams.get('q') || '';
 
   const renderContent = () => {
     switch (activeTab) {
@@ -41,14 +44,14 @@ const SearchResults = () => {
       case 'Communities':
         return (
           <div className="full-width-content">
-            <CommunitiesSectionFull showHeader={false} />
+            <CommunitiesSectionFull showHeader={false} searchQuery={searchQuery} />
           </div>
         );
       
       case 'People':
         return (
           <div className="full-width-content">
-            <PeopleSectionFull showHeader={false} />
+            <PeopleSectionFull showHeader={false} searchQuery={searchQuery} />
           </div>
         );
       

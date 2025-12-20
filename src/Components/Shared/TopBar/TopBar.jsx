@@ -21,6 +21,20 @@ function TopBar({ isSignedIn = false }) {
     avatarUrl: null,
   });
   const [isLoading, setIsLoading] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+
+  const handleSearch = () => {
+    if (searchQuery.trim()) {
+      navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
+      setSearchQuery(''); // Clear search after navigating
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === 'Enter') {
+      handleSearch();
+    }
+  };
 
   // Fetch user data when signed in
   useEffect(() => {
@@ -125,11 +139,16 @@ function TopBar({ isSignedIn = false }) {
             src={searchIconImage}
             alt="Search"
             className="topbar-search-icon"
+            onClick={handleSearch}
+            style={{ cursor: 'pointer' }}
           />
           <input
             type="text"
             placeholder="Search Reddit"
             className="topbar-search-input"
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            onKeyDown={handleKeyDown}
           />
         </div>
       </div>

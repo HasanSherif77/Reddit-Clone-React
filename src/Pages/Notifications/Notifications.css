@@ -76,6 +76,10 @@
 .notification-item:hover {
     background-color: #f0f0f0;
 }
+.notification-item.clickable:hover {
+    background-color: #e5e5e5;
+    cursor: pointer;
+}
 .notification-icon {
     margin-right: 12px;
     display: flex;

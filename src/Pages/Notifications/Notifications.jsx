@@ -60,6 +60,7 @@ const Notifications = () => {
                         description: notif.description || notif.body || notif.content || '',
                         time: formatTimeAgo(notif.createdAt || notif.created_at || notif.timestamp),
                         read: notif.read || notif.isRead || false,
+                        postId: notif.relatedPost || notif.postId || notif.relatedPostId || null,
                     }));
 
                     setNotifications(mappedNotifications);

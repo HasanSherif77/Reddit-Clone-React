@@ -3,7 +3,7 @@ import React, { useState } from "react";
 import { IoEyeOutline, IoChevronDown } from "react-icons/io5";
 import { GoPlus } from "react-icons/go";
 
-const FeedControls = () => {
+const FeedControls = ({ showCreatePost = true }) => {
   const [sort, setSort] = useState("New");
 
   return (
@@ -16,13 +16,15 @@ const FeedControls = () => {
 
       <div className="feed-controls-right">
         {/* Button with Plus Icon */}
-        <button 
-          className="btn-primary" 
-          style={{ display: "flex", alignItems: "center", gap: "4px" }}
-        >
-          <GoPlus size={20} />
-          <span>Create Post</span>
-        </button>
+        {showCreatePost && (
+          <button 
+            className="btn-primary" 
+            style={{ display: "flex", alignItems: "center", gap: "4px" }}
+          >
+            <GoPlus size={20} />
+            <span>Create Post</span>
+          </button>
+        )}
 
         {/* Sort Dropdown with Custom Arrow */}
         <div className="feed-sort">

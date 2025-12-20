@@ -1,8 +1,17 @@
+import { useNavigate } from "react-router-dom";
 import "./PersonItem.css";
 
-export default function PersonItem({ avatar, username, bio, karma }) {
+export default function PersonItem({ userId, avatar, username, bio, karma }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (userId) {
+      navigate(`/user/${userId}`);
+    }
+  };
+
   return (
-    <div className="person-item">
+    <div className="person-item" onClick={handleClick}>
       <img src={avatar} alt="" className="person-avatar" />
 
       <div className="person-info">
