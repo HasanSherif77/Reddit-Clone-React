@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import CommunityItem from "./CommunityItem";
 import "./CommunitiesSectionFull.css";
+import defaultAvatar from "../../assets/default-avatars/default.svg";
 
 export default function CommunitiesSectionFull({ showHeader = true, searchQuery = "" }) {
   const [communities, setCommunities] = useState([]);
@@ -43,8 +44,9 @@ export default function CommunitiesSectionFull({ showHeader = true, searchQuery 
         
         // Map backend data to frontend format
         const mappedCommunities = Array.isArray(data) ? data.map((community) => ({
-          avatar: community.communityIcon || "",
+          avatar: community.communityIcon || defaultAvatar,
           name: `r/${community.communityName || "unknown"}`,
+          communityName: community.communityName || "unknown",
           description: community.communityDescription || "No description available",
           members: formatMembers(community.communityMembersCount || 0),
           online: 0, // Backend doesn't provide online count, defaulting to 0

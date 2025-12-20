@@ -73,6 +73,19 @@
   background-color: #f0f8ff;
 }
 
+.loading-message,
+.error-message,
+.empty-message {
+  padding: 40px;
+  text-align: center;
+  color: #7c7c7c;
+  font-size: 16px;
+}
+
+.error-message {
+  color: #ea0027;
+}
+
 @media (max-width: 768px) {
   .people-grid {
     gap: 12px;

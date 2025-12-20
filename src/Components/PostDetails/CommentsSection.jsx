@@ -3,7 +3,7 @@ import './CommentsSection.css';
 import CommentItem from './CommentItem';
 import defaultAvatar from '../../assets/default-avatars/default.svg';
 
-const CommentsSection = ({ comments, onAddComment, onAddReply, isSignedIn = true }) => {
+const CommentsSection = ({ comments, onAddComment, onAddReply, onDeleteComment, isSignedIn = true }) => {
   const [commentText, setCommentText] = useState('');
   const [userAvatar, setUserAvatar] = useState(defaultAvatar);
 
@@ -115,6 +115,7 @@ const CommentsSection = ({ comments, onAddComment, onAddReply, isSignedIn = true
             key={comment.id} 
             comment={comment} 
             onAddReply={onAddReply}
+            onDeleteComment={onDeleteComment}
             isSignedIn={isSignedIn}
           />
         ))}

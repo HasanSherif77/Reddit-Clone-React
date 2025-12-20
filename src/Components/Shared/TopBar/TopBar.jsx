@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import "./TopBar.css";
 import UserMenu from "./UserMenu";
 import LoginButton from "./LoginButton";
+import FloatingChat from "../../../Pages/DirectMesseges/FloatingChat";
 
 import redditLogoImage from "../../../assets/images/Logo.png";
 import searchIconImage from "../../../assets/images/Search.svg";
@@ -14,19 +15,47 @@ import defaultAvatar from "../../../assets/default-avatars/default.svg";
 
 function TopBar({ isSignedIn = false }) {
   const navigate = useNavigate();
+  const location = useLocation();
   const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
   const [userData, setUserData] = useState({
     username: null,
     displayName: null,
     avatarUrl: null,
+    id: null,
   });
   const [isLoading, setIsLoading] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [isChatOpen, setIsChatOpen] = useState(false);
+
+  // Load search query from localStorage on mount
+  useEffect(() => {
+    const savedQuery = localStorage.getItem('searchQuery') || '';
+    setSearchQuery(savedQuery);
+  }, []);
+
+  // Sync with URL query parameter when on search results page
+  useEffect(() => {
+    if (location.pathname === '/search') {
+      const urlParams = new URLSearchParams(location.search);
+      const urlQuery = urlParams.get('q') || '';
+      if (urlQuery) {
+        setSearchQuery(urlQuery);
+        localStorage.setItem('searchQuery', urlQuery);
+      }
+    }
+  }, [location]);
+
+  // Save search query to localStorage whenever it changes
+  useEffect(() => {
+    if (searchQuery !== '') {
+      localStorage.setItem('searchQuery', searchQuery);
+    }
+  }, [searchQuery]);
 
   const handleSearch = () => {
     if (searchQuery.trim()) {
       navigate(`/search?q=${encodeURIComponent(searchQuery.trim())}`);
-      setSearchQuery(''); // Clear search after navigating
+      // Don't clear search query - keep it for navigation
     }
   };
 
@@ -61,11 +90,16 @@ function TopBar({ isSignedIn = false }) {
 
         if (response.ok) {
           const data = await response.json();
+          const userId = data._id || data.id || data.user?._id || data.user?.id || localStorage.getItem("userId");
           setUserData({
             username: data.username || data.user?.username || null,
             displayName: data.displayname || data.displayName || data.user?.displayname || data.user?.displayName || null,
             avatarUrl: data.avatarUrl || data.avatar || data.user?.avatarUrl || data.user?.avatar || null,
+            id: userId,
           });
+          if (userId) {
+            localStorage.setItem("userId", userId);
+          }
         } else {
           console.error("Failed to fetch user data");
           // If token is invalid, clear it
@@ -103,11 +137,16 @@ function TopBar({ isSignedIn = false }) {
 
         if (response.ok) {
           const data = await response.json();
+          const userId = data._id || data.id || data.user?._id || data.user?.id || localStorage.getItem("userId");
           setUserData({
             username: data.username || data.user?.username || null,
             displayName: data.displayname || data.displayName || data.user?.displayname || data.user?.displayName || null,
             avatarUrl: data.avatarUrl || data.avatar || data.user?.avatarUrl || data.user?.avatar || null,
+            id: userId,
           });
+          if (userId) {
+            localStorage.setItem("userId", userId);
+          }
         }
       } catch (error) {
         console.error("Error refreshing user data:", error);
@@ -122,6 +161,16 @@ function TopBar({ isSignedIn = false }) {
       window.removeEventListener('avatarUpdated', handleProfileUpdate);
     };
   }, [isSignedIn]);
+
+  // Load userId from localStorage on mount if not in userData
+  useEffect(() => {
+    if (isSignedIn && !userData.id) {
+      const savedUserId = localStorage.getItem("userId");
+      if (savedUserId) {
+        setUserData(prev => ({ ...prev, id: savedUserId }));
+      }
+    }
+  }, [isSignedIn, userData.id]);
 
   return (
     <header className="topbar">
@@ -160,7 +209,11 @@ function TopBar({ isSignedIn = false }) {
               <img src={adImage} alt="Ads" className="topbar-icon-img" />
             </button>
 
-            <button className="topbar-icon-btn" title="Open chat">
+            <button 
+              className="topbar-icon-btn" 
+              title="Open chat"
+              onClick={() => setIsChatOpen(true)}
+            >
               <img src={chatImage} alt="Chat messages" className="topbar-icon-img" />
             </button>
 
@@ -200,6 +253,14 @@ function TopBar({ isSignedIn = false }) {
           <LoginButton />
         )}
       </div>
+
+      {/* Floating Chat */}
+      {isSignedIn && isChatOpen && userData.id && (
+        <FloatingChat
+          currentUser={{ id: userData.id, username: userData.username }}
+          onClose={() => setIsChatOpen(false)}
+        />
+      )}
     </header>
   );
 }

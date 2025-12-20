@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './CommentItem.css';
 
-const CommentItem = ({ comment, isReply = false, depth = 0, onAddReply, isSignedIn = true }) => {
+const CommentItem = ({ comment, isReply = false, depth = 0, onAddReply, isSignedIn = true, onDeleteComment }) => {
   const navigate = useNavigate();
   const [showReplies, setShowReplies] = useState(false);
   const [showReplyForm, setShowReplyForm] = useState(false);
@@ -17,6 +17,37 @@ const CommentItem = ({ comment, isReply = false, depth = 0, onAddReply, isSigned
     return null;
   });
   const [isVoting, setIsVoting] = useState(false);
+  const [currentUserData, setCurrentUserData] = useState(null);
+  const [isDeleting, setIsDeleting] = useState(false);
+
+  // Fetch current user data to check ownership
+  useEffect(() => {
+    const fetchCurrentUser = async () => {
+      if (!isSignedIn) return;
+
+      const token = localStorage.getItem("token");
+      if (!token) return;
+
+      try {
+        const response = await fetch('http://localhost:5000/users/me', {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const user = await response.json();
+          setCurrentUserData(user);
+        }
+      } catch (error) {
+        // Error fetching current user data
+      }
+    };
+
+    fetchCurrentUser();
+  }, [isSignedIn]);
 
   // Update votes when comment prop changes
   useEffect(() => {
@@ -100,6 +131,55 @@ const CommentItem = ({ comment, isReply = false, depth = 0, onAddReply, isSigned
       // Error upvoting comment
     } finally {
       setIsVoting(false);
+    }
+  };
+
+  const handleDeleteComment = async (e) => {
+    e.stopPropagation();
+    
+    if (!isSignedIn || !comment.id) return;
+    
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    // Confirm deletion
+    if (!window.confirm("Are you sure you want to delete this comment?")) {
+      return;
+    }
+
+    setIsDeleting(true);
+    try {
+      const response = await fetch(`http://localhost:5000/comments/${comment.id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        // Call onDeleteComment callback if provided to refresh comments
+        if (onDeleteComment) {
+          onDeleteComment(comment.id);
+        }
+      } else {
+        if (response.status === 401) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("userId");
+          navigate("/login");
+        } else if (response.status === 403) {
+          alert("You don't have permission to delete this comment");
+        } else {
+          alert("Failed to delete comment. Please try again.");
+        }
+      }
+    } catch (error) {
+      alert("An error occurred while deleting the comment");
+    } finally {
+      setIsDeleting(false);
     }
   };
 
@@ -204,6 +284,17 @@ const CommentItem = ({ comment, isReply = false, depth = 0, onAddReply, isSigned
           </div>
           
           <div className="comment-action-buttons">
+            {/* Show delete button only if current user is the comment owner */}
+            {currentUserData && comment.userId && String(currentUserData._id || currentUserData.id) === String(comment.userId) && (
+              <button 
+                className="comment-action-btn comment-delete-btn"
+                onClick={handleDeleteComment}
+                disabled={isDeleting}
+                style={{ color: '#ff4500' }}
+              >
+                {isDeleting ? 'Deleting...' : 'Delete'}
+              </button>
+            )}
             <button 
               className="comment-action-btn reply-btn"
               onClick={toggleReplyForm}
@@ -265,6 +356,7 @@ const CommentItem = ({ comment, isReply = false, depth = 0, onAddReply, isSigned
                 isReply={true}
                 depth={depth + 1}
                 onAddReply={onAddReply}
+                onDeleteComment={onDeleteComment}
                 isSignedIn={isSignedIn}
               />
             ))}

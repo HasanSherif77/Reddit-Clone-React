@@ -1,6 +1,9 @@
+import { useNavigate } from "react-router-dom";
 import "./PostCard.css";
 
 export default function PostCard({
+  id,
+  postId,
   avatar,
   subreddit,
   time,
@@ -10,8 +13,20 @@ export default function PostCard({
   comments,
   image,
 }) {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    if (postId || id) {
+      navigate(`/post/${postId || id}`);
+    }
+  };
+
   return (
-    <div className="post-card">
+    <div 
+      className="post-card" 
+      onClick={handleClick}
+      style={{ cursor: (postId || id) ? 'pointer' : 'default' }}
+    >
       <div className="post-left">
         <div className="post-header-row">
           <img className="avatar" src={avatar} alt="" />

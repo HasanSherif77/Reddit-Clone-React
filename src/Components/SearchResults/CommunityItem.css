@@ -4,7 +4,6 @@
   margin-bottom: 14px;
   text-align: start;
   cursor: pointer;
-  width: 100%;
 }
 
 .community-avatar {
@@ -15,7 +14,6 @@
 
 .community-info {
   flex: 1;
-  min-width: 0;
 }
 
 .community-name {

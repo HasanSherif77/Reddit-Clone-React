@@ -64,10 +64,10 @@ function PostCard({
     setCurrentVotes(votes || 0);
   }, [votes]);
 
-  // Fetch current user data to check joinedCommunities
+  // Fetch current user data to check joinedCommunities and ownership
   useEffect(() => {
     const fetchCurrentUser = async () => {
-      if (!isSignedIn || !communityId) return;
+      if (!isSignedIn) return;
 
       const token = localStorage.getItem("token");
       if (!token) return;
@@ -86,13 +86,15 @@ function PostCard({
           setCurrentUserData(user);
           
           // Check if user has joined this community
-          const joinedCommunities = user.joinedCommunities || [];
-          const communityIdString = String(communityId);
-          const isJoined = joinedCommunities.some(commId => 
-            String(commId) === communityIdString || 
-            String(commId._id || commId) === communityIdString
-          );
-          setHasJoined(isJoined);
+          if (communityId) {
+            const joinedCommunities = user.joinedCommunities || [];
+            const communityIdString = String(communityId);
+            const isJoined = joinedCommunities.some(commId => 
+              String(commId) === communityIdString || 
+              String(commId._id || commId) === communityIdString
+            );
+            setHasJoined(isJoined);
+          }
         }
       } catch (error) {
         // Error fetching current user data
@@ -433,6 +435,54 @@ function PostCard({
     }
   };
 
+  const handleDeletePost = async (e) => {
+    e.stopPropagation();
+    
+    if (!isSignedIn || !id) return;
+    
+    const token = localStorage.getItem("token");
+    if (!token) {
+      navigate("/login");
+      return;
+    }
+
+    // Confirm deletion
+    if (!window.confirm("Are you sure you want to delete this post?")) {
+      return;
+    }
+
+    try {
+      const response = await fetch(`http://localhost:5000/posts/${id}`, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        // Navigate to home page after successful deletion
+        navigate("/");
+        // Dispatch event to refresh posts list
+        window.dispatchEvent(new CustomEvent('postDeleted', { detail: { postId: id } }));
+      } else {
+        if (response.status === 401) {
+          localStorage.removeItem("token");
+          localStorage.removeItem("userId");
+          navigate("/login");
+        } else if (response.status === 403) {
+          alert("You don't have permission to delete this post");
+        } else {
+          alert("Failed to delete post. Please try again.");
+        }
+      }
+    } catch (error) {
+      alert("An error occurred while deleting the post");
+    }
+    
+    setIsMenuOpen(false);
+  };
+
   const handleJoinClick = async (e) => {
     e.stopPropagation();
     if (!isSignedIn) {
@@ -596,6 +646,16 @@ function PostCard({
 
       {isMenuOpen && (
         <div className="postcard-menu" ref={menuRef}>
+          {/* Show delete button only if current user is the post owner */}
+          {currentUserData && userId && String(currentUserData._id || currentUserData.id) === String(userId) && (
+            <button 
+              className="postcard-menu-item postcard-menu-item-delete"
+              onClick={handleDeletePost}
+              style={{ color: '#ff4500' }}
+            >
+              <span>Delete Post</span>
+            </button>
+          )}
           <button className="postcard-menu-item">
             <img src={bellIcon} alt="Follow post" />
             <span>Follow post</span>

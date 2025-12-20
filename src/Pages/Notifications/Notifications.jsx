@@ -53,15 +53,100 @@ const Notifications = () => {
                     const data = await response.json();
                     
                     // Map backend response to component format
-                    const mappedNotifications = (Array.isArray(data) ? data : data.notifications || []).map((notif) => ({
-                        id: notif._id || notif.id,
-                        type: notif.type || notif.notificationType || 'general',
-                        title: notif.title || notif.message || 'Notification',
-                        description: notif.description || notif.body || notif.content || '',
-                        time: formatTimeAgo(notif.createdAt || notif.created_at || notif.timestamp),
-                        read: notif.read || notif.isRead || false,
-                        postId: notif.relatedPost || notif.postId || notif.relatedPostId || null,
-                    }));
+                    const mappedNotifications = (Array.isArray(data) ? data : data.notifications || []).map((notif) => {
+                        // Extract populated objects
+                        const relatedUser = notif.relatedUser;
+                        const relatedPost = notif.relatedPost;
+                        const relatedComment = notif.relatedComment;
+                        const user = notif.user;
+
+                        // Extract postId from relatedPost (could be object or string)
+                        let postId = null;
+                        if (relatedPost) {
+                            postId = typeof relatedPost === 'object' ? (relatedPost._id || relatedPost.id) : relatedPost;
+                        }
+
+                        // Extract commentId from relatedComment (could be object or string)
+                        let commentId = null;
+                        if (relatedComment) {
+                            commentId = typeof relatedComment === 'object' ? (relatedComment._id || relatedComment.id) : relatedComment;
+                        }
+
+                        // Generate title and description based on type and action
+                        let title = 'Notification';
+                        let description = notif.action || '';
+
+                        if (relatedUser) {
+                            const relatedUserName = relatedUser.displayname || relatedUser.username || 'someone';
+                            const relatedUserPrefix = `u/${relatedUserName}`;
+
+                            switch (notif.type) {
+                                case 'comment':
+                                    title = `${relatedUserPrefix} commented on your post`;
+                                    description = notif.action || 'New comment on your post';
+                                    break;
+                                case 'reply':
+                                    title = `${relatedUserPrefix} replied to your comment`;
+                                    description = notif.action || 'New reply to your comment';
+                                    break;
+                                case 'upvote':
+                                    title = `${relatedUserPrefix} upvoted your ${relatedPost ? 'post' : 'comment'}`;
+                                    description = notif.action || 'Your content received an upvote';
+                                    break;
+                                case 'downvote':
+                                    title = `${relatedUserPrefix} downvoted your ${relatedPost ? 'post' : 'comment'}`;
+                                    description = notif.action || 'Your content received a downvote';
+                                    break;
+                                case 'message':
+                                    title = `${relatedUserPrefix} sent you a message`;
+                                    description = notif.action || 'New message';
+                                    break;
+                                case 'community':
+                                    title = `${relatedUserPrefix} ${notif.action || 'updated the community'}`;
+                                    description = notif.action || 'Community update';
+                                    break;
+                                default:
+                                    title = `${relatedUserPrefix} ${notif.action || 'performed an action'}`;
+                                    description = notif.action || '';
+                            }
+                        } else {
+                            // No relatedUser, use action as title
+                            title = notif.action || 'Notification';
+                            description = '';
+                        }
+
+                        return {
+                            id: notif._id || notif.id,
+                            type: notif.type || 'general',
+                            action: notif.action || '',
+                            title: title,
+                            description: description,
+                            time: formatTimeAgo(notif.createdAt),
+                            read: notif.read || false,
+                            postId: postId,
+                            commentId: commentId,
+                            relatedUser: relatedUser ? {
+                                id: typeof relatedUser === 'object' ? (relatedUser._id || relatedUser.id) : relatedUser,
+                                displayname: relatedUser.displayname || '',
+                                username: relatedUser.username || '',
+                                avatarUrl: relatedUser.avatarUrl || ''
+                            } : null,
+                            relatedPost: relatedPost ? {
+                                id: typeof relatedPost === 'object' ? (relatedPost._id || relatedPost.id) : relatedPost,
+                                title: relatedPost.title || ''
+                            } : null,
+                            relatedComment: relatedComment ? {
+                                id: typeof relatedComment === 'object' ? (relatedComment._id || relatedComment.id) : relatedComment,
+                                content: relatedComment.content || ''
+                            } : null,
+                            user: user ? {
+                                id: typeof user === 'object' ? (user._id || user.id) : user,
+                                displayname: user.displayname || '',
+                                username: user.username || ''
+                            } : null,
+                            createdAt: notif.createdAt
+                        };
+                    });
 
                     setNotifications(mappedNotifications);
                 } else {

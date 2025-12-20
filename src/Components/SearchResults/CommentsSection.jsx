@@ -2,15 +2,15 @@ import React, { useState, useEffect } from "react";
 import PostCard from "./PostCard";
 import defaultAvatar from "../../assets/default-avatars/default.svg";
 
-export default function PostsList({ searchQuery = "" }) {
-  const [posts, setPosts] = useState([]);
+export default function CommentsSection({ searchQuery = "" }) {
+  const [comments, setComments] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    const fetchPosts = async () => {
+    const fetchComments = async () => {
       if (!searchQuery.trim()) {
-        setPosts([]);
+        setComments([]);
         return;
       }
 
@@ -28,7 +28,7 @@ export default function PostsList({ searchQuery = "" }) {
         }
 
         const response = await fetch(
-          `http://localhost:5000/posts/search/${encodeURIComponent(searchQuery.trim())}`,
+          `http://localhost:5000/comments/search/${encodeURIComponent(searchQuery.trim())}`,
           {
             method: "GET",
             headers: headers,
@@ -36,50 +36,58 @@ export default function PostsList({ searchQuery = "" }) {
         );
 
         if (!response.ok) {
-          throw new Error("Failed to fetch posts");
+          throw new Error("Failed to fetch comments");
         }
 
         const data = await response.json();
-        const postsArray = Array.isArray(data) ? data : [];
+        const commentsArray = Array.isArray(data) ? data : [];
 
-        // Map backend data to PostCard format
-        const mappedPosts = postsArray.map((post) => {
-          // Extract user and community data
+        // Map comments to PostCard format (showing the post the comment belongs to)
+        const mappedComments = commentsArray.map((comment) => {
+          // Extract user and post data
           let avatar = defaultAvatar;
           let subreddit = "unknown";
+          let postTitle = "";
+          let postId = null;
 
-          if (post.userId && typeof post.userId === 'object') {
-            avatar = post.userId.avatarUrl || defaultAvatar;
+          if (comment.userId && typeof comment.userId === 'object') {
+            avatar = comment.userId.avatarUrl || defaultAvatar;
           }
 
-          if (post.communityId && typeof post.communityId === 'object') {
-            subreddit = post.communityId.communityName || "unknown";
+          if (comment.postId && typeof comment.postId === 'object') {
+            postTitle = comment.postId.title || '';
+            postId = comment.postId._id || comment.postId.id;
+            
+            // Get community from post
+            if (comment.postId.communityId && typeof comment.postId.communityId === 'object') {
+              subreddit = comment.postId.communityId.communityName || "unknown";
+            }
           }
 
           return {
-            id: post._id || post.id,
-            postId: post._id || post.id, // For navigation
+            id: comment._id || comment.id,
             avatar: avatar,
             subreddit: subreddit,
-            time: formatTimeAgo(post.createdAt || post.created_at),
-            title: post.title || '',
-            firstComment: post.body || '',
-            votes: formatVotes(post.votesCount || 0),
-            comments: post.commentsCount || 0,
-            image: post.mediaUrl || null,
+            time: formatTimeAgo(comment.createdAt || comment.created_at),
+            title: postTitle || 'Comment on post',
+            firstComment: comment.content || '',
+            votes: formatVotes(comment.votes || 0),
+            comments: 0, // Comments don't have nested comments count in this view
+            image: null,
+            postId: postId, // Store postId for navigation
           };
         });
 
-        setPosts(mappedPosts);
+        setComments(mappedComments);
       } catch (err) {
         setError(err.message);
-        setPosts([]);
+        setComments([]);
       } finally {
         setIsLoading(false);
       }
     };
 
-    fetchPosts();
+    fetchComments();
   }, [searchQuery]);
 
   const formatTimeAgo = (dateString) => {
@@ -108,22 +116,23 @@ export default function PostsList({ searchQuery = "" }) {
   };
 
   if (isLoading) {
-    return <div style={{ padding: '40px', textAlign: 'center' }}>Loading posts...</div>;
+    return <div style={{ padding: '40px', textAlign: 'center' }}>Loading comments...</div>;
   }
 
   if (error) {
     return <div style={{ padding: '40px', textAlign: 'center', color: '#ea0027' }}>Error: {error}</div>;
   }
 
-  if (posts.length === 0 && searchQuery) {
-    return <div style={{ padding: '40px', textAlign: 'center', color: '#7c7c7c' }}>No posts found for "{searchQuery}"</div>;
+  if (comments.length === 0 && searchQuery) {
+    return <div style={{ padding: '40px', textAlign: 'center', color: '#7c7c7c' }}>No comments found for "{searchQuery}"</div>;
   }
 
   return (
     <>
-      {posts.map((post) => (
-        <PostCard key={post.id} {...post} />
+      {comments.map((comment) => (
+        <PostCard key={comment.id} {...comment} />
       ))}
     </>
   );
 }
+

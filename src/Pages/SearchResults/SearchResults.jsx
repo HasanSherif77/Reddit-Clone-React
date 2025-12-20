@@ -6,6 +6,7 @@ import SearchTabsBar from '../../Components/SearchResults/SearchTabsBar';
 import FiltersDropdowns from '../../Components/SearchResults/FiltersDropdowns';
 import MediaPage from '../../Components/SearchResults/MediaSection';
 import PostsSection from '../../Components/SearchResults/PostsSection';
+import CommentsSection from '../../Components/SearchResults/CommentsSection';
 import CommunitiesSectionFull from '../../Components/SearchResults/CommunitiesSectionFull';
 import PeopleSectionFull from '../../Components/SearchResults/PeopleSectionFull';
 import RightSidebar from '../../Components/SearchResults/RightSidebar';
@@ -24,10 +25,10 @@ const SearchResults = () => {
         return (
           <div className="content-layout">
             <div className="main-content-wrapper">
-              <PostsSection />
+              <PostsSection searchQuery={searchQuery} />
             </div>
             <div className="right-sidebar-wrapper">
-              <RightSidebar />
+              <RightSidebar searchQuery={searchQuery} />
             </div>
           </div>
         );
@@ -36,7 +37,7 @@ const SearchResults = () => {
         return (
           <div className="content-layout">
             <div className="main-content-wrapper">
-              <MediaPage />
+              <MediaPage searchQuery={searchQuery} />
             </div>
           </div>
         );
@@ -59,7 +60,7 @@ const SearchResults = () => {
         return (
           <div className="content-layout">
             <div className="main-content-wrapper">
-              <PostsSection />
+              <CommentsSection searchQuery={searchQuery} />
             </div>
           </div>
         );
@@ -69,12 +70,12 @@ const SearchResults = () => {
         return (
           <div className="content-layout">
             <div className="main-content-wrapper">
-              <MediaPage />
+              <MediaPage searchQuery={searchQuery} />
               <div className="section-divider"></div>
-              <PostsSection />
+              <PostsSection searchQuery={searchQuery} />
             </div>
             <div className="right-sidebar-wrapper">
-              <RightSidebar />
+              <RightSidebar searchQuery={searchQuery} />
             </div>
           </div>
         );

@@ -2,12 +2,12 @@ import CommunitiesSection from "./CommunitiesSection";
 import PeopleSection from "./PeopleSection";
 import "./RightSidebar.css";
 
-export default function RightSidebar() {
+export default function RightSidebar({ searchQuery = "" }) {
   return (
     <div className="right-sidebar">
-      <CommunitiesSection />
+      <CommunitiesSection searchQuery={searchQuery} />
       <div className="divider"></div>
-      <PeopleSection />
+      <PeopleSection searchQuery={searchQuery} />
     </div>
   );
 }

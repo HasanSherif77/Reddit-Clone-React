@@ -153,6 +153,7 @@ const PostDetails = () => {
             
             const mappedComment = {
               id: commentId,
+              userId: userIdString,
               author: (userIdObj?.displayname && userIdObj.displayname.trim() !== '') 
                 ? userIdObj.displayname 
                 : (userIdObj?.username || 'unknown'),
@@ -208,6 +209,99 @@ const PostDetails = () => {
       fetchComments();
     }
   }, [postId, postData]);
+
+  // Handle comment deletion - refresh comments list
+  const handleDeleteComment = (commentId) => {
+    // Remove the deleted comment from the comments state
+    const removeComment = (comments) => {
+      return comments
+        .filter(comment => comment.id !== commentId)
+        .map(comment => ({
+          ...comment,
+          replies: comment.replies ? removeComment(comment.replies) : []
+        }));
+    };
+    
+    setComments(prevComments => removeComment(prevComments));
+    
+    // Optionally refetch all comments to ensure consistency
+    const fetchComments = async () => {
+      if (!postId) return;
+
+      try {
+        const token = localStorage.getItem('token');
+        const headers = {
+          'Content-Type': 'application/json',
+        };
+        
+        if (token) {
+          headers['Authorization'] = `Bearer ${token}`;
+        }
+
+        const response = await fetch(`http://localhost:5000/comments/post/${postId}`, {
+          method: 'GET',
+          headers: headers,
+        });
+
+        if (response.ok) {
+          const commentsData = await response.json();
+          const postAuthorId = postData?.userId ? String(postData.userId) : null;
+          
+          const buildCommentTree = (comments) => {
+            const commentMap = new Map();
+            const topLevelComments = [];
+            
+            comments.forEach(comment => {
+              const commentId = String(comment._id);
+              const userIdObj = comment.userId;
+              const userIdString = typeof userIdObj === 'object' ? String(userIdObj._id) : String(userIdObj);
+              
+              const mappedComment = {
+                id: commentId,
+                userId: userIdString,
+                author: (userIdObj?.displayname && userIdObj.displayname.trim() !== '') 
+                  ? userIdObj.displayname 
+                  : (userIdObj?.username || 'unknown'),
+                timeAgo: formatTimeAgo(comment.createdAt || comment.created_at),
+                content: comment.content || '',
+                voteCount: comment.votes || 0,
+                isOP: postAuthorId && userIdString === postAuthorId,
+                replies: []
+              };
+              
+              commentMap.set(commentId, mappedComment);
+            });
+            
+            comments.forEach(comment => {
+              const commentId = String(comment._id);
+              const mappedComment = commentMap.get(commentId);
+              
+              if (comment.parentComment === null || comment.parentComment === undefined) {
+                topLevelComments.push(mappedComment);
+              } else {
+                const parentId = typeof comment.parentComment === 'object' 
+                  ? String(comment.parentComment._id) 
+                  : String(comment.parentComment);
+                const parentComment = commentMap.get(parentId);
+                if (parentComment) {
+                  parentComment.replies.push(mappedComment);
+                }
+              }
+            });
+            
+            return topLevelComments;
+          };
+          
+          const mappedComments = buildCommentTree(commentsData);
+          setComments(mappedComments);
+        }
+      } catch (error) {
+        // Error fetching comments
+      }
+    };
+    
+    fetchComments();
+  };
 
   // Helper function to format time ago
   const formatTimeAgo = (dateString) => {
@@ -441,9 +535,10 @@ const PostDetails = () => {
                   </div>
                 ) : (
                   <CommentsSection 
-                    comments={comments} 
+                    comments={comments}
                     onAddComment={handleAddComment}
                     onAddReply={handleAddComment}
+                    onDeleteComment={handleDeleteComment}
                     isSignedIn={isSignedIn}
                   />
                 )}

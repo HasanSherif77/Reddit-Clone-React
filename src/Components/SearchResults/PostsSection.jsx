@@ -1,11 +1,11 @@
 import PostsHeader from "./PostsHeader";
 import PostsList from "./PostsList";
 
-export default function PostsSection() {
+export default function PostsSection({ searchQuery = "" }) {
   return (
     <div style={{ padding: "0px 20px 20px 40px" }}>
       <PostsHeader />
-      <PostsList />
+      <PostsList searchQuery={searchQuery} />
     </div>
   );
 }
