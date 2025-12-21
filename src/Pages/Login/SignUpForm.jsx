@@ -30,7 +30,7 @@ const SignUpForm = ({ onAuthSuccess }) => {
     setIsLoading(true);
 
     try {
-      const res = await fetch('http://localhost:5000/users/signup', {
+  const res = await fetch('http://localhost:5000/users/signup', {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ 

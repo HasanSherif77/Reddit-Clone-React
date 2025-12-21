@@ -53,7 +53,7 @@ const CommunityPage = () => {
         }
 
         // First, fetch all communities to find the one matching the name
-        const communitiesResponse = await fetch('http://localhost:5000/communities/', {
+  const communitiesResponse = await fetch('http://localhost:5000/communities/', {
           method: 'GET',
           headers: headers,
         });
@@ -94,7 +94,7 @@ const CommunityPage = () => {
         const communityId = String(mappedCommunity.id);
         setPostsLoading(true);
         
-        const postsResponse = await fetch(`http://localhost:5000/posts/community/${communityId}`, {
+  const postsResponse = await fetch(`http://localhost:5000/posts/community/${communityId}`, {
           method: 'GET',
           headers: headers,
         });
@@ -175,7 +175,7 @@ const CommunityPage = () => {
       if (!token) return;
 
       try {
-        const response = await fetch('http://localhost:5000/users/me', {
+  const response = await fetch('http://localhost:5000/users/me', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -214,7 +214,7 @@ const CommunityPage = () => {
       if (!token) return;
 
       try {
-        const response = await fetch('http://localhost:5000/users/me', {
+  const response = await fetch('http://localhost:5000/users/me', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -270,8 +270,8 @@ const CommunityPage = () => {
     try {
       const communityIdString = String(community.id);
       const endpoint = hasJoined 
-        ? `http://localhost:5000/users/communities/${communityIdString}/leave`
-        : `http://localhost:5000/users/communities/${communityIdString}/join`;
+  ? `http://localhost:5000/users/communities/${communityIdString}/leave`
+  : `http://localhost:5000/users/communities/${communityIdString}/join`;
 
       const response = await fetch(endpoint, {
         method: 'POST',

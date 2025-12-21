@@ -29,7 +29,7 @@ const CommentItem = ({ comment, isReply = false, depth = 0, onAddReply, isSigned
       if (!token) return;
 
       try {
-        const response = await fetch('http://localhost:5000/users/me', {
+  const response = await fetch('http://localhost:5000/users/me', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -98,7 +98,7 @@ const CommentItem = ({ comment, isReply = false, depth = 0, onAddReply, isSigned
 
     setIsVoting(true);
     try {
-      const response = await fetch(`http://localhost:5000/comments/${comment.id}/upvote`, {
+  const response = await fetch(`http://localhost:5000/comments/${comment.id}/upvote`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -152,7 +152,7 @@ const CommentItem = ({ comment, isReply = false, depth = 0, onAddReply, isSigned
 
     setIsDeleting(true);
     try {
-      const response = await fetch(`http://localhost:5000/comments/${comment.id}`, {
+  const response = await fetch(`http://localhost:5000/comments/${comment.id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -207,7 +207,7 @@ const CommentItem = ({ comment, isReply = false, depth = 0, onAddReply, isSigned
 
     setIsVoting(true);
     try {
-      const response = await fetch(`http://localhost:5000/comments/${comment.id}/downvote`, {
+  const response = await fetch(`http://localhost:5000/comments/${comment.id}/downvote`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

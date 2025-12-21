@@ -90,7 +90,7 @@ const CommunityIcon = () => {
       };
 
       // Create the community via backend API
-      const response = await fetch('http://localhost:5000/communities/', {
+  const response = await fetch('http://localhost:5000/communities/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

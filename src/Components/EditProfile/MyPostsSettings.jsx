@@ -23,8 +23,8 @@ const MyPostsSettings = () => {
       }
 
       try {
-        setLoading(true);
-        const response = await fetch('http://localhost:5000/posts/me', {
+    setLoading(true);
+  const response = await fetch('http://localhost:5000/posts/me', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',

@@ -42,7 +42,7 @@ const PostDetails = () => {
           headers['Authorization'] = `Bearer ${token}`;
         }
 
-        const response = await fetch(`http://localhost:5000/posts/${postId}`, {
+  const response = await fetch(`http://localhost:5000/posts/${postId}`, {
           method: 'GET',
           headers: headers,
         });
@@ -125,7 +125,7 @@ const PostDetails = () => {
           headers['Authorization'] = `Bearer ${token}`;
         }
 
-        const response = await fetch(`http://localhost:5000/comments/post/${postId}`, {
+  const response = await fetch(`http://localhost:5000/comments/post/${postId}`, {
           method: 'GET',
           headers: headers,
         });
@@ -238,7 +238,7 @@ const PostDetails = () => {
           headers['Authorization'] = `Bearer ${token}`;
         }
 
-        const response = await fetch(`http://localhost:5000/comments/post/${postId}`, {
+  const response = await fetch(`http://localhost:5000/comments/post/${postId}`, {
           method: 'GET',
           headers: headers,
         });
@@ -343,7 +343,7 @@ const PostDetails = () => {
         body.parentComment = parentId;
       }
 
-      const response = await fetch('http://localhost:5000/comments/', {
+        const response = await fetch('http://localhost:5000/comments/', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -542,6 +542,7 @@ const PostDetails = () => {
                     isSignedIn={isSignedIn}
                   />
                 )}
+                
               </div>
             </div>
           </div>

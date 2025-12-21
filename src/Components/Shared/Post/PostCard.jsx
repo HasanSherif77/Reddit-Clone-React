@@ -73,7 +73,7 @@ function PostCard({
       if (!token) return;
 
       try {
-        const response = await fetch('http://localhost:5000/users/me', {
+  const response = await fetch('http://localhost:5000/users/me', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -114,7 +114,7 @@ function PostCard({
       if (!token) return;
 
       try {
-        const response = await fetch('http://localhost:5000/users/me', {
+  const response = await fetch('http://localhost:5000/users/me', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -247,7 +247,7 @@ function PostCard({
     setSummaryError(null);
 
     try {
-      const response = await fetch('http://localhost:5000/ai/summarize', {
+  const response = await fetch('http://localhost:5000/ai/summarize', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -334,7 +334,7 @@ function PostCard({
 
     setIsVoting(true);
     try {
-      const response = await fetch(`http://localhost:5000/posts/${id}/upvote`, {
+  const response = await fetch(`http://localhost:5000/posts/${id}/upvote`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -397,7 +397,7 @@ function PostCard({
 
     setIsVoting(true);
     try {
-      const response = await fetch(`http://localhost:5000/posts/${id}/downvote`, {
+  const response = await fetch(`http://localhost:5000/posts/${id}/downvote`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -452,7 +452,7 @@ function PostCard({
     }
 
     try {
-      const response = await fetch(`http://localhost:5000/posts/${id}`, {
+  const response = await fetch(`http://localhost:5000/posts/${id}`, {
         method: "DELETE",
         headers: {
           "Content-Type": "application/json",
@@ -503,9 +503,9 @@ function PostCard({
     setIsJoining(true);
     try {
       const communityIdString = String(communityId);
-      const endpoint = hasJoined 
-        ? `http://localhost:5000/users/communities/${communityIdString}/leave`
-        : `http://localhost:5000/users/communities/${communityIdString}/join`;
+    const endpoint = hasJoined 
+  ? `http://localhost:5000/users/communities/${communityIdString}/leave`
+  : `http://localhost:5000/users/communities/${communityIdString}/join`;
 
       
       const response = await fetch(endpoint, {

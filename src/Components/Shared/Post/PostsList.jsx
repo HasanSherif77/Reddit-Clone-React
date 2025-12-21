@@ -20,7 +20,7 @@ function PostsList({ isSignedIn = true }) {
           headers['Authorization'] = `Bearer ${token}`;
         }
 
-        const response = await fetch('http://localhost:5000/posts/', {
+  const response = await fetch('http://localhost:5000/posts/', {
           method: 'GET',
           headers: headers,
         });

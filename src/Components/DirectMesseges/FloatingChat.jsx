@@ -1,6 +1,6 @@
 // src/components/FloatingChat.js
 import React, { useState, useEffect } from "react";
-
+import { API_BASE } from "../../utils/api";
 const FloatingChat = ({ currentUser, onClose }) => {
   const [searchQuery, setSearchQuery] = useState("");
   const [searchResults, setSearchResults] = useState([]);
@@ -31,9 +31,8 @@ const FloatingChat = ({ currentUser, onClose }) => {
     }
 
     try {
-      const res = await fetch(
-        `http://localhost:5000/users/search/${encodeURIComponent(searchQuery)}`,
-        {
+      const res = await fetch(`${API_BASE}/users/search/${encodeURIComponent(searchQuery)}`,
+       {
           method: "GET",
           headers: { 
             "Content-Type": "application/json",
@@ -66,7 +65,7 @@ const FloatingChat = ({ currentUser, onClose }) => {
     
     setLoadingMessages(true);
     try {
-      const res = await fetch("http://localhost:5000/messages/", {
+        const res = await fetch(`${API_BASE}/messages/`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
@@ -263,7 +262,8 @@ const FloatingChat = ({ currentUser, onClose }) => {
     setNewMessage("");
 
     try {
-      const res = await fetch("http://localhost:5000/messages/", {
+      const res = await fetch(`${API_BASE}/messages/`, {
+
         method: "POST",
         headers: {
           "Content-Type": "application/json",

@@ -40,7 +40,7 @@ const CreatePost = () => {
 
       try {
         setLoadingCommunities(true);
-        const response = await fetch("http://localhost:5000/communities/me", {
+  const response = await fetch("http://localhost:5000/communities/me", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -185,7 +185,7 @@ const CreatePost = () => {
         }
       });
 
-      const response = await fetch("http://localhost:5000/posts", {
+  const response = await fetch("http://localhost:5000/posts", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

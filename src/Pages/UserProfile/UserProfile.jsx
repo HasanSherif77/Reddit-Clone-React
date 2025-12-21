@@ -57,7 +57,7 @@ const UserProfilePage = () => {
         }
 
         // Fetch user info
-        const userResponse = await fetch(`http://localhost:5000/users/info/${userId}`, {
+  const userResponse = await fetch(`http://localhost:5000/users/info/${userId}`, {
           method: "GET",
           headers: headers,
         });
@@ -76,7 +76,7 @@ const UserProfilePage = () => {
         });
 
         // Fetch user posts
-        const postsResponse = await fetch(`http://localhost:5000/posts/user/${userId}`, {
+  const postsResponse = await fetch(`http://localhost:5000/posts/user/${userId}`, {
           method: "GET",
           headers: headers,
         });

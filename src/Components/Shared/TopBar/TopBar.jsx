@@ -3,7 +3,7 @@ import { useNavigate, useLocation } from "react-router-dom";
 import "./TopBar.css";
 import UserMenu from "./UserMenu";
 import LoginButton from "./LoginButton";
-import FloatingChat from "../../../Pages/DirectMesseges/FloatingChat";
+import FloatingChat from "../../DirectMesseges/FloatingChat";
 
 import redditLogoImage from "../../../assets/images/Logo.png";
 import searchIconImage from "../../../assets/images/Search.svg";
@@ -80,7 +80,7 @@ function TopBar({ isSignedIn = false }) {
 
       setIsLoading(true);
       try {
-        const response = await fetch("http://localhost:5000/users/me", {
+  const response = await fetch("http://localhost:5000/users/me", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -127,7 +127,7 @@ function TopBar({ isSignedIn = false }) {
       if (!token) return;
 
       try {
-        const response = await fetch("http://localhost:5000/users/me", {
+  const response = await fetch("http://localhost:5000/users/me", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",

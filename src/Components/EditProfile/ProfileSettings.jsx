@@ -42,7 +42,7 @@ const ProfileSettings = () => {
       }
 
       try {
-        const response = await fetch("http://localhost:5000/users/me", {
+  const response = await fetch("http://localhost:5000/users/me", {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -98,7 +98,7 @@ const ProfileSettings = () => {
     if (!token) return;
 
     try {
-      const response = await fetch("http://localhost:5000/users/me", {
+  const response = await fetch("http://localhost:5000/users/me", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -128,7 +128,7 @@ const ProfileSettings = () => {
     if (!token) return;
 
     try {
-      const response = await fetch("http://localhost:5000/users/me", {
+  const response = await fetch("http://localhost:5000/users/me", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",
@@ -156,7 +156,7 @@ const ProfileSettings = () => {
     if (!token) return;
 
     try {
-      const response = await fetch("http://localhost:5000/users/me", {
+  const response = await fetch("http://localhost:5000/users/me", {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

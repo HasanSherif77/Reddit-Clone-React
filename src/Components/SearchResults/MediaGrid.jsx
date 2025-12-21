@@ -28,6 +28,9 @@ export default function MediaGrid({ searchQuery = "" }) {
         }
 
         const response = await fetch(
+          
+        
+        
           `http://localhost:5000/posts/search/${encodeURIComponent(searchQuery.trim())}`,
           {
             method: "GET",

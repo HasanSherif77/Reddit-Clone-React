@@ -16,7 +16,8 @@ const LoginForm = ({ onAuthSuccess }) => {
     setIsLoading(true);
 
     try {
-      const res = await fetch('http://localhost:5000/users/login', {
+
+      const res = await fetch(`${API_BASE}/users/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email : emailOrUsername, password }),
@@ -30,6 +31,14 @@ const LoginForm = ({ onAuthSuccess }) => {
       }
 
       // Clear all vote-related localStorage items from previous user
+if (data.token) {
+  localStorage.setItem("token", data.token);
+}
+
+// Add this after saving token:
+if (data.user) {
+  localStorage.setItem("userData", JSON.stringify(data.user));
+}
       Object.keys(localStorage).forEach(key => {
         if (key.startsWith('vote_') || key.startsWith('comment_vote_')) {
           localStorage.removeItem(key);

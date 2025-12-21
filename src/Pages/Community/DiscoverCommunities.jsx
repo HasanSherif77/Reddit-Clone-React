@@ -37,7 +37,7 @@ const DiscoverCommunities = () => {
           headers['Authorization'] = `Bearer ${token}`;
         }
 
-        const response = await fetch('http://localhost:5000/communities/', {
+  const response = await fetch('http://localhost:5000/communities/', {
           method: 'GET',
           headers: headers,
         });
@@ -107,7 +107,7 @@ const DiscoverCommunities = () => {
       if (!token) return;
 
       try {
-        const response = await fetch('http://localhost:5000/users/me', {
+  const response = await fetch('http://localhost:5000/users/me', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -154,7 +154,7 @@ const DiscoverCommunities = () => {
       if (!token) return;
 
       try {
-        const response = await fetch('http://localhost:5000/users/me', {
+  const response = await fetch('http://localhost:5000/users/me', {
           method: 'GET',
           headers: {
             'Content-Type': 'application/json',
@@ -219,8 +219,8 @@ const DiscoverCommunities = () => {
     
     try {
       const endpoint = hasJoined 
-        ? `http://localhost:5000/users/communities/${communityIdString}/leave`
-        : `http://localhost:5000/users/communities/${communityIdString}/join`;
+  ? `http://localhost:5000/users/communities/${communityIdString}/leave`
+  : `http://localhost:5000/users/communities/${communityIdString}/join`;
 
       const response = await fetch(endpoint, {
         method: 'POST',
